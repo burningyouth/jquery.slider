@@ -1,4 +1,4 @@
-import Model from '../bundles/model';
+import { Model } from '../modules/model';
 import { expect, assert } from 'chai';
 import 'mocha';
 

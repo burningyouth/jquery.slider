@@ -1,26 +1,19 @@
 {
-    "compilerOptions": {
-        "noImplicitAny": true,
-        "removeComments": true,
-        "target": "es6",
-        "noEmit": true,
-        "esModuleInterop": true
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "removeComments": true,
+    "target": "es5",
+    "noEmit": true,
+    "esModuleInterop": true
+  },
+  "include": ["src/plugin/@types/slider.d.ts", "src/plugin/slider/slider.ts"],
+  "exclude": ["build/*", "dist/*", "node_modules/*"],
+  "awesomeTypescriptLoaderOptions": {
+    "useBabel": true,
+    "babelOptions": {
+      "babelrc": false,
+      "presets": [["@babel/preset-env", { "targets": "last 2 versions, ie 11", "modules": false }]]
     },
-    "include": [
-        "src/blocks/*", "src/plugin/*"
-    ],
-    "exclude": [
-        "build/*",
-        "node_modules/*"
-    ],
-    "awesomeTypescriptLoaderOptions": {
-        "useBabel": true,
-        "babelOptions": {
-            "babelrc": false, 
-            "presets": [
-                ["@babel/preset-env", { "targets": "last 2 versions, ie 11", "modules": false }]
-            ]
-        },
-        "babelCore": "@babel/core", 
-    }
+    "babelCore": "@babel/core"
+  }
 }
