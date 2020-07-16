@@ -4,7 +4,7 @@ enum Align {
 }
 
 class Model {
-  public settings: Settings = {
+  settings: Settings = {
     min: 0,
     max: 100,
     range: true,
@@ -18,13 +18,17 @@ class Model {
     }
   };
 
-  public data: Object;
+  data: Object;
 
   constructor(options?: Object) {
     if (options) this.settings = $.extend(this.settings, options);
     this.data = {
       values: this.settings.startValue
     };
+  }
+
+  static pow(num: number, p: number): number {
+    return num ** p;
   }
 }
 

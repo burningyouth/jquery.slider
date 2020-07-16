@@ -64,7 +64,7 @@ class View {
       if (this.methodsToElements[key]) {
         this.methodsToElements[key][0].call(this, obj[key]);
       } else {
-        throw new Error('Method to add ' + obj[key] + ' not found!');
+        throw new Error(`Method to add ${obj[key]} not found!`);
       }
     });
     return this;
@@ -75,7 +75,7 @@ class View {
       if (this.methodsToElements[key]) {
         this.methodsToElements[key][1].call(this, obj[key]);
       } else {
-        throw new Error('Method to remove ' + obj[key] + ' not found!');
+        throw new Error(`Method to remove ${obj[key]} not found!`);
       }
     });
     return this;

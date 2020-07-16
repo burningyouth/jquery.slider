@@ -7,7 +7,6 @@ class Presenter {
     target.remove();
     target.prependTo(view.elements.wrapper);
     view.elements.wrapper.prependTo(view.elements.parent);
-
     view.addClasses(model.settings.additionalClasses);
   }
 }
