@@ -1,5 +1,5 @@
 {
-  "name": "webpacktemplate",
+  "name": "jquery.slider",
   "version": "1.0.0",
   "description": "FSD плагин",
   "main": "src/entry/kit.js",
@@ -10,7 +10,7 @@
     "b": "webpack --config ./build/webpack.build.conf.js",
     "serve": "webpack --config ./build/webpack.build.conf.js && webpack-dev-server --open --config ./build/webpack.dev.conf.js",
     "s": "webpack --config ./build/webpack.build.conf.js && webpack-dev-server --open --config ./build/webpack.dev.conf.js",
-    "test": "mocha -r ts-node/register src/plugin/tests/*.ts"
+    "test": "mocha -r ts-node/register src/plugin/tests/*.spec.ts"
   },
   "browserslist": [
     "> 1%",
@@ -47,6 +47,7 @@
     "autoprefixer": "^9.7.3",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.6",
+    "chai": "^4.2.0",
     "copy-webpack-plugin": "^5.0.5",
     "css-loader": "^3.2.1",
     "css-mqpacker": "^7.0.0",
@@ -61,21 +62,20 @@
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
     "mini-css-extract-plugin": "^0.8.0",
+    "mocha": "^7.0.0",
     "postcss-loader": "^3.0.0",
     "pug": "^2.0.4",
     "pug-loader": "^2.4.0",
     "pug-plain-loader": "^1.0.0",
     "style-loader": "^1.0.1",
-    "ts-node": "^8.6.2",
-    "typescript": "^3.7.5"
-  },
-  "dependencies": {
-    "chai": "^4.2.0",
-    "jquery": "^3.5.1",
-    "mocha": "^7.0.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.7.5",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "jquery": "^3.5.1"
   }
 }

@@ -1,3 +1,5 @@
+import { Settings } from '../types/slider';
+
 enum Align {
   horizontal,
   vertical

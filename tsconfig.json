@@ -4,15 +4,21 @@
     "removeComments": true,
     "target": "es5",
     "noEmit": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "typeRoots": ["src/plugin/types/slider.d.ts", "src/plugin/types/jquery.d.ts"],
+    "types": ["node", "chai", "mocha", "jquery"]
   },
-  "include": ["src/plugin/@types/slider.d.ts", "src/plugin/slider/slider.ts"],
-  "exclude": ["build/*", "dist/*", "node_modules/*"],
+  "include": [
+    "src/plugin/types/slider.d.ts",
+    "src/plugin/types/jquery.d.ts",
+    "src/plugin/slider/slider.ts"
+  ],
+  "exclude": ["build/*", "dist/*", "node_modules/*", "src/plugin/tests/*"],
   "awesomeTypescriptLoaderOptions": {
     "useBabel": true,
     "babelOptions": {
-      "babelrc": false,
-      "presets": [["@babel/preset-env", { "targets": "last 2 versions, ie 11", "modules": false }]]
+      "babelrc": true
     },
     "babelCore": "@babel/core"
   }

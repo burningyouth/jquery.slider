@@ -1,12 +1,14 @@
+import * as slider from '../types/slider';
+
 class View {
-  public elements: Elements = {
+  public elements: slider.Elements = {
     wrapper: $('<div class="js-slider"></div>'),
     base: $('<div class="js-slider__base"></div>'),
     handlers: [$('<div class="js-slider__handler"></div>')],
     connector: $('<div class="js-slider__connector"></div>')
   };
 
-  private methodsToElements: MethodsToElements = {
+  private methodsToElements: slider.MethodsToElements = {
     wrapper: [this.addWrapperClass, this.removeWrapperClass],
     base: [this.addBaseClass, this.removeBaseClass],
     handler: [this.addHandlerClass, this.removeHandlerClass],
@@ -59,8 +61,8 @@ class View {
     return this;
   }
 
-  public addClasses(obj: AdditionalClasses): View {
-    Object.keys(obj).forEach((key: keyof AdditionalClasses) => {
+  public addClasses(obj: slider.AdditionalClasses): View {
+    Object.keys(obj).forEach((key: keyof slider.AdditionalClasses) => {
       if (this.methodsToElements[key]) {
         this.methodsToElements[key][0].call(this, obj[key]);
       } else {
@@ -70,8 +72,8 @@ class View {
     return this;
   }
 
-  public removeClasses(obj: AdditionalClasses): View {
-    Object.keys(obj).forEach((key: keyof AdditionalClasses) => {
+  public removeClasses(obj: slider.AdditionalClasses): View {
+    Object.keys(obj).forEach((key: keyof slider.AdditionalClasses) => {
       if (this.methodsToElements[key]) {
         this.methodsToElements[key][1].call(this, obj[key]);
       } else {

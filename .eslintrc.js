@@ -20,13 +20,14 @@ module.exports = {
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
     'no-console': 'off',
     'no-undef': 'off',
-    "no-unused-vars": 'off',
+    'no-unused-vars': 'off',
+    'import/no-extraneous-dependencies': 'off',
     'func-names': ['error', 'never'],
     'prettier/prettier': ['error']
   },
   settings: {
-    "import/extensions": {
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    'import/extensions': {
+      extensions: ['.js', '.jsx', '.ts', '.tsx']
     }
   }
 };

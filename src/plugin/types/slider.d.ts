@@ -1,7 +1,3 @@
-interface JQuery {
-  slider: (options?: Object) => JQuery<HTMLElement>;
-}
-
 interface AdditionalClasses {
   wrapper?: string;
   base?: string;
@@ -32,3 +28,5 @@ interface MethodsToElements {
   handler: Array<Function>;
   connector: Array<Function>;
 }
+
+export { AdditionalClasses, Settings, Elements, MethodsToElements };
