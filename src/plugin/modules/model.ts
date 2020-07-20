@@ -10,7 +10,7 @@ class Model {
     min: 0,
     max: 100,
     range: true,
-    startValue: [0, 100],
+    startValue: 50,
     align: Align.horizontal,
     additionalClasses: {
       wrapper: 'slider',
@@ -27,10 +27,6 @@ class Model {
     this.data = {
       values: this.settings.startValue
     };
-  }
-
-  static pow(num: number, p: number): number {
-    return num ** p;
   }
 }
 

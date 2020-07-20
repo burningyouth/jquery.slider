@@ -9,7 +9,7 @@ interface Settings {
   min: number;
   max: number;
   range: boolean;
-  startValue: Array<number>;
+  startValue: Array<number> | number;
   align: number;
   additionalClasses: AdditionalClasses;
 }
