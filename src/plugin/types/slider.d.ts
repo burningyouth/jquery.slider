@@ -9,22 +9,25 @@ interface Settings {
   min: number;
   max: number;
   range: boolean;
-  startValue: Values;
+  startValues: Values;
   align: number;
   additionalClasses: AdditionalClasses;
   step: number;
+  sortValues: boolean;
+  sortOnlyPares: boolean;
   roundTo: number;
+  template: string;
 }
 
 type Values = number[];
 
 interface Elements {
-  connector?: JQuery<HTMLElement>;
   parent?: JQuery<HTMLElement>;
 
   wrapper: JQuery<HTMLElement>;
   base: JQuery<HTMLElement>;
   handlers: Array<JQuery<HTMLElement>>;
+  connectors: Array<JQuery<HTMLElement>>;
   result: JQuery<HTMLElement>;
 }
 

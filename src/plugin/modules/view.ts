@@ -8,7 +8,7 @@ class View {
     wrapper: $('<div class="js-slider"></div>'),
     base: $('<div class="js-slider__base"></div>'),
     handlers: [$('<button type="button" class="js-slider__handler"></button>')],
-    connector: $('<div class="js-slider__connector"></div>'),
+    connectors: [$('<div class="js-slider__connector"></div>')],
     result: $('<div class="js-slider__result">undefined</div>')
   };
 
@@ -18,6 +18,9 @@ class View {
     handler: [this.addHandlerClass, this.removeHandlerClass],
     connector: [this.addConnectorClass, this.removeConnectorClass]
   };
+
+  public range: boolean;
+  public startValues: slider.Values;
 
   constructor() {
     this.elements.wrapper.append(this.elements.base);
@@ -55,12 +58,12 @@ class View {
   }
 
   public addConnectorClass(className: string): View {
-    this.elements.connector.addClass(className);
+    this.elements.connectors.forEach(connector => connector.addClass(className));
     return this;
   }
 
   public removeConnectorClass(className: string): View {
-    this.elements.connector.removeClass(className);
+    this.elements.connectors.forEach(connector => connector.removeClass(className));
     return this;
   }
 
@@ -86,28 +89,38 @@ class View {
     return this;
   }
 
-  public initHandlers(presenter: Presenter, func: Function): View {
-    const startValue = presenter.model.settings.startValue;
-    if (startValue.length > 1) {
-      startValue.forEach((value, index) => {
+  public init(presenter: Presenter, callback: Function): View {
+    this.startValues = presenter.model.settings.startValues;
+    this.range = presenter.model.settings.range;
+    if (this.startValues.length > 1) {
+      this.startValues.forEach((value, index) => {
         if (index > 0) {
           this.elements.handlers.push(this.elements.handlers[index - 1].clone());
         }
         this.elements.handlers[index].data('index', index);
+
+        if (this.range) {
+          const connectorIndex = Math.floor(index / 2);
+          if (index % 2 === 0 && index > 1) {
+            this.elements.connectors.push(this.elements.connectors[connectorIndex - 1].clone());
+          }
+          this.elements.connectors[connectorIndex].data('index', connectorIndex);
+          this.elements.handlers[index].data('pairedConnector', connectorIndex);
+        }
       });
 
       this.elements.base.append(this.elements.handlers);
-      if (this.elements.handlers.length % 2 === 0) {
-        this.elements.base.prepend(this.elements.connector);
+      if (this.elements.handlers.length % 2 === 0 && this.range) {
+        this.elements.base.prepend(this.elements.connectors);
       }
 
       this.elements.handlers.forEach(handler => {
-        func.call(presenter, handler);
+        callback.call(presenter, handler);
       });
     } else {
       this.elements.handlers[0].data('index', 0);
       this.elements.base.append(this.elements.handlers[0]);
-      func.call(presenter, this.elements.handlers[0]);
+      callback.call(presenter, this.elements.handlers[0]);
     }
 
     return this;
@@ -119,16 +132,19 @@ class View {
     return this;
   }
 
-  public changeConnectorPosition(handlerIndex: number, percentage: number): View {
-    if (this.elements.handlers.length % 2 == 0) {
+  public changeConnectorPosition(handler: JQuery<HTMLElement>, percentage: number): View {
+    if (this.elements.handlers.length % 2 == 0 && this.range) {
+      const handlerIndex = +handler.data('index');
       const pairedHandlerIndex = handlerIndex % 2 === 0 ? handlerIndex + 1 : handlerIndex - 1;
       const pairedPercentage = this.elements.handlers[pairedHandlerIndex].data('percentage');
+      const pairedConnectorIndex = +handler.data('pairedConnector');
+
       if (pairedPercentage > percentage) {
-        this.elements.connector.css('left', `${percentage}%`);
-        this.elements.connector.css('right', `${100 - pairedPercentage}%`);
+        this.elements.connectors[pairedConnectorIndex].css('left', `${percentage}%`);
+        this.elements.connectors[pairedConnectorIndex].css('right', `${100 - pairedPercentage}%`);
       } else {
-        this.elements.connector.css('left', `${pairedPercentage}%`);
-        this.elements.connector.css('right', `${100 - percentage}%`);
+        this.elements.connectors[pairedConnectorIndex].css('left', `${pairedPercentage}%`);
+        this.elements.connectors[pairedConnectorIndex].css('right', `${100 - percentage}%`);
       }
     }
 

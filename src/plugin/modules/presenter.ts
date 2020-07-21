@@ -17,7 +17,7 @@ class Presenter {
   }
 
   public init(): void {
-    this.view.initHandlers(this, this.handlersCallback);
+    this.view.init(this, this.handlersCallback);
   }
 
   public getValue(mouseX: number): number {
@@ -53,25 +53,28 @@ class Presenter {
     const value = this.getValue(mouseX);
     const percentage = this.getPercentage(value);
     const handlerIndex = +handler.data('index');
+
     this.model.setValue(handlerIndex, value);
+
     this.view
       .changeHandlerPosition(handler, percentage)
-      .changeConnectorPosition(handlerIndex, percentage)
-      .changeResultText(`${this.model.values.toString()}`);
+      .changeConnectorPosition(handler, percentage)
+      .changeResultText(this.model.formattedValues);
 
     return this;
   }
 
   public handlersCallback(handler: JQuery<HTMLElement>): void {
     const presenter: any = this;
+
     const handlerIndex = +handler.data('index');
     const value = this.model.values[handlerIndex];
     const percentage = this.getPercentage(value);
 
     presenter.view
       .changeHandlerPosition(handler, percentage)
-      .changeConnectorPosition(handlerIndex, percentage)
-      .changeResultText(`${this.model.values.toString()}`);
+      .changeConnectorPosition(handler, percentage)
+      .changeResultText(this.model.formattedValues);
 
     handler.on('mousedown', function(e) {
       e.preventDefault();
@@ -92,7 +95,7 @@ class Presenter {
       $(window).on('touchmove', function(e2) {
         presenter.changePosition($(e.target), e2.touches[0].clientX);
       });
-      $(window).on('touched', function() {
+      $(window).on('touchend', function() {
         $(this).off('touchmove touched');
       });
     });
