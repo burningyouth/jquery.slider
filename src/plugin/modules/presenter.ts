@@ -28,7 +28,7 @@ class Presenter {
     let value = (mouseX - base.offset().left) / base.width();
     value *= settings.max - settings.min;
     value = settings.min + Math.floor(value / settings.step + 0.5) * settings.step;
-    value = Math.floor(value * roundTo) / roundTo;
+    value = roundTo ? Math.floor(value * roundTo) / roundTo : value;
 
     if (value >= settings.min && value <= settings.max) {
       return value;
