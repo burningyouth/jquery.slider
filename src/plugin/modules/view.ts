@@ -1,4 +1,5 @@
 import * as slider from '../types/slider';
+import Presenter from './presenter';
 
 class View {
   public settings: slider.Settings;
@@ -7,7 +8,8 @@ class View {
     wrapper: $('<div class="js-slider"></div>'),
     base: $('<div class="js-slider__base"></div>'),
     handlers: [$('<button type="button" class="js-slider__handler"></button>')],
-    connector: $('<div class="js-slider__connector"></div>')
+    connector: $('<div class="js-slider__connector"></div>'),
+    result: $('<div class="js-slider__result">undefined</div>')
   };
 
   private methodsToElements: slider.MethodsToElements = {
@@ -19,7 +21,7 @@ class View {
 
   constructor() {
     this.elements.wrapper.append(this.elements.base);
-    this.elements.base.append(this.elements.connector);
+    this.elements.wrapper.append(this.elements.result);
   }
 
   public addWrapperClass(className: string): View {
@@ -84,56 +86,57 @@ class View {
     return this;
   }
 
-  public initHandlers(func: Function): View {
-    if (Array.isArray(this.settings.startValue) && this.settings.startValue.length > 1) {
-      this.settings.startValue.forEach((value, index) => {
+  public initHandlers(presenter: Presenter, func: Function): View {
+    const startValue = presenter.model.settings.startValue;
+    if (startValue.length > 1) {
+      startValue.forEach((value, index) => {
         if (index > 0) {
-          this.elements.handlers[index] = this.elements.handlers[index - 1];
+          this.elements.handlers.push(this.elements.handlers[index - 1].clone());
         }
+        this.elements.handlers[index].data('index', index);
       });
-    }
-    this.elements.base.append(...this.elements.handlers);
 
-    this.elements.handlers.forEach(handler => {
-      func.call(this, handler);
-    });
+      this.elements.base.append(this.elements.handlers);
+      if (this.elements.handlers.length % 2 === 0) {
+        this.elements.base.prepend(this.elements.connector);
+      }
+
+      this.elements.handlers.forEach(handler => {
+        func.call(presenter, handler);
+      });
+    } else {
+      this.elements.handlers[0].data('index', 0);
+      this.elements.base.append(this.elements.handlers[0]);
+      func.call(presenter, this.elements.handlers[0]);
+    }
 
     return this;
   }
 
-  public changeHandlerValue(handler: JQuery<HTMLElement>, value: any): View {
-    const pos = ((value - this.elements.base.offset().left) / this.elements.base.width()) * 100;
-    if (pos >= 0 && pos <= 100) {
-      handler.css('left', `calc(${pos}% - 2px`);
-    } else if (pos < 0) {
-      handler.css('left', 'calc(0% - 2px)');
-    } else {
-      handler.css('left', 'calc(100% - 2px)');
-    }
+  public changeHandlerPosition(handler: JQuery<HTMLElement>, percentage: number): View {
+    handler.data('percentage', percentage);
+    handler.css('left', `calc(${percentage}% - 2px`);
     return this;
   }
 
-  public changeHandlerPosition(handler: JQuery<HTMLElement>, posX: number): View {
-    const pos = ((posX - this.elements.base.offset().left) / this.elements.base.width()) * 100;
-    if (pos >= 0 && pos <= 100) {
-      handler.css('left', `calc(${pos}% - 2px`);
-    } else if (pos < 0) {
-      handler.css('left', 'calc(0% - 2px)');
-    } else {
-      handler.css('left', 'calc(100% - 2px)');
+  public changeConnectorPosition(handlerIndex: number, percentage: number): View {
+    if (this.elements.handlers.length % 2 == 0) {
+      const pairedHandlerIndex = handlerIndex % 2 === 0 ? handlerIndex + 1 : handlerIndex - 1;
+      const pairedPercentage = this.elements.handlers[pairedHandlerIndex].data('percentage');
+      if (pairedPercentage > percentage) {
+        this.elements.connector.css('left', `${percentage}%`);
+        this.elements.connector.css('right', `${100 - pairedPercentage}%`);
+      } else {
+        this.elements.connector.css('left', `${pairedPercentage}%`);
+        this.elements.connector.css('right', `${100 - percentage}%`);
+      }
     }
+
     return this;
   }
 
-  public changeConnectorPosition(posX: number): View {
-    const pos = ((posX - this.elements.base.offset().left) / this.elements.base.width()) * 100;
-    if (pos >= 0 && pos <= 100) {
-      this.elements.connector.css('width', `${pos}%`);
-    } else if (pos < 0) {
-      this.elements.connector.css('width', `0%`);
-    } else {
-      this.elements.connector.css('width', `100%`);
-    }
+  public changeResultText(text: string): View {
+    this.elements.result.text(text);
     return this;
   }
 }

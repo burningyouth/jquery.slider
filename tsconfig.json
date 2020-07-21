@@ -5,7 +5,6 @@
     "target": "es5",
     "noEmit": true,
     "esModuleInterop": true,
-    "isolatedModules": true,
     "typeRoots": ["src/plugin/types/slider.d.ts", "src/plugin/types/jquery.d.ts"],
     "types": ["node", "chai", "mocha", "jquery"]
   },

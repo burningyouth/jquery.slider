@@ -9,17 +9,23 @@ interface Settings {
   min: number;
   max: number;
   range: boolean;
-  startValue: Array<number> | number;
+  startValue: Values;
   align: number;
   additionalClasses: AdditionalClasses;
+  step: number;
+  roundTo: number;
 }
 
+type Values = number[];
+
 interface Elements {
+  connector?: JQuery<HTMLElement>;
   parent?: JQuery<HTMLElement>;
+
   wrapper: JQuery<HTMLElement>;
   base: JQuery<HTMLElement>;
   handlers: Array<JQuery<HTMLElement>>;
-  connector: JQuery<HTMLElement>;
+  result: JQuery<HTMLElement>;
 }
 
 interface MethodsToElements {
@@ -29,4 +35,4 @@ interface MethodsToElements {
   connector: Array<Function>;
 }
 
-export { AdditionalClasses, Settings, Elements, MethodsToElements };
+export { AdditionalClasses, Settings, Values, Elements, MethodsToElements };
