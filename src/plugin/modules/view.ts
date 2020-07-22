@@ -1,5 +1,6 @@
 import * as slider from '../types/slider';
 import Presenter from './presenter';
+import { Align } from './model';
 
 class View {
   public settings: slider.Settings; //настройки из модели
@@ -38,6 +39,9 @@ class View {
 
   public init(presenter: Presenter, callback: Function): View {
     this.settings = presenter.model.settings;
+    if (this.settings.align === Align.vertical) {
+      this.elements.wrapper.addClass('js-slider_vertical');
+    }
     if (this.settings.startValues.length > 1) {
       //если количество значений больше одного, то нужно создать новые ползунки и коннекторы (если они нужны)
       this.settings.startValues.forEach((value, index) => {

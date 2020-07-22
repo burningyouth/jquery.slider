@@ -1,4 +1,4 @@
-import { Model } from './model';
+import { Model, Align } from './model';
 import View from './view';
 
 class Presenter {
@@ -23,13 +23,14 @@ class Presenter {
     this.view.init(this, this.handlersCallback);
   }
 
-  public getValue(mouseX: number): number {
+  public getValue(coords: number): number {
     //возвращает значение ползунка в зависимости от min, max, ширины базы, положения мыши, положения базы и настроек слайдера
     const settings = this.model.settings;
     const base = this.view.elements.base;
     const roundTo = 10 ** settings.roundTo;
+    const devider = this.model.settings.align === Align.horizontal ? base.width() : base.height();
 
-    let value = (mouseX - base.offset().left) / base.width();
+    let value = (coords - base.offset().left) / devider;
     value *= settings.max - settings.min;
     value = settings.min + Math.floor(value / settings.step + 0.5) * settings.step; //форматируется значение в зависимости от step
     value = roundTo ? Math.floor(value * roundTo) / roundTo : value; //округление числа до roundTo
@@ -55,10 +56,10 @@ class Presenter {
     return 0;
   }
 
-  public changePosition(handler: JQuery<HTMLElement>, mouseX: number): Presenter {
+  public changePosition(handler: JQuery<HTMLElement>, coords: number): Presenter {
     //изменение положения ползунка запускает изменение view и model, отдавая им сформированные значения
     //для view - проценты, для model - числовые значения
-    const value = this.getValue(mouseX);
+    const value = this.getValue(coords);
     const percentage = this.getPercentage(value);
     const handlerIndex = +handler.data('index');
 
@@ -90,7 +91,9 @@ class Presenter {
       e.preventDefault();
       if (e.which == 1) {
         $(window).on('mousemove', function(e2) {
-          presenter.changePosition($(e.target), e2.clientX);
+          const mouseCords =
+            presenter.model.settings.align === Align.horizontal ? e2.clientX : e2.clientY;
+          presenter.changePosition($(e.target), mouseCords);
         });
         $(window).on('mouseup', function(e2) {
           if (e2.which == 1) {
@@ -104,7 +107,11 @@ class Presenter {
     handler.on('touchstart', function(e) {
       e.preventDefault();
       $(window).on('touchmove', function(e2) {
-        presenter.changePosition($(e.target), e2.touches[0].clientX);
+        const touchCords =
+          presenter.model.settings.align === Align.horizontal
+            ? e2.touches[0].clientX
+            : e2.touches[0].clientY;
+        presenter.changePosition($(e.target), touchCords);
       });
       $(window).on('touchend', function() {
         $(this).off('touchmove touched');
