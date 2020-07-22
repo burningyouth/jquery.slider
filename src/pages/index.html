@@ -1,19 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-    <link rel="stylesheet" href="assets/css/misc.css" />
-  </head>
-  <body class="body">
-    <input type="text" id="slider" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="assets/js/misc.min.js"></script>
-    <script src="assets/js/jquery.slider.min.js"></script>
-    <script>
-      $('#slider').slider();
-    </script>
-  </body>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+        <title>Document</title>
+        <link href="assets/css/misc.css" rel="stylesheet"/>
+    </head>
+    <body class="body">
+        <input id="slider1" type="text"/>
+        <input id="slider2" type="text"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="assets/js/misc.min.js"></script>
+        <script src="assets/js/jquery.slider.min.js"></script>
+        <script>
+          $('#slider1').slider({
+            min: 50,
+            max: 200,
+            step: 0.5,
+            roundTo: 1,
+            range: false,
+            startValues: [90, 100],
+            sortValues: true,
+          });
+          $('#slider2').slider({
+            min: 0,
+            max: 97,
+            step: 0.25,
+            roundTo: 2,
+            range: false,
+            startValues: [25, 50, 75],
+            sortValues: true,
+            template: '$1, $2, $3'
+          });
+        </script>
+    </body>
+    </body>
 </html>

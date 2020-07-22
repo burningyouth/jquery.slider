@@ -1,8 +1,9 @@
 interface AdditionalClasses {
   wrapper?: string;
   base?: string;
-  handler?: string;
-  connector?: string;
+  handlers?: string;
+  connectors?: string;
+  result?: string;
 }
 
 interface Settings {
@@ -31,11 +32,4 @@ interface Elements {
   result: JQuery<HTMLElement>;
 }
 
-interface MethodsToElements {
-  wrapper: Array<Function>;
-  base: Array<Function>;
-  handler: Array<Function>;
-  connector: Array<Function>;
-}
-
-export { AdditionalClasses, Settings, Values, Elements, MethodsToElements };
+export { AdditionalClasses, Settings, Values, Elements };

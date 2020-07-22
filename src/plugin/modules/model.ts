@@ -6,22 +6,23 @@ enum Align {
 }
 
 class Model {
-  settings: Settings = {
+  public settings: Settings = {
     min: 0,
-    max: 200,
+    max: 100,
     range: true,
-    startValues: [50, 100],
-    step: 10,
+    startValues: [30, 70],
+    step: 1,
     roundTo: 0,
     align: Align.horizontal,
     sortValues: true,
-    sortOnlyPares: true,
-    template: '${values[0]} - ${values[1]}',
+    sortOnlyPares: false,
+    template: 'default',
     additionalClasses: {
       wrapper: 'slider',
       base: 'slider__base',
-      handler: 'slider__handler',
-      connector: 'slider__connector'
+      handlers: 'slider__handler',
+      connectors: 'slider__connector',
+      result: 'slider__result'
     }
   };
 
@@ -29,7 +30,6 @@ class Model {
 
   constructor(options?: Object) {
     if (options) this.settings = $.extend(this.settings, options);
-
     if (this.checkValue(this.settings.startValues)) {
       this._values = this.settings.startValues;
     } else {
@@ -61,8 +61,21 @@ class Model {
   }
 
   get formattedValues(): string {
-    const values = this.sortedValues;
-    return eval('`' + this.settings.template + '`');
+    const template = this.settings.template;
+    let formattedString = 'undefined';
+    if (template !== 'default') {
+      const arr = template.split(/\$(\d)/gm).map(item => {
+        const index = parseInt(item);
+        if (index) {
+          return this.sortedValues[index - 1];
+        }
+        return item;
+      });
+      formattedString = arr.join('');
+    } else {
+      return this.sortedValues.toString();
+    }
+    return formattedString;
   }
 
   set values(newValues: Values) {
