@@ -8,30 +8,89 @@
         <link href="assets/css/misc.css" rel="stylesheet"/>
     </head>
     <body class="body">
-        <input id="slider1" type="text"/>
-        <input id="slider2" type="text"/>
+        <form action="" class='basic-form'>
+          <h1 class='title'>JQuery.slider</h1>
+          <input id="slider1" type="text"/>
+          <input id="slider2" type="text"/>
+          <input id="slider3" type="text"/>
+          <input id="slider4" type="text"/>
+          <input id="slider5" type="text"/>
+        </form>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="assets/js/misc.min.js"></script>
         <script src="assets/js/jquery.slider.min.js"></script>
         <script>
-          $('#slider1').slider({
-            min: 50,
-            max: 200,
-            step: 0.5,
-            roundTo: 1,
-            range: false,
-            startValues: [90, 100],
-            sortValues: true,
-          });
-          $('#slider2').slider({
-            min: 0,
-            max: 97,
-            step: 0.25,
-            roundTo: 2,
-            range: false,
-            startValues: [25, 50, 75],
-            sortValues: true,
-            template: '$1, $2, $3'
+          $( document ).ready(function() {
+            $('#slider1').slider({
+              min: 50,
+              max: 200,
+              step: 10,
+              roundTo: 1,
+              range: false,
+              startValues: [90, 100],
+              sortValues: true,
+              additionalClasses: {
+                wrapper: 'slider',
+                result: 'slider__result'
+              }
+            });
+            $('#slider2').slider({
+              min: 0,
+              max: 97,
+              step: 0.25,
+              roundTo: 2,
+              range: false,
+              startValues: [25, 50, 75],
+              sortValues: true,
+              template: '$1; $2; $3;',
+              additionalClasses: {
+                wrapper: 'slider',
+                result: 'slider__result'
+              }
+            });
+            $('#slider3').slider({
+              min: 21,
+              max: 125,
+              step: 0.75,
+              roundTo: 2,
+              range: true,
+              startValues: [25, 100],
+              sortValues: true,
+              template: '$1 - $2',
+              additionalClasses: {
+                wrapper: 'slider',
+                result: 'slider__result'
+              }
+            });
+            $('#slider4').slider({
+              min: 0,
+              max: 350,
+              step: 5,
+              roundTo: 0,
+              range: true,
+              startValues: [50, 100, 150, 200],
+              sortValues: true,
+              sortOnlyPares: true,
+              template: '$1 - $2, $3 - $4',
+              additionalClasses: {
+                wrapper: 'slider',
+                result: 'slider__result'
+              }
+            });
+            $('#slider5').slider({
+              min: 42.25,
+              max: 192.5,
+              step: 0.25,
+              roundTo: 2,
+              range: true,
+              startValues: [90, 100],
+              sortValues: true,
+              template: '$1 ---- $2',
+              additionalClasses: {
+                wrapper: 'slider',
+                result: 'slider__result'
+              }
+            });
           });
         </script>
     </body>

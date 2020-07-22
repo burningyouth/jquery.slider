@@ -9,5 +9,5 @@ jQuery.fn.slider = function(options?: Object): JQuery<HTMLElement> {
 
   presenter.init();
 
-  return view.elements.parent;
+  return this;
 };

@@ -2,35 +2,40 @@ import { Model } from './model';
 import View from './view';
 
 class Presenter {
-  model: Model;
-  view: View;
+  public model: Model;
+  public view: View;
 
-  constructor(target: JQuery<HTMLElement>, model: Model, view: View) {
+  constructor(input: JQuery<HTMLElement>, model: Model, view: View) {
     this.model = model;
     this.view = view;
+    this.view.input = input;
 
-    this.view.elements.parent = target.parent();
-    target.remove();
-    target.prependTo(this.view.elements.wrapper);
-    this.view.elements.wrapper.prependTo(view.elements.parent);
+    this.view.elements.parent = input.parent(); //зопоминаем, где находилось поле
+    input.remove(); //удаляем поле и снова добавляем его уже во внутрь обертки слайдера
+    input.prependTo(this.view.elements.wrapper);
+
+    this.view.elements.wrapper.appendTo(view.elements.parent); //добавляем обертку туда же, где поле находилось
     this.view.addClasses(this.model.settings.additionalClasses);
   }
 
   public init(): void {
+    //инициализация view добавляет ползунки и коннекторы (если нужны) и вызывает колбэк для каждого ползунка
     this.view.init(this, this.handlersCallback);
   }
 
   public getValue(mouseX: number): number {
+    //возвращает значение ползунка в зависимости от min, max, ширины базы, положения мыши, положения базы и настроек слайдера
     const settings = this.model.settings;
     const base = this.view.elements.base;
     const roundTo = 10 ** settings.roundTo;
 
     let value = (mouseX - base.offset().left) / base.width();
     value *= settings.max - settings.min;
-    value = settings.min + Math.floor(value / settings.step + 0.5) * settings.step;
-    value = roundTo ? Math.floor(value * roundTo) / roundTo : value;
+    value = settings.min + Math.floor(value / settings.step + 0.5) * settings.step; //форматируется значение в зависимости от step
+    value = roundTo ? Math.floor(value * roundTo) / roundTo : value; //округление числа до roundTo
 
     if (value >= settings.min && value <= settings.max) {
+      //если значение не попадает в границы, то мы берем за значение эти границы
       return value;
     } else if (value > settings.max) {
       return settings.max;
@@ -39,9 +44,11 @@ class Presenter {
   }
 
   public getPercentage(value: number): number {
+    //возвращает процентное соотношение value от min, max
     const settings = this.model.settings;
     const percentage = ((value - settings.min) / (settings.max - settings.min)) * 100;
     if (percentage >= 0 && percentage <= 100) {
+      //если значение не попадает в границы, то мы берем за значение эти границы
       return percentage;
     } else if (percentage > 100) {
       return 100;
@@ -50,11 +57,13 @@ class Presenter {
   }
 
   public changePosition(handler: JQuery<HTMLElement>, mouseX: number): Presenter {
+    //изменение положения ползунка запускает изменение view и model, отдавая им сформированные значения
+    //для view - проценты, для model - числовые значения
     const value = this.getValue(mouseX);
     const percentage = this.getPercentage(value);
     const handlerIndex = +handler.data('index');
 
-    this.model.setValue(handlerIndex, value);
+    this.model.values[handlerIndex] = value;
 
     this.view
       .changeHandlerPosition(handler, percentage)
@@ -65,16 +74,18 @@ class Presenter {
   }
 
   public handlersCallback(handler: JQuery<HTMLElement>): void {
-    const presenter: any = this;
+    //колбэк, который вызывается при инициализации каждого ползунка во view
+    const presenter: any = this; //внутри событий презентер будет недоступен
 
     const handlerIndex = +handler.data('index');
     const value = this.model.values[handlerIndex];
     const percentage = this.getPercentage(value);
 
-    presenter.view
+    this.view
       .changeHandlerPosition(handler, percentage)
       .changeConnectorPosition(handler, percentage)
-      .changeResultText(this.model.formattedValues);
+      .changeResultText(this.model.formattedValues)
+      .updateInput(this.model.values);
 
     handler.on('mousedown', function(e) {
       e.preventDefault();
@@ -85,6 +96,7 @@ class Presenter {
         $(window).on('mouseup', function(e2) {
           if (e2.which == 1) {
             $(this).off('mousemove mouseup');
+            presenter.view.updateInput(presenter.model.values);
           }
         });
       }
@@ -97,6 +109,7 @@ class Presenter {
       });
       $(window).on('touchend', function() {
         $(this).off('touchmove touched');
+        presenter.view.updateInput(presenter.model.values);
       });
     });
   }

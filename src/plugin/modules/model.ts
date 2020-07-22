@@ -17,13 +17,7 @@ class Model {
     sortValues: true,
     sortOnlyPares: false,
     template: 'default',
-    additionalClasses: {
-      wrapper: 'slider',
-      base: 'slider__base',
-      handlers: 'slider__handler',
-      connectors: 'slider__connector',
-      result: 'slider__result'
-    }
+    additionalClasses: {}
   };
 
   private _values: Values;
@@ -33,7 +27,7 @@ class Model {
     if (this.checkValue(this.settings.startValues)) {
       this._values = this.settings.startValues;
     } else {
-      throw new Error('Start value is invalid (out of range)!');
+      throw new Error('Model: Start value is invalid (out of range)!');
     }
   }
 
@@ -43,7 +37,8 @@ class Model {
 
   get sortedValues(): Values {
     if (this.settings.sortValues) {
-      if (this.settings.sortOnlyPares && this._values.length > 2) {
+      if (this.settings.sortOnlyPares && this._values.length % 2 === 0) {
+        //если нужно сортировать попарно и количество значений четно
         const arr = this._values.slice(0);
         for (let i = 0; i < arr.length; i += 2) {
           if (arr[i] > arr[i + 1]) {
@@ -64,10 +59,14 @@ class Model {
     const template = this.settings.template;
     let formattedString = 'undefined';
     if (template !== 'default') {
-      const arr = template.split(/\$(\d)/gm).map(item => {
+      const arr = template.split(/\$(\d)/g).map(item => {
         const index = parseInt(item);
         if (index) {
-          return this.sortedValues[index - 1];
+          if (this.sortedValues[index - 1]) {
+            return this.sortedValues[index - 1];
+          } else {
+            throw new Error(`Template error (Model): index ${index} isn't exist in values array!`);
+          }
         }
         return item;
       });
@@ -87,6 +86,7 @@ class Model {
   }
 
   public checkValue(value: number | Values): boolean {
+    //проверка значений на попадание в диапазон
     if (Array.isArray(value)) {
       let result = true;
       value.forEach(item => {
@@ -96,11 +96,6 @@ class Model {
     } else {
       return value >= this.settings.min && value <= this.settings.max;
     }
-  }
-
-  public setValue(index: number, value: number): Model {
-    this._values[index] = value;
-    return this;
   }
 }
 
