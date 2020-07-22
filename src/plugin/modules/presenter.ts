@@ -48,7 +48,6 @@ class Presenter {
     const settings = this.model.settings;
     const percentage = ((value - settings.min) / (settings.max - settings.min)) * 100;
     if (percentage >= 0 && percentage <= 100) {
-      //если значение не попадает в границы, то мы берем за значение эти границы
       return percentage;
     } else if (percentage > 100) {
       return 100;
@@ -85,7 +84,7 @@ class Presenter {
       .changeHandlerPosition(handler, percentage)
       .changeConnectorPosition(handler, percentage)
       .changeResultText(this.model.formattedValues)
-      .updateInput(this.model.values);
+      .updateInput(this.model.sortedValues);
 
     handler.on('mousedown', function(e) {
       e.preventDefault();
@@ -96,7 +95,7 @@ class Presenter {
         $(window).on('mouseup', function(e2) {
           if (e2.which == 1) {
             $(this).off('mousemove mouseup');
-            presenter.view.updateInput(presenter.model.values);
+            presenter.view.updateInput(presenter.model.sortedValues);
           }
         });
       }
@@ -109,7 +108,7 @@ class Presenter {
       });
       $(window).on('touchend', function() {
         $(this).off('touchmove touched');
-        presenter.view.updateInput(presenter.model.values);
+        presenter.view.updateInput(presenter.model.sortedValues);
       });
     });
   }

@@ -62,11 +62,7 @@ class Model {
       const arr = template.split(/\$(\d)/g).map(item => {
         const index = parseInt(item);
         if (index) {
-          if (this.sortedValues[index - 1]) {
-            return this.sortedValues[index - 1];
-          } else {
-            throw new Error(`Template error (Model): index ${index} isn't exist in values array!`);
-          }
+          return this.sortedValues[index - 1];
         }
         return item;
       });
