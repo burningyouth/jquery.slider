@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+        <title>Document</title>
+        <link href="assets/css/misc.css" rel="stylesheet"/>
+    </head>
+    <body class="body">
+        <form action="" class='basic-form'>
+          <h1 class='title'>JQuery.slider</h1>
+          <div style='margin-bottom: 50px;'>
+            <input id="slider1" type="text"/>
+            <input id="slider2" type="text"/>
+            <input id="slider3" type="text"/>
+            <div style='margin-top: 30px; margin-bottom: 60px;'>
+              <input id="slider4" type="text"/>
+            </div>
+            <div>
+              <input id="slider5" type="text"/>
+            </div>
+          </div>
+          <div style='display: inline-block; width: 49%;'>
+            <input id="slider6" type="text"/>
+          </div>
+          <div style='display: inline-block; width: 50%;'>
+            <input id="slider7" type="text"/>
+          </div>
+        </form>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="assets/js/misc.min.js"></script>
+        <script src="assets/js/jquery.slider.min.js"></script>
+        <script>
+          $( document ).ready(function() {
+            $('#slider1').slider({
+              min: 50,
+              max: 200,
+              step: 10,
+              roundTo: 1,
+              startValues: [90, 100],
+              sortValues: true,
+              tooltipPosition: 1,
+              additionalClasses: {
+                wrapper: 'slider',
+                result: 'slider__result'
+              }
+            });
+            $('#slider2').slider({
+              min: 0,
+              max: 97,
+              step: 0.25,
+              roundTo: 2,
+              startValues: [25, 50, 75],
+              resultTemplate: '$1; $2; $3;',
+              additionalClasses: {
+                wrapper: 'slider',
+                result: 'slider__result'
+              }
+            });
+            $('#slider3').slider({
+              min: 21,
+              max: 125,
+              step: 0.75,
+              roundTo: 2,
+              range: true,
+              startValues: [25, 100],
+              sortValues: true,
+              resultTemplate: '$1 - $2',
+              additionalClasses: {
+                wrapper: 'slider',
+                result: 'slider__result'
+              }
+            });
+            $('#slider4').slider({
+              min: 0,
+              max: 350,
+              step: 5,
+              roundTo: 0,
+              range: true,
+              startValues: [50, 100, 150, 200],
+              sortValues: true,
+              sortOnlyPares: true,
+              tooltipReverse: true,
+              showBounds: false,
+              showResult: false,
+              showTooltip: true,
+              additionalClasses: {
+                wrapper: 'slider',
+                result: 'slider__result'
+              }
+            });
+            $('#slider5').slider({
+              min: 0,
+              max: 1000,
+              step: 25,
+              range: true,
+              startValues: [0, 100, 225, 350, 400, 675],
+              showTooltip: true,
+              showResult: false,
+              additionalClasses: {
+                wrapper: 'slider',
+                result: 'slider__result'
+              }
+            });
+            
+            $('#slider6').slider({
+              min: 0,
+              max: 255,
+              step: 1,
+              align: 1,
+              startValues: [90, 150, 67],
+              showTooltip: true,
+              resultTemplate: 'Red: $1, Green: $2, Blue: $3',
+              additionalClasses: {
+                wrapper: 'slider',
+                result: 'slider__result'
+              }
+            });
+
+            $('#slider7').slider({
+              min: 0,
+              max: 500,
+              step: 5,
+              align: 1,
+              range: true,
+              startValues: [90, 150, 205, 420],
+              sortValues: true,
+              sortOnlyPares: true,
+              showTooltip: true,
+              showBounds: false,
+              tooltipReverse: true,
+              resultTemplate: '$1 - $2; $3 - $4',
+              additionalClasses: {
+                wrapper: 'slider',
+                result: 'slider__result'
+              }
+            });
+
+          });
+        </script>
+    </body>
+    </body>
+</html>
