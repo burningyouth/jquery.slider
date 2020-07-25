@@ -1,0 +1,14 @@
+.js-slider_vertical .js-slider__tooltip.js-slider__tooltip_left {
+  top: auto;
+  bottom: auto;
+  left: auto;
+  right: 150%;
+  text-align: right;
+  &::after {
+    transform: rotate(-90deg);
+    top: auto;
+    left: auto;
+    right: -5px;
+    bottom: ~'calc(50% - 2.5px)';
+  }
+}

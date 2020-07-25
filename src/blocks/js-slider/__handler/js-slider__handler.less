@@ -1,8 +1,11 @@
+@import url('./_active/js-slider__handler_active.less');
+
 .js-slider__handler {
   position: absolute;
   left: ~'calc(100% - 2px)';
   top: -6px;
-  display: block;
+  display: flex;
+  justify-content: center;
 
   width: 15px;
   height: 15px;
@@ -12,20 +15,7 @@
   border-radius: 50%;
   background: white;
   outline: none;
-  cursor: pointer;
+  cursor: grab;
 
-  /*&:first-of-type,
-  &:nth-of-type(2) {
-    background: rgb(189, 230, 255);
-  }
-
-  &:nth-of-type(3),
-  &:nth-of-type(4) {
-    background: rgb(187, 255, 187);
-  }
-
-  &:nth-of-type(5),
-  &:nth-of-type(6) {
-    background: rgb(255, 188, 255);
-  }*/
+  transition: transform 0.3s ease;
 }

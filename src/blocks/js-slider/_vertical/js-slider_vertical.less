@@ -1,8 +1,26 @@
 .js-slider_vertical {
   padding: 0 3.5px 0 3.5px;
+  .js-slider__base-wrapper {
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    width: auto;
+    height: 250px;
+  }
+  .js-slider__bound {
+    text-align: center;
+    margin-right: 0;
+    margin-left: 0;
+    &:first-of-type {
+      margin-bottom: 10px;
+    }
+    &:last-of-type {
+      margin-top: 10px;
+    }
+  }
   .js-slider__base {
     width: 5px;
-    height: 200px;
+    height: 100%;
   }
   .js-slider__connector {
     top: 0%;
@@ -13,5 +31,19 @@
   .js-slider__handler {
     left: -6px;
     top: auto;
+    align-items: center;
+  }
+  .js-slider__tooltip {
+    bottom: auto;
+    right: auto;
+    top: auto;
+    left: 150%;
+    &::after {
+      transform: rotate(90deg);
+      top: auto;
+      right: auto;
+      left: -5px;
+      bottom: ~'calc(50% - 2.5px)';
+    }
   }
 }

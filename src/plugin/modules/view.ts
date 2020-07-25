@@ -9,14 +9,20 @@ class View {
   public elements: slider.Elements = {
     wrapper: $('<div class="js-slider"></div>'), //обертка
     base: $('<div class="js-slider__base"></div>'), //элемент, по которому перемещается ползунок
+    baseWrapper: $('<div class="js-slider__base-wrapper"></div>'), //обертка базы
+    bounds: [
+      $('<div class="js-slider__bound">undef.</div>'),
+      $('<div class="js-slider__bound">undef.</div>')
+    ],
     handlers: [$('<span class="js-slider__handler"></span>')], //ползунок
+    tooltips: [$('<span class="js-slider__tooltip">undef.</span>')], //тултип со значением ползунка
     connectors: [$('<div class="js-slider__connector"></div>')], //элемент, соединяющий ползунки
-    result: $('<div class="js-slider__result">undefined</div>') //элемент с результатами
+    result: $('<div class="js-slider__result">undef.</div>') //элемент с результатами
   };
 
   constructor() {
-    this.elements.wrapper.append(this.elements.base);
-    this.elements.wrapper.append(this.elements.result);
+    this.elements.wrapper.append(this.elements.baseWrapper);
+    this.elements.baseWrapper.append(this.elements.base);
   }
 
   public addClasses(obj: slider.AdditionalClasses): View {
@@ -42,28 +48,54 @@ class View {
 
   public init(presenter: Presenter, callback: Function): View {
     this.settings = presenter.model.settings;
+
+    if (this.settings.showBounds) {
+      this.elements.bounds[0].text(this.settings.min);
+      this.elements.bounds[1].text(this.settings.max);
+      this.elements.baseWrapper.prepend(this.elements.bounds[0]);
+      this.elements.baseWrapper.append(this.elements.bounds[1]);
+    }
+
+    if (this.settings.showResult) {
+      this.elements.wrapper.append(this.elements.result);
+    }
+
     if (this.settings.align === Align.vertical) {
       this.elements.wrapper.addClass('js-slider_vertical');
+      if (this.settings.tooltipReverse && this.settings.showTooltip) {
+        this.elements.tooltips[0].addClass('js-slider__tooltip_left');
+      }
+    } else if (this.settings.tooltipReverse && this.settings.showTooltip) {
+      this.elements.tooltips[0].addClass('js-slider__tooltip_bottom');
     }
+
     if (this.settings.startValues.length > 1) {
       //если количество значений больше одного, то нужно создать новые ползунки и коннекторы (если они нужны)
       this.settings.startValues.forEach((value, index) => {
         if (index > 0) {
-          this.elements.handlers.push(this.elements.handlers[index - 1].clone());
+          this.elements.handlers.push(this.elements.handlers[0].clone());
+          if (this.settings.showTooltip) {
+            this.elements.tooltips.push(this.elements.tooltips[0].clone());
+            this.elements.handlers[index].append(this.elements.tooltips[index]);
+          }
         }
         this.elements.handlers[index].data('index', index);
 
         if (this.settings.range) {
           const connectorIndex = Math.floor(index / 2);
           if (index % 2 === 0 && index > 1) {
-            this.elements.connectors.push(this.elements.connectors[connectorIndex - 1].clone());
+            this.elements.connectors.push(this.elements.connectors[0].clone());
           }
           this.elements.connectors[connectorIndex].data('index', connectorIndex);
           this.elements.handlers[index].data('pairedConnector', connectorIndex);
         }
       });
 
+      if (this.settings.showTooltip) {
+        this.elements.handlers[0].append(this.elements.tooltips[0]);
+      }
       this.elements.base.append(this.elements.handlers);
+
       if (this.elements.handlers.length % 2 === 0 && this.settings.range) {
         this.elements.base.prepend(this.elements.connectors);
       }
@@ -73,6 +105,9 @@ class View {
       });
     } else {
       this.elements.handlers[0].data('index', 0);
+      if (this.settings.showTooltip) {
+        this.elements.handlers[0].append(this.elements.tooltips[0]);
+      }
       this.elements.base.append(this.elements.handlers[0]);
       callback.call(presenter, this.elements.handlers[0]); //вызываем колбэк для одного ползунка
     }
@@ -84,9 +119,9 @@ class View {
     //менеяем позицию ползунка в процентах от ширины base
     handler.data('percentage', percentage);
     if (this.settings.align === Align.vertical) {
-      handler.css('top', `${percentage}%`);
+      handler.css('top', `calc(${percentage}% - 7.5px`);
     } else {
-      handler.css('left', `calc(${percentage}% - 2px`);
+      handler.css('left', `calc(${percentage}% - 7.5px`);
     }
     return this;
   }
@@ -125,7 +160,16 @@ class View {
   }
 
   public changeResultText(text: string): View {
-    this.elements.result.text(text);
+    if (this.settings.showResult === true) {
+      this.elements.result.text(text);
+    }
+    return this;
+  }
+
+  public changeTooltipText(handlerIndex: number, value: number): View {
+    if (this.settings.showTooltip) {
+      this.elements.tooltips[handlerIndex].text(value);
+    }
     return this;
   }
 

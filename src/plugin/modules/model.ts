@@ -14,9 +14,13 @@ class Model {
     step: 1,
     roundTo: 0,
     align: Align.horizontal,
+    tooltipReverse: false,
+    showTooltip: false,
+    showResult: true,
+    showBounds: true,
     sortValues: false,
     sortOnlyPares: false,
-    template: 'default',
+    resultTemplate: 'default',
     additionalClasses: {}
   };
 
@@ -61,11 +65,11 @@ class Model {
   }
 
   get formattedValues(): string {
-    const template = this.settings.template;
+    const resultTemplate = this.settings.resultTemplate;
     const sortedValues = this.sortedValues;
     let formattedString = 'undefined';
-    if (template !== 'default') {
-      formattedString = template.replace(/\$(\d)/g, function(
+    if (resultTemplate !== 'default') {
+      formattedString = resultTemplate.replace(/\$(\d)/g, function(
         substr: string,
         index: string
       ): string {

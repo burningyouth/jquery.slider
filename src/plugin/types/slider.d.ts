@@ -12,12 +12,16 @@ interface Settings {
   range: boolean;
   startValues: Values;
   align: number;
+  tooltipReverse: boolean;
+  showResult: boolean;
+  showTooltip: boolean;
+  showBounds: boolean;
   additionalClasses: AdditionalClasses;
   step: number;
   sortValues: boolean;
   sortOnlyPares: boolean;
   roundTo: number;
-  template: string;
+  resultTemplate: string;
 }
 
 type Values = number[];
@@ -27,7 +31,10 @@ interface Elements {
 
   wrapper: JQuery<HTMLElement>;
   base: JQuery<HTMLElement>;
+  baseWrapper: JQuery<HTMLElement>;
   handlers: Array<JQuery<HTMLElement>>;
+  bounds: Array<JQuery<HTMLElement>>;
+  tooltips: Array<JQuery<HTMLElement>>;
   connectors: Array<JQuery<HTMLElement>>;
   result: JQuery<HTMLElement>;
 }

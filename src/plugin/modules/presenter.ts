@@ -76,28 +76,29 @@ class Presenter {
     this.view
       .changeHandlerPosition(handler, percentage)
       .changeConnectorPosition(handler, percentage)
-      .changeResultText(this.model.formattedValues);
+      .changeResultText(this.model.formattedValues)
+      .changeTooltipText(handlerIndex, value);
 
     return this;
   }
 
   public handlersCallback(handler: JQuery<HTMLElement>): void {
     //колбэк, который вызывается при инициализации каждого ползунка во view
-    const presenter: any = this; //внутри событий презентер будет недоступен
-
-    const handlerIndex = +handler.data('index');
-    const value = this.model.values[handlerIndex];
-    const percentage = this.getPercentage(value);
-
+    const presenter: any = this, //внутри событий презентер будет недоступен
+      handlerIndex = +handler.data('index'),
+      value = this.model.values[handlerIndex],
+      percentage = this.getPercentage(value);
     this.view
       .changeHandlerPosition(handler, percentage)
       .changeConnectorPosition(handler, percentage)
       .changeResultText(this.model.formattedValues)
-      .updateInput(this.model.sortedValues);
+      .updateInput(this.model.sortedValues)
+      .changeTooltipText(handlerIndex, value);
 
     handler.on('mousedown', function(e) {
       e.preventDefault();
       if (e.which == 1) {
+        handler.addClass('js-slider__handler_active');
         $(window).on('mousemove', function(e2) {
           const mouseCords =
             presenter.model.settings.align === Align.horizontal ? e2.clientX : e2.clientY;
@@ -105,6 +106,7 @@ class Presenter {
         });
         $(window).on('mouseup', function(e2) {
           if (e2.which == 1) {
+            handler.removeClass('js-slider__handler_active');
             $(this).off('mousemove mouseup');
             presenter.view.updateInput(presenter.model.sortedValues);
           }

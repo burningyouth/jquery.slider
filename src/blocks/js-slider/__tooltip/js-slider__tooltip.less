@@ -1,0 +1,30 @@
+.js-slider__tooltip {
+  display: none;
+  position: absolute;
+  top: -250%;
+
+  padding: 5px;
+
+  background: rgba(187, 187, 187, 0.25);
+  border-radius: 5px;
+  font-size: 1rem;
+  color: rgb(121, 121, 121);
+
+  transform: scale(0.71);
+
+  &::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    bottom: -5px;
+    left: ~'calc(50% - 2.5px)';
+
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 2.5px 0 2.5px;
+    border-color: transparent;
+
+    border-color: rgba(128, 128, 128, 0.25) transparent transparent transparent;
+  }
+}

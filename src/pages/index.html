@@ -14,8 +14,12 @@
             <input id="slider1" type="text"/>
             <input id="slider2" type="text"/>
             <input id="slider3" type="text"/>
-            <input id="slider4" type="text"/>
-            <input id="slider5" type="text"/>
+            <div style='margin-top: 30px; margin-bottom: 60px;'>
+              <input id="slider4" type="text"/>
+            </div>
+            <div>
+              <input id="slider5" type="text"/>
+            </div>
           </div>
           <div style='display: inline-block; width: 49%;'>
             <input id="slider6" type="text"/>
@@ -37,6 +41,7 @@
               roundTo: 1,
               startValues: [90, 100],
               sortValues: true,
+              tooltipPosition: 1,
               additionalClasses: {
                 wrapper: 'slider',
                 result: 'slider__result'
@@ -48,7 +53,7 @@
               step: 0.25,
               roundTo: 2,
               startValues: [25, 50, 75],
-              template: '$1; $2; $3;',
+              resultTemplate: '$1; $2; $3;',
               additionalClasses: {
                 wrapper: 'slider',
                 result: 'slider__result'
@@ -62,7 +67,7 @@
               range: true,
               startValues: [25, 100],
               sortValues: true,
-              template: '$1 - $2',
+              resultTemplate: '$1 - $2',
               additionalClasses: {
                 wrapper: 'slider',
                 result: 'slider__result'
@@ -77,7 +82,10 @@
               startValues: [50, 100, 150, 200],
               sortValues: true,
               sortOnlyPares: true,
-              template: '$1 - $2, $3 - $4',
+              tooltipReverse: true,
+              showBounds: false,
+              showResult: false,
+              showTooltip: true,
               additionalClasses: {
                 wrapper: 'slider',
                 result: 'slider__result'
@@ -89,9 +97,8 @@
               step: 25,
               range: true,
               startValues: [0, 100, 225, 350, 400, 675],
-              sortValues: true,
-              sortOnlyPares: true,
-              template: '$1 - $2, $3 - $4, $5 - $6',
+              showTooltip: true,
+              showResult: false,
               additionalClasses: {
                 wrapper: 'slider',
                 result: 'slider__result'
@@ -104,7 +111,8 @@
               step: 1,
               align: 1,
               startValues: [90, 150, 67],
-              template: 'Red: $1, Green: $2, Blue: $3',
+              showTooltip: true,
+              resultTemplate: 'Red: $1, Green: $2, Blue: $3',
               additionalClasses: {
                 wrapper: 'slider',
                 result: 'slider__result'
@@ -120,7 +128,10 @@
               startValues: [90, 150, 205, 420],
               sortValues: true,
               sortOnlyPares: true,
-              template: '$1 - $2; $3 - $4',
+              showTooltip: true,
+              showBounds: false,
+              tooltipReverse: true,
+              resultTemplate: '$1 - $2; $3 - $4',
               additionalClasses: {
                 wrapper: 'slider',
                 result: 'slider__result'
