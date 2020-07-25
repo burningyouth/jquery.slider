@@ -4,9 +4,7 @@
     "removeComments": true,
     "target": "es5",
     "noEmit": true,
-    "esModuleInterop": true,
-    "typeRoots": ["src/plugin/types/slider.d.ts", "src/plugin/types/jquery.d.ts"],
-    "types": ["node", "jquery"]
+    "esModuleInterop": true
   },
   "include": [
     "src/plugin/types/slider.d.ts",

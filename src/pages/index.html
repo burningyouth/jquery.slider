@@ -10,15 +10,21 @@
     <body class="body">
         <form action="" class='basic-form'>
           <h1 class='title'>JQuery.slider</h1>
-          <input id="slider1" type="text"/>
-          <input id="slider2" type="text"/>
-          <input id="slider3" type="text"/>
-          <input id="slider4" type="text"/>
-          <input id="slider5" type="text"/>
+          <div style='margin-bottom: 50px;'>
+            <input id="slider1" type="text"/>
+            <input id="slider2" type="text"/>
+            <input id="slider3" type="text"/>
+            <input id="slider4" type="text"/>
+            <input id="slider5" type="text"/>
+          </div>
+          <div style='display: inline-block; width: 49%;'>
+            <input id="slider6" type="text"/>
+          </div>
+          <div style='display: inline-block; width: 50%;'>
+            <input id="slider7" type="text"/>
+          </div>
         </form>
-        <div style='margin-top: 100px;'>
-          <input id="slider6" type="text"/>
-        </div>
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="assets/js/misc.min.js"></script>
         <script src="assets/js/jquery.slider.min.js"></script>
@@ -29,7 +35,6 @@
               max: 200,
               step: 10,
               roundTo: 1,
-              range: false,
               startValues: [90, 100],
               sortValues: true,
               additionalClasses: {
@@ -42,9 +47,7 @@
               max: 97,
               step: 0.25,
               roundTo: 2,
-              range: false,
               startValues: [25, 50, 75],
-              sortValues: true,
               template: '$1; $2; $3;',
               additionalClasses: {
                 wrapper: 'slider',
@@ -81,34 +84,49 @@
               }
             });
             $('#slider5').slider({
-              min: 42.25,
-              max: 192.5,
-              step: 0.25,
-              roundTo: 2,
+              min: 0,
+              max: 1000,
+              step: 25,
               range: true,
-              startValues: [90, 100],
+              startValues: [0, 100, 225, 350, 400, 675],
               sortValues: true,
-              template: '$1 ---- $2',
+              sortOnlyPares: true,
+              template: '$1 - $2, $3 - $4, $5 - $6',
               additionalClasses: {
                 wrapper: 'slider',
                 result: 'slider__result'
               }
             });
+            
             $('#slider6').slider({
-              min: 42.25,
-              max: 192.5,
-              step: 0.25,
-              roundTo: 2,
+              min: 0,
+              max: 255,
+              step: 1,
+              align: 1,
+              startValues: [90, 150, 67],
+              template: 'Red: $1, Green: $2, Blue: $3',
+              additionalClasses: {
+                wrapper: 'slider',
+                result: 'slider__result'
+              }
+            });
+
+            $('#slider7').slider({
+              min: 0,
+              max: 500,
+              step: 5,
               align: 1,
               range: true,
-              startValues: [90, 100],
+              startValues: [90, 150, 205, 420],
               sortValues: true,
-              template: '$1 ---- $2',
+              sortOnlyPares: true,
+              template: '$1 - $2; $3 - $4',
               additionalClasses: {
                 wrapper: 'slider',
                 result: 'slider__result'
               }
             });
+
           });
         </script>
     </body>

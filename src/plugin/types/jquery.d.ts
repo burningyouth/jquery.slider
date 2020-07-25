@@ -1,3 +1,3 @@
 interface JQuery {
-  slider: (options?: Object) => JQuery<HTMLElement>;
+  slider: (options?: Object) => any;
 }

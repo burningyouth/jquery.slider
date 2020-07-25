@@ -31,7 +31,10 @@ class View {
           (this.elements[key] as JQuery<HTMLElement>).addClass(obj[key]);
         }
       } else {
-        throw new Error(`View: There is no ${obj[key]} element!`);
+        throw {
+          name: 'ViewError',
+          message: `There is no ${key} element!`
+        };
       }
     });
     return this;
@@ -80,7 +83,11 @@ class View {
   public changeHandlerPosition(handler: JQuery<HTMLElement>, percentage: number): View {
     //менеяем позицию ползунка в процентах от ширины base
     handler.data('percentage', percentage);
-    handler.css('left', `calc(${percentage}% - 2px`);
+    if (this.settings.align === Align.vertical) {
+      handler.css('top', `${percentage}%`);
+    } else {
+      handler.css('left', `calc(${percentage}% - 2px`);
+    }
     return this;
   }
 
@@ -92,12 +99,25 @@ class View {
       const pairedPercentage = this.elements.handlers[pairedHandlerIndex].data('percentage');
       const pairedConnectorIndex = +handler.data('pairedConnector');
 
-      if (pairedPercentage > percentage) {
-        this.elements.connectors[pairedConnectorIndex].css('left', `${percentage}%`);
-        this.elements.connectors[pairedConnectorIndex].css('right', `${100 - pairedPercentage}%`);
+      if (this.settings.align === Align.vertical) {
+        if (pairedPercentage > percentage) {
+          this.elements.connectors[pairedConnectorIndex].css('top', `${percentage}%`);
+          this.elements.connectors[pairedConnectorIndex].css(
+            'bottom',
+            `${100 - pairedPercentage}%`
+          );
+        } else {
+          this.elements.connectors[pairedConnectorIndex].css('top', `${pairedPercentage}%`);
+          this.elements.connectors[pairedConnectorIndex].css('bottom', `${100 - percentage}%`);
+        }
       } else {
-        this.elements.connectors[pairedConnectorIndex].css('left', `${pairedPercentage}%`);
-        this.elements.connectors[pairedConnectorIndex].css('right', `${100 - percentage}%`);
+        if (pairedPercentage > percentage) {
+          this.elements.connectors[pairedConnectorIndex].css('left', `${percentage}%`);
+          this.elements.connectors[pairedConnectorIndex].css('right', `${100 - pairedPercentage}%`);
+        } else {
+          this.elements.connectors[pairedConnectorIndex].css('left', `${pairedPercentage}%`);
+          this.elements.connectors[pairedConnectorIndex].css('right', `${100 - percentage}%`);
+        }
       }
     }
 

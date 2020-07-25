@@ -28,9 +28,17 @@ class Presenter {
     const settings = this.model.settings;
     const base = this.view.elements.base;
     const roundTo = 10 ** settings.roundTo;
-    const devider = this.model.settings.align === Align.horizontal ? base.width() : base.height();
 
-    let value = (coords - base.offset().left) / devider;
+    let value: number, devider: number, startCoords: number;
+    if (settings.align === Align.vertical) {
+      devider = base.height();
+      startCoords = base[0].getBoundingClientRect().top;
+    } else {
+      devider = base.width();
+      startCoords = base[0].getBoundingClientRect().left;
+    }
+
+    value = (coords - startCoords) / devider;
     value *= settings.max - settings.min;
     value = settings.min + Math.floor(value / settings.step + 0.5) * settings.step; //форматируется значение в зависимости от step
     value = roundTo ? Math.floor(value * roundTo) / roundTo : value; //округление числа до roundTo
