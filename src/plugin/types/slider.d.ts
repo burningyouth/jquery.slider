@@ -11,6 +11,8 @@ interface Settings {
   max: number;
   range: boolean;
   startValues: Values;
+  handlersColors: Array<string>;
+  connectorsColors: Array<string>;
   align: number;
   tooltipReverse: boolean;
   showResult: boolean;

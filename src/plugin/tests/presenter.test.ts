@@ -26,14 +26,16 @@ const model = new Model({
 const view = new View(input);
 const presenter = new Presenter(model, view);
 
-test('Model and view is defined', () => {
-  expect(presenter.model).toBeDefined();
-  expect(presenter.view).toBeDefined();
-});
+describe('Presenter', () => {
+  test('Model and view is defined', () => {
+    expect(presenter.model).toBeDefined();
+    expect(presenter.view).toBeDefined();
+  });
 
-test('Percentage is calculated fine', () => {
-  expect(presenter.getPercentage(0)).toBe(0);
-  expect(presenter.getPercentage(42)).toBe(42);
-  expect(presenter.getPercentage(89)).toBe(89);
-  expect(presenter.getPercentage(100)).toBe(100);
+  /*test('Percentage is calculated fine', () => {
+    expect(presenter.view.getPercentage(0)).toBe(0);
+    expect(presenter.getPercentage(42)).toBe(42);
+    expect(presenter.getPercentage(89)).toBe(89);
+    expect(presenter.getPercentage(100)).toBe(100);
+  });*/
 });

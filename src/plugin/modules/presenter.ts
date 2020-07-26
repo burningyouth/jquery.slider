@@ -17,52 +17,11 @@ class Presenter {
     this.view.init(this.handlersCallback);
   }
 
-  public getValue(coords: number): number {
-    //возвращает значение ползунка в зависимости от min, max, ширины базы, положения мыши, положения базы и настроек слайдера
-    const settings = this.model.settings;
-    const base = this.view.elements.base;
-    const roundTo = 10 ** settings.roundTo;
-
-    let value: number, devider: number, startCoords: number;
-    if (settings.align === Align.vertical) {
-      devider = base.height();
-      startCoords = base[0].getBoundingClientRect().top;
-    } else {
-      devider = base.width();
-      startCoords = base[0].getBoundingClientRect().left;
-    }
-
-    value = (coords - startCoords) / devider;
-    value *= settings.max - settings.min;
-    value = settings.min + Math.floor(value / settings.step + 0.5) * settings.step; //форматируется значение в зависимости от step
-    value = roundTo ? Math.floor(value * roundTo) / roundTo : value; //округление числа до roundTo
-
-    if (value >= settings.min && value <= settings.max) {
-      //если значение не попадает в границы, то мы берем за значение эти границы
-      return value;
-    } else if (value > settings.max) {
-      return settings.max;
-    }
-    return settings.min;
-  }
-
-  public getPercentage(value: number): number {
-    //возвращает процентное соотношение value от min, max
-    const settings = this.model.settings;
-    const percentage = ((value - settings.min) / (settings.max - settings.min)) * 100;
-    if (percentage >= 0 && percentage <= 100) {
-      return percentage;
-    } else if (percentage > 100) {
-      return 100;
-    }
-    return 0;
-  }
-
   public changePosition(handler: JQuery<HTMLElement>, coords: number): Presenter {
     //изменение положения ползунка запускает изменение view и model, отдавая им сформированные значения
     //для view - проценты, для model - числовые значения
-    const value = this.getValue(coords);
-    const percentage = this.getPercentage(value);
+    const value = this.model.getValue(coords, this.view.elements.base);
+    const percentage = this.view.getPercentage(value);
     const handlerIndex = +handler.data('index');
 
     this.model.values[handlerIndex] = value;
@@ -81,7 +40,8 @@ class Presenter {
     const presenter: any = this, //внутри событий презентер будет недоступен
       handlerIndex = +handler.data('index'),
       value = this.model.values[handlerIndex],
-      percentage = this.getPercentage(value);
+      percentage = this.view.getPercentage(value);
+
     this.view
       .changeHandlerPosition(handler, percentage)
       .changeConnectorPosition(handler, percentage)

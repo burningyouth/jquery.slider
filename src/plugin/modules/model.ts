@@ -12,6 +12,8 @@ class Model {
     max: 100,
     range: false,
     startValues: [30, 70],
+    handlersColors: [],
+    connectorsColors: [],
     step: 1,
     roundTo: 0,
     align: Align.horizontal,
@@ -82,6 +84,36 @@ class Model {
 
   set values(newValues: Values) {
     if (this.checkValue(newValues)) this._values = newValues;
+  }
+
+  public getValue(coords: number, base: JQuery<HTMLElement>): number {
+    //возвращает значение ползунка в зависимости от min, max, ширины базы, положения мыши, положения базы и настроек слайдера
+    const settings = this.settings;
+    const roundTo = 10 ** settings.roundTo;
+
+    let value: number, devider: number, startCoords: number;
+    if (settings.align === Align.vertical) {
+      devider = base.height();
+      startCoords = base[0].getBoundingClientRect().top;
+    } else {
+      devider = base.width();
+      startCoords = base[0].getBoundingClientRect().left;
+    }
+
+    value = (coords - startCoords) / devider;
+    value *= settings.max - settings.min;
+    value = settings.step
+      ? settings.min + Math.floor(value / settings.step + 0.5) * settings.step
+      : settings.min + value; //форматируется значение в зависимости от step
+    value = roundTo ? Math.floor(value * roundTo) / roundTo : value; //округление числа до roundTo
+
+    if (value >= settings.min && value <= settings.max) {
+      //если значение не попадает в границы, то мы берем за значение эти границы
+      return value;
+    } else if (value > settings.max) {
+      return settings.max;
+    }
+    return settings.min;
   }
 
   public checkValue(value: number | Values): boolean {

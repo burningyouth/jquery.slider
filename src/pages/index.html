@@ -5,15 +5,21 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
         <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
         <title>Document</title>
-        <link href="assets/css/misc.css" rel="stylesheet"/>
+        <link href="assets/css/jquery.slider.min.css" rel="stylesheet"/>
     </head>
     <body class="body">
         <form action="" class='basic-form'>
           <h1 class='title'>JQuery.slider</h1>
           <div style='margin-bottom: 50px;'>
-            <input id="slider1" type="text"/>
-            <input id="slider2" type="text"/>
-            <input id="slider3" type="text"/>
+            <div>
+              <input id="slider1" type="text"/>
+            </div>
+            <div>
+              <input id="slider2" type="text"/>
+            </div>
+            <div>
+              <input id="slider3" type="text"/>
+            </div>
             <div style='margin-top: 30px; margin-bottom: 60px;'>
               <input id="slider4" type="text"/>
             </div>
@@ -34,10 +40,12 @@
         <script src="assets/js/jquery.slider.min.js"></script>
         <script>
           $( document ).ready(function() {
-            $('#slider1').slider({
+            $('#slider1').slider({//не трогать настройки, нужны для корректной работы теста
               min: 50,
               max: 200,
-              step: 10,
+              step: 0,
+              range: true,
+              showTooltip: true,
               roundTo: 1,
               startValues: [90, 100],
               sortValues: true,
@@ -80,6 +88,7 @@
               roundTo: 0,
               range: true,
               startValues: [50, 100, 150, 200],
+              handlersColors: ['#FBFEA4', '#FBFEA4', '#A4DEFE', '#A4DEFE'],
               sortValues: true,
               sortOnlyPares: true,
               tooltipReverse: true,
@@ -97,6 +106,7 @@
               step: 25,
               range: true,
               startValues: [0, 100, 225, 350, 400, 675],
+              connectorsColors: ['#A4E8FE', '#B5FEA4', '#E1A4FE'],
               showTooltip: true,
               showResult: false,
               additionalClasses: {
@@ -113,13 +123,14 @@
               startValues: [90, 150, 67],
               showTooltip: true,
               resultTemplate: 'Red: $1, Green: $2, Blue: $3',
+              handlersColors: ['#FC6A6A', '#8CFC6A', '#6AB2FC'],
               additionalClasses: {
                 wrapper: 'slider',
                 result: 'slider__result'
               }
             });
 
-            $('#slider7').slider({
+            $('#slider7').slider({ //не трогать, нужны для тестов
               min: 0,
               max: 500,
               step: 5,

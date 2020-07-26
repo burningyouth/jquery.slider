@@ -4,7 +4,6 @@ import { Align } from './model';
 import $ from 'jquery';
 
 class View {
-  public settings: slider.Settings; //настройки из модели
   public input: JQuery<HTMLElement>; //поле, в которое записывается значения ползунков
   public presenter: Presenter;
 
@@ -25,14 +24,17 @@ class View {
   constructor(input: JQuery<HTMLElement>) {
     this.input = input;
 
-    if (input.parent()) {
-      this.elements.parent = input.parent(); //зопоминаем, где находилось поле
-      input.remove(); //удаляем поле и снова добавляем его уже во внутрь обертки слайдера
-      input.prependTo(this.elements.wrapper);
-    }
+    this.elements.parent = input.parent(); //зопоминаем, где находилось поле
+    input.remove(); //удаляем поле и снова добавляем его уже во внутрь обертки слайдера
+    input.prependTo(this.elements.wrapper);
+
     this.elements.wrapper.appendTo(this.elements.parent); //добавляем обертку туда же, где поле находилось
     this.elements.wrapper.append(this.elements.baseWrapper);
     this.elements.baseWrapper.append(this.elements.base);
+  }
+
+  get settings(): slider.Settings {
+    return this.presenter.model.settings;
   }
 
   public addClasses(obj: slider.AdditionalClasses): View {
@@ -57,7 +59,6 @@ class View {
   }
 
   public init(callback: Function): View {
-    this.settings = this.presenter.model.settings;
     this.addClasses(this.settings.additionalClasses);
     if (this.settings.showBounds) {
       this.elements.bounds[0].text(this.settings.min);
@@ -79,11 +80,17 @@ class View {
       this.elements.tooltips[0].addClass('js-slider__tooltip_bottom');
     }
 
-    if (this.settings.startValues.length > 1) {
+    if (this.settings.startValues.length) {
       //если количество значений больше одного, то нужно создать новые ползунки и коннекторы (если они нужны)
       this.settings.startValues.forEach((value, index) => {
         if (index > 0) {
           this.elements.handlers.push(this.elements.handlers[0].clone());
+          if (this.settings.handlersColors[index]) {
+            this.elements.handlers[index].css(
+              'background-color',
+              this.settings.handlersColors[index]
+            );
+          }
           if (this.settings.showTooltip) {
             this.elements.tooltips.push(this.elements.tooltips[0].clone());
             this.elements.handlers[index].append(this.elements.tooltips[index]);
@@ -95,6 +102,17 @@ class View {
           const connectorIndex = Math.floor(index / 2);
           if (index % 2 === 0 && index > 1) {
             this.elements.connectors.push(this.elements.connectors[0].clone());
+            if (this.settings.connectorsColors[connectorIndex]) {
+              this.elements.connectors[connectorIndex].css(
+                'background-color',
+                this.settings.connectorsColors[connectorIndex]
+              );
+            } else if (this.settings.handlersColors[index]) {
+              this.elements.connectors[connectorIndex].css(
+                'background-color',
+                this.settings.handlersColors[index]
+              );
+            }
           }
           this.elements.connectors[connectorIndex].data('index', connectorIndex);
           this.elements.handlers[index].data('pairedConnector', connectorIndex);
@@ -103,6 +121,14 @@ class View {
 
       if (this.settings.showTooltip) {
         this.elements.handlers[0].append(this.elements.tooltips[0]);
+      }
+      if (this.settings.handlersColors[0]) {
+        this.elements.handlers[0].css('background-color', this.settings.handlersColors[0]);
+      }
+      if (this.settings.connectorsColors[0]) {
+        this.elements.connectors[0].css('background-color', this.settings.connectorsColors[0]);
+      } else if (this.settings.handlersColors[0]) {
+        this.elements.connectors[0].css('background-color', this.settings.handlersColors[0]);
       }
       this.elements.base.append(this.elements.handlers);
 
@@ -115,6 +141,9 @@ class View {
       });
     } else {
       this.elements.handlers[0].data('index', 0);
+      if (this.settings.handlersColors[0]) {
+        this.elements.handlers[0].css('background-color', this.settings.handlersColors[0]);
+      }
       if (this.settings.showTooltip) {
         this.elements.handlers[0].append(this.elements.tooltips[0]);
       }
@@ -123,6 +152,18 @@ class View {
     }
 
     return this;
+  }
+
+  public getPercentage(value: number): number {
+    //возвращает процентное соотношение value от min, max
+    const settings = this.settings;
+    const percentage = ((value - settings.min) / (settings.max - settings.min)) * 100;
+    if (percentage >= 0 && percentage <= 100) {
+      return percentage;
+    } else if (percentage > 100) {
+      return 100;
+    }
+    return 0;
   }
 
   public changeHandlerPosition(handler: JQuery<HTMLElement>, percentage: number): View {
