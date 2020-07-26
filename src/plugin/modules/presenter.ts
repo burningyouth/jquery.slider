@@ -1,26 +1,20 @@
 import { Model, Align } from './model';
 import View from './view';
+import $ from 'jquery';
 
 class Presenter {
   public model: Model;
   public view: View;
 
-  constructor(input: JQuery<HTMLElement>, model: Model, view: View) {
+  constructor(model: Model, view: View) {
     this.model = model;
     this.view = view;
-    this.view.input = input;
-
-    this.view.elements.parent = input.parent(); //зопоминаем, где находилось поле
-    input.remove(); //удаляем поле и снова добавляем его уже во внутрь обертки слайдера
-    input.prependTo(this.view.elements.wrapper);
-
-    this.view.elements.wrapper.appendTo(view.elements.parent); //добавляем обертку туда же, где поле находилось
-    this.view.addClasses(this.model.settings.additionalClasses);
+    this.view.presenter = this;
   }
 
   public init(): void {
     //инициализация view добавляет ползунки и коннекторы (если нужны) и вызывает колбэк для каждого ползунка
-    this.view.init(this, this.handlersCallback);
+    this.view.init(this.handlersCallback);
   }
 
   public getValue(coords: number): number {

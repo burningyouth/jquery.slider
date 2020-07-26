@@ -1,10 +1,12 @@
 import * as slider from '../types/slider';
 import Presenter from './presenter';
 import { Align } from './model';
+import $ from 'jquery';
 
 class View {
   public settings: slider.Settings; //настройки из модели
   public input: JQuery<HTMLElement>; //поле, в которое записывается значения ползунков
+  public presenter: Presenter;
 
   public elements: slider.Elements = {
     wrapper: $('<div class="js-slider"></div>'), //обертка
@@ -20,7 +22,15 @@ class View {
     result: $('<div class="js-slider__result">undef.</div>') //элемент с результатами
   };
 
-  constructor() {
+  constructor(input: JQuery<HTMLElement>) {
+    this.input = input;
+
+    if (input.parent()) {
+      this.elements.parent = input.parent(); //зопоминаем, где находилось поле
+      input.remove(); //удаляем поле и снова добавляем его уже во внутрь обертки слайдера
+      input.prependTo(this.elements.wrapper);
+    }
+    this.elements.wrapper.appendTo(this.elements.parent); //добавляем обертку туда же, где поле находилось
     this.elements.wrapper.append(this.elements.baseWrapper);
     this.elements.baseWrapper.append(this.elements.base);
   }
@@ -46,9 +56,9 @@ class View {
     return this;
   }
 
-  public init(presenter: Presenter, callback: Function): View {
-    this.settings = presenter.model.settings;
-
+  public init(callback: Function): View {
+    this.settings = this.presenter.model.settings;
+    this.addClasses(this.settings.additionalClasses);
     if (this.settings.showBounds) {
       this.elements.bounds[0].text(this.settings.min);
       this.elements.bounds[1].text(this.settings.max);
@@ -101,7 +111,7 @@ class View {
       }
 
       this.elements.handlers.forEach(handler => {
-        callback.call(presenter, handler); //вызываем колбэк для каждого ползунка c this == presenter
+        callback.call(this.presenter, handler); //вызываем колбэк для каждого ползунка c this == this.presenter
       });
     } else {
       this.elements.handlers[0].data('index', 0);
@@ -109,7 +119,7 @@ class View {
         this.elements.handlers[0].append(this.elements.tooltips[0]);
       }
       this.elements.base.append(this.elements.handlers[0]);
-      callback.call(presenter, this.elements.handlers[0]); //вызываем колбэк для одного ползунка
+      callback.call(this.presenter, this.elements.handlers[0]); //вызываем колбэк для одного ползунка
     }
 
     return this;

@@ -37,13 +37,15 @@
     bottom: auto;
     right: auto;
     top: auto;
-    left: 150%;
+    left: 140%;
     &::after {
-      transform: rotate(90deg);
+      transform: rotate(0deg);
       top: auto;
       right: auto;
       left: -5px;
-      bottom: ~'calc(50% - 2.5px)';
+      bottom: ~'calc(50% - 5px)';
+      border-width: 5px 5px 5px 0;
+      border-color: transparent rgba(187, 187, 187, 0.25) transparent transparent;
     }
   }
 }

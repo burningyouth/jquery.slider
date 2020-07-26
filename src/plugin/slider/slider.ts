@@ -4,8 +4,8 @@ import Presenter from '../modules/presenter';
 
 jQuery.fn.slider = function(options?: Object): Model {
   const model = new Model(options);
-  const view = new View();
-  const presenter = new Presenter(this, model, view);
+  const view = new View(this);
+  const presenter = new Presenter(model, view);
 
   presenter.init();
 

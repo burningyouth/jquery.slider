@@ -7,7 +7,8 @@
     "dev": "webpack-dev-server --open --config ./build/webpack.dev.conf.js",
     "build": "webpack --config ./build/webpack.build.conf.js",
     "serve": "webpack --config ./build/webpack.build.conf.js && webpack-dev-server --open --config ./build/webpack.dev.conf.js",
-    "publish": "gh-pages -d dist"
+    "publish": "gh-pages -d dist",
+    "test": "jest --collectCoverage"
   },
   "browserslist": [
     "> 1%",
@@ -35,6 +36,8 @@
   "devDependencies": {
     "@babel/core": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/jest": "^26.0.7",
     "@types/jquery": "^3.3.31",
     "@types/mini-css-extract-plugin": "^0.9.0",
     "@types/webpack": "^4.41.3",
@@ -54,6 +57,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "file-loader": "^4.3.0",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^26.1.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
     "mini-css-extract-plugin": "^0.8.0",

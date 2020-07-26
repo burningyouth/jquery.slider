@@ -1,4 +1,5 @@
 import { Settings, Values } from '../types/slider';
+import $ from 'jquery';
 
 enum Align {
   horizontal,
@@ -29,12 +30,9 @@ class Model {
   constructor(options?: Object) {
     if (options) this.settings = $.extend(this.settings, options);
     if (this.checkValue(this.settings.startValues)) {
-      this._values = this.settings.startValues;
+      this.values = this.settings.startValues;
     } else {
-      throw {
-        name: 'ModelError',
-        message: 'Start value is invalid (out of range)!'
-      };
+      throw new RangeError('Start value is invalid (out of range)!');
     }
   }
 
@@ -69,7 +67,7 @@ class Model {
     const sortedValues = this.sortedValues;
     let formattedString = 'undefined';
     if (resultTemplate !== 'default') {
-      formattedString = resultTemplate.replace(/\$(\d)/g, function(
+      formattedString = resultTemplate.replace(/\$(\d+)/g, function(
         substr: string,
         index: string
       ): string {
