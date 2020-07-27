@@ -1,5 +1,6 @@
 import BasicElementView from './basicElementView';
 import View from '../view';
+import $ from 'jquery';
 
 class ResultView extends BasicElementView {
   public static elementBase = $('<div class="js-slider__result">undef.</div>');
@@ -16,7 +17,10 @@ class ResultView extends BasicElementView {
     this.update();
   }
 
-  public update(): ResultView {
+  public update(text?: string): ResultView {
+    if (text) {
+      this.text = text;
+    }
     this.element.text(this.text);
     this.trigger('resultUpdated');
 

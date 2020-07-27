@@ -3,11 +3,13 @@ import ConnectorView from './connectorView';
 import TooltipView from './tooltipView';
 import View from '../view';
 import { Align } from '../model';
+import $ from 'jquery';
 
 class HandlerView extends BasicElementView {
   public static elementBase = $('<span class="js-slider__handler"></span>');
   public index: number;
   public percentage: number;
+  public value: number;
   public connector: ConnectorView | undefined = undefined;
   public tooltip: TooltipView | undefined = undefined;
 
@@ -15,12 +17,14 @@ class HandlerView extends BasicElementView {
     view: View,
     index: number = 0,
     percentage: number = 0,
+    value: number = 0,
     base: BasicElementView,
     initCallback: Function = HandlerView.init
   ) {
     super(view, HandlerView.elementBase.clone(), base.element, initCallback);
     this.index = index;
     this.percentage = percentage;
+    this.value = value;
     this.update();
   }
 
@@ -31,15 +35,15 @@ class HandlerView extends BasicElementView {
 
     that.element.on('mousedown', function(e) {
       e.preventDefault();
-      that.trigger('handlerStart', e);
+      that.trigger('handlerStart', that);
       if (e.which == 1) {
         $(window).on('mousemove', function(e2) {
-          that.trigger('handlerMoved', e2[coordsAxis]);
+          that.trigger('handlerMoved', that, e2[coordsAxis]);
         });
         $(window).on('mouseup', function(e2) {
           if (e2.which == 1) {
             $(this).off('mousemove mouseup');
-            that.trigger('handlerEnd', e2[coordsAxis]);
+            that.trigger('handlerEnd', that, e2[coordsAxis]);
           }
         });
       }
@@ -47,19 +51,23 @@ class HandlerView extends BasicElementView {
 
     that.element.on('touchstart', function(e) {
       e.preventDefault();
-      $(this).trigger('handlerStart', e);
+      $(this).trigger('handlerStart', that);
       $(window).on('touchmove', function(e2) {
-        that.trigger('handlerMoved', e2.touches[0][coordsAxis]);
+        that.trigger('handlerMoved', that, e2.touches[0][coordsAxis]);
       });
       $(window).on('touchend', function(e2) {
         $(this).off('touchmove touchend');
-        that.trigger('handlerEnd', e2.touches[0][coordsAxis]);
+        that.trigger('handlerEnd', that, e2.touches[0][coordsAxis]);
       });
     });
   }
 
-  public update(percentage: number | undefined = undefined): HandlerView {
+  public update(
+    percentage: number | undefined = undefined,
+    value: number | undefined = undefined
+  ): HandlerView {
     if (typeof percentage === 'number') this.percentage = percentage;
+    if (typeof value === 'number') this.value = value;
 
     if (this.settings.align === Align.vertical) {
       this.element.css('top', `calc(${this.percentage}% - 7.5px`);
@@ -67,7 +75,7 @@ class HandlerView extends BasicElementView {
       this.element.css('left', `calc(${this.percentage}% - 7.5px`);
     }
 
-    this.trigger('handlerUpdated');
+    this.trigger('handlerUpdated', this);
 
     if (this.connector) this.connector.update();
     if (this.tooltip) this.tooltip.update();

@@ -4,6 +4,7 @@ import HandlerView from '../modules/subViews/handlerView';
 import ConnectorView from '../modules/subViews/connectorView';
 import ResultView from '../modules/subViews/resultView';
 import TooltipView from '../modules/subViews/tooltipView';
+import InputView from '../modules/subViews/inputView';
 
 interface AdditionalClasses {
   wrapper?: string;
@@ -37,7 +38,7 @@ type Values = number[];
 
 interface Elements {
   parent?: BasicElementView;
-  input?: BasicElementView;
+  input?: InputView;
   wrapper?: BasicElementView;
   base?: BasicElementView;
   baseWrapper?: BasicElementView;

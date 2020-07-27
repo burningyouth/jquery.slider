@@ -7,7 +7,6 @@ import ConnectorView from './subViews/connectorView';
 import ResultView from './subViews/resultView';
 import TooltipView from './subViews/tooltipView';
 import InputView from './subViews/inputView';
-import { Align, Model } from './model';
 import events from './mixins/eventsMixin';
 import $ from 'jquery';
 
@@ -52,30 +51,52 @@ class View {
     return this;
   }
 
-  public init(callback: Function): View {
+  public initParent(): View {
     this.elements.parent = new BasicElementView(this, this.input.parent());
+    return this;
+  }
+
+  public initWrapper(): View {
     this.elements.wrapper = new BasicElementView(
       this,
       $('<div class="js-slider"></div>'),
       this.elements.parent.element
     );
+    if (this.settings.align) {
+      this.elements.wrapper.element.addClass('js-slider_vertical');
+    }
+    return this;
+  }
+
+  public initInput(): View {
     this.elements.input = new InputView(
       this,
       this.input,
       this.settings.startValues,
       this.elements.wrapper
     );
+    return this;
+  }
+
+  public initBaseWrapper(): View {
     this.elements.baseWrapper = new BasicElementView(
       this,
       $('<div class="js-slider__base-wrapper"></div>'),
       this.elements.wrapper.element
     );
+    return this;
+  }
+
+  public initBase(): View {
     this.elements.base = new BasicElementView(
       this,
       $('<div class="js-slider__base"></div>'),
       this.elements.baseWrapper.element
     );
+    return this;
+  }
 
+  public initBounds(): View {
     if (this.settings.showBounds) {
       this.elements.bounds.push(
         new BoundView(this, this.settings.min, this.elements.baseWrapper.element, function(
@@ -88,7 +109,10 @@ class View {
         new BoundView(this, this.settings.max, this.elements.baseWrapper.element)
       );
     }
+    return this;
+  }
 
+  public initResult(): View {
     if (this.settings.showResult) {
       this.elements.result = new ResultView(
         this,
@@ -96,59 +120,84 @@ class View {
         this.elements.wrapper.element
       );
     }
+    return this;
+  }
 
-    if (this.settings.align) {
-      this.elements.wrapper.addClass('js-slider_vertical');
+  public initTooltip(index: number): View {
+    if (this.settings.showTooltip) {
+      this.elements.tooltips.push(new TooltipView(this, this.elements.handlers[index]));
+      this.elements.handlers[index].tooltip = this.elements.tooltips[index];
+      if (this.settings.align && this.settings.tooltipReverse) {
+        this.elements.tooltips[index].addClass('js-slider__tooltip_left');
+      } else if (this.settings.tooltipReverse) {
+        this.elements.tooltips[index].addClass('js-slider__tooltip_bottom');
+      }
     }
-    this.settings.startValues.forEach((value, index) => {
-      this.elements.handlers.push(
-        new HandlerView(this, index, this.getPercentage(value), this.elements.base)
+    return this;
+  }
+
+  public initConnector(index: number): View {
+    if (this.settings.range && index % 2 === 1) {
+      const connectorIndex = Math.floor(index / 2);
+      this.elements.connectors.push(
+        new ConnectorView(
+          this,
+          connectorIndex,
+          [this.elements.handlers[index - 1], this.elements.handlers[index]],
+          this.elements.base.element
+        )
       );
-      this.elements.handlers[index].on('handlerMoved', function(coords: number) {
-        console.log(this, coords);
-      });
-      if (this.settings.handlersColors[index]) {
-        this.elements.handlers[index].css('background-color', this.settings.handlersColors[index]);
-      }
-      if (this.settings.showTooltip) {
-        this.elements.tooltips.push(new TooltipView(this, value, this.elements.handlers[index]));
-        this.elements.handlers[index].tooltip = this.elements.tooltips[index];
-        if (this.settings.align && this.settings.tooltipReverse) {
-          this.elements.tooltips[index].addClass('js-slider__tooltip_left');
-        } else if (this.settings.tooltipReverse) {
-          this.elements.tooltips[index].addClass('js-slider__tooltip_bottom');
-        }
-      }
-
-      if (this.settings.range && index % 2 === 1) {
-        const connectorIndex = Math.floor(index / 2);
-        this.elements.connectors.push(
-          new ConnectorView(
-            this,
-            connectorIndex,
-            [this.elements.handlers[index - 1], this.elements.handlers[index]],
-            this.elements.base.element
-          )
+      this.elements.handlers[index - 1].connector = this.elements.connectors[connectorIndex];
+      this.elements.handlers[index].connector = this.elements.connectors[connectorIndex];
+      if (this.settings.connectorsColors[connectorIndex]) {
+        this.elements.connectors[connectorIndex].css(
+          'background-color',
+          this.settings.connectorsColors[connectorIndex]
         );
-        this.elements.handlers[index - 1].connector = this.elements.connectors[connectorIndex];
-        this.elements.handlers[index].connector = this.elements.connectors[connectorIndex];
-        if (this.settings.connectorsColors[connectorIndex]) {
-          this.elements.connectors[connectorIndex].css(
-            'background-color',
-            this.settings.connectorsColors[connectorIndex]
-          );
-        } else if (this.settings.handlersColors[index]) {
-          this.elements.connectors[connectorIndex].css(
-            'background-color',
-            this.settings.handlersColors[index]
-          );
-        }
+      } else if (this.settings.handlersColors[index]) {
+        this.elements.connectors[connectorIndex].css(
+          'background-color',
+          this.settings.handlersColors[index]
+        );
       }
+    }
 
-      callback.call(this.presenter, this.elements.handlers[index]); //вызываем колбэк для одного ползунка
+    return this;
+  }
+
+  public initHandler(value: number, index: number): View {
+    this.elements.handlers.push(
+      new HandlerView(this, index, this.getPercentage(value), value, this.elements.base)
+    );
+    if (this.settings.handlersColors[index]) {
+      this.elements.handlers[index].css('background-color', this.settings.handlersColors[index]);
+    }
+    this.initTooltip(index).initConnector(index);
+    return this;
+  }
+
+  public init(): View {
+    this.initParent()
+      .initWrapper()
+      .initInput()
+      .initBaseWrapper()
+      .initBase()
+      .initBounds()
+      .initResult();
+
+    this.settings.startValues.forEach((value, index) => {
+      this.initHandler(value, index);
     });
 
     this.addClasses(this.settings.additionalClasses);
+
+    this.on('handlerStart', function(handler: HandlerView) {
+      handler.addClass('js-slider__handler_active');
+    });
+
+    this.on('handlerEnd', function(handler: HandlerView) {
+      handler.removeClass('js-slider__handler_active');
+    });
 
     return this;
   }
@@ -165,9 +214,9 @@ class View {
     return 0;
   }
 
-  public trigger(eventType: string, args?: any) {
-    this.exec(eventType, args);
-    this.presenter.trigger(eventType, args);
+  public trigger(eventType: string, ...args: any) {
+    this.exec(eventType, ...args);
+    this.presenter.trigger(eventType, ...args);
   }
 }
 

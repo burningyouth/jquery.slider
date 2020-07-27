@@ -1,6 +1,7 @@
 import BasicElementView from './basicElementView';
 import View from '../view';
 import { Values } from '../../types/slider';
+import $ from 'jquery';
 
 class InputView extends BasicElementView {
   public values: Values;
@@ -22,7 +23,8 @@ class InputView extends BasicElementView {
     that.element.prependTo(that.parent);
   }
 
-  public update(): InputView {
+  public update(values?: Values): InputView {
+    if (values) this.values = values;
     this.element.attr(
       'value',
       JSON.stringify({

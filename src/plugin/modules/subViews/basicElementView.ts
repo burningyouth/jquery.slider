@@ -1,6 +1,7 @@
 import View from '../view';
 import events from '../mixins/eventsMixin';
 import { Settings } from '../../types/slider';
+import $ from 'jquery';
 
 class BasicElementView {
   private _eventHandlers: Object = {};
@@ -28,9 +29,14 @@ class BasicElementView {
     return this.view.settings;
   }
 
-  public trigger(eventType: string, args?: any) {
-    this.exec(eventType, args);
-    this.view.trigger(eventType, args);
+  public trigger(eventType: string, ...args: any) {
+    this.exec(eventType, ...args);
+    this.view.trigger(eventType, ...args);
+  }
+
+  public removeClass(className: string): any {
+    this.element.removeClass(className);
+    return this;
   }
 
   public addClass(className: string): any {

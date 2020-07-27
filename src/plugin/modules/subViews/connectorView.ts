@@ -2,6 +2,7 @@ import BasicElementView from './basicElementView';
 import HandlerView from './handlerView';
 import View from '../view';
 import { Align } from '../model';
+import $ from 'jquery';
 
 class ConnectorView extends BasicElementView {
   public static elementBase = $('<div class="js-slider__connector"></div>');
@@ -29,7 +30,7 @@ class ConnectorView extends BasicElementView {
     if (pairedPercentage > percentage) {
       this.percentage = [percentage, 100 - pairedPercentage];
     } else {
-      this.percentage = [100 - pairedPercentage, percentage];
+      this.percentage = [pairedPercentage, 100 - percentage];
     }
 
     if (this.settings.align === Align.vertical) {

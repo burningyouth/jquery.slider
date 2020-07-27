@@ -7,7 +7,6 @@ jQuery.fn.slider = function(options?: Object): Presenter {
   const view = new View(this);
   const presenter = new Presenter(model, view);
 
-  presenter.init();
-
+  view.init();
   return presenter;
 };

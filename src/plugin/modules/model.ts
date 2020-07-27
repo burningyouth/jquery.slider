@@ -1,6 +1,7 @@
 import { Settings, Values } from '../types/slider';
 import events from './mixins/eventsMixin';
 import $ from 'jquery';
+import BasicElementView from './subViews/basicElementView';
 
 enum Align {
   horizontal,
@@ -8,11 +9,6 @@ enum Align {
 }
 
 class Model {
-  private _eventHandlers: Object = {};
-  public exec: Function;
-  public on: Function;
-  public off: Function;
-
   public settings: Settings = {
     min: 0,
     max: 100,
@@ -92,18 +88,18 @@ class Model {
     if (this.checkValue(newValues)) this._values = newValues;
   }
 
-  public getValue(coords: number, base: JQuery<HTMLElement>): number {
+  public getValue(coords: number, base: BasicElementView): number {
     //возвращает значение ползунка в зависимости от min, max, ширины базы, положения мыши, положения базы и настроек слайдера
     const settings = this.settings;
     const roundTo = 10 ** settings.roundTo;
 
     let value: number, devider: number, startCoords: number;
     if (settings.align === Align.vertical) {
-      devider = base.height();
-      startCoords = base[0].getBoundingClientRect().top;
+      devider = base.element.height();
+      startCoords = base.element[0].getBoundingClientRect().top;
     } else {
-      devider = base.width();
-      startCoords = base[0].getBoundingClientRect().left;
+      devider = base.element.width();
+      startCoords = base.element[0].getBoundingClientRect().left;
     }
 
     value = (coords - startCoords) / devider;
@@ -134,12 +130,6 @@ class Model {
       return value >= this.settings.min && value <= this.settings.max;
     }
   }
-
-  public trigger(eventType: string, args?: any) {
-    this.exec(eventType, args);
-  }
 }
-
-Object.assign(Model.prototype, events);
 
 export { Model, Align };
