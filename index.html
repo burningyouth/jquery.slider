@@ -41,13 +41,13 @@
         <script>
           $( document ).ready(function() {
             $('#slider1').slider({//не трогать настройки, нужны для корректной работы теста
-              min: 50,
-              max: 200,
+              min: -100,
+              max: 100,
               step: 0,
               range: true,
               showTooltip: true,
               roundTo: 1,
-              startValues: [90, 100],
+              startValues: [-50, 50],
               sortValues: true,
               tooltipPosition: 1,
               additionalClasses: {
@@ -82,12 +82,12 @@
               }
             });
             $('#slider4').slider({
-              min: 0,
+              min: -30,
               max: 350,
               step: 5,
               roundTo: 0,
               range: true,
-              startValues: [50, 100, 150, 200],
+              startValues: [-30, 100, 150, 200],
               handlersColors: ['#FBFEA4', '#FBFEA4', '#A4DEFE', '#A4DEFE'],
               sortValues: true,
               sortOnlyPares: true,
