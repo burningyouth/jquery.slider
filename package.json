@@ -8,8 +8,9 @@
     "build": "webpack --config ./build/webpack.build.conf.js",
     "serve": "webpack --config ./build/webpack.build.conf.js && webpack-dev-server --open --config ./build/webpack.dev.conf.js",
     "publish": "gh-pages -d dist",
-    "coverage": "jest --collectCoverage",
-    "test": "jest"
+    "test": "npm run build && jest",
+    "test dev": "jest",
+    "test coverage": "jest --collectCoverage"
   },
   "browserslist": [
     "> 1%",
