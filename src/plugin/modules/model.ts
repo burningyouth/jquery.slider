@@ -1,4 +1,5 @@
 import { Settings, Values } from '../types/slider';
+import events from './mixins/eventsMixin';
 import $ from 'jquery';
 
 enum Align {
@@ -7,6 +8,11 @@ enum Align {
 }
 
 class Model {
+  private _eventHandlers: Object = {};
+  public exec: Function;
+  public on: Function;
+  public off: Function;
+
   public settings: Settings = {
     min: 0,
     max: 100,
@@ -128,6 +134,12 @@ class Model {
       return value >= this.settings.min && value <= this.settings.max;
     }
   }
+
+  public trigger(eventType: string, args?: any) {
+    this.exec(eventType, args);
+  }
 }
+
+Object.assign(Model.prototype, events);
 
 export { Model, Align };

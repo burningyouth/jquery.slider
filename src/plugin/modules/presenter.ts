@@ -1,8 +1,14 @@
 import { Model, Align } from './model';
 import View from './view';
+import events from './mixins/eventsMixin';
 import $ from 'jquery';
 
 class Presenter {
+  private _eventHandlers: Object = {};
+  public exec: Function;
+  public on: Function;
+  public off: Function;
+
   public model: Model;
   public view: View;
 
@@ -14,10 +20,10 @@ class Presenter {
 
   public init(): void {
     //инициализация view добавляет ползунки и коннекторы (если нужны) и вызывает колбэк для каждого ползунка
-    this.view.init(this.handlersCallback);
+    this.view.init(() => {});
   }
 
-  public changePosition(handler: JQuery<HTMLElement>, coords: number): Presenter {
+  /*public changePosition(handler: JQuery<HTMLElement>, coords: number): Presenter {
     //изменение положения ползунка запускает изменение view и model, отдавая им сформированные значения
     //для view - проценты, для model - числовые значения
     const value = this.model.getValue(coords, this.view.elements.base);
@@ -82,7 +88,14 @@ class Presenter {
         presenter.view.updateInput(presenter.model.sortedValues);
       });
     });
+  }*/
+
+  public trigger(eventType: string, args?: any) {
+    this.exec(eventType, args);
+    this.model.trigger(eventType, args);
   }
 }
+
+Object.assign(Presenter.prototype, events);
 
 export default Presenter;
