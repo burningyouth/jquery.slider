@@ -321,6 +321,30 @@ describe('View', () => {
 
     expect(+tooltipTextBefore > +tooltipTextAfter).toBe(true);
   });
+
+  /*test('Clicking on base is moving handler and connector', async () => {
+    const base1 = await page.$('#horizontal-test1 .js-slider__base'),
+      handler1 = await page.$('#horizontal-test1 .js-slider__handler'),
+      connector1 = await page.$('#horizontal-test1 .js-slider__connector');
+    const handler2 = await page.$('#vertical-test1 .js-slider__handler'),
+      connector2 = await page.$('#vertical-test1 .js-slider__connector');
+
+    //first
+    let baseBoundingBox = await base1.boundingBox(),
+      handlerBoundingBoxBefore = centerCoords(await handler1.boundingBox()),
+      connectorBoundingBoxBefore = centerCoords(await connector1.boundingBox());
+
+    await page.mouse.move(baseBoundingBox.x + 20, handlerBoundingBoxBefore.y);
+    await page.mouse.down();
+    let classes = await handler1.getProperty('className');
+    expect(classes._remoteObject.value).toMatch(/js-slider__handler_focus/);
+
+    let handlerBoundingBoxAfter = centerCoords(await handler1.boundingBox()),
+      connectorBoundingBoxAfter = centerCoords(await connector1.boundingBox());
+
+    expect(handlerBoundingBoxAfter.x - handlerBoundingBoxBefore.x).toBeCloseTo(20, 0);
+    expect(connectorBoundingBoxAfter.x - connectorBoundingBoxBefore.x).toBeCloseTo(10, 0);
+  });*/
 });
 
 afterAll(async () => {

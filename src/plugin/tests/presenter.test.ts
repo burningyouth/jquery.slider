@@ -1,4 +1,4 @@
-import { Model } from '../modules/model';
+import Model from '../modules/model';
 import View from '../modules/view';
 import Presenter from '../modules/presenter';
 import $ from 'jquery';
@@ -28,8 +28,8 @@ const presenter = new Presenter(model, view);
 
 describe('Presenter', () => {
   test('Model and view is defined', () => {
-    expect(presenter.model).toBeDefined();
-    expect(presenter.view).toBeDefined();
+    expect(presenter._model).toBeDefined();
+    expect(presenter._view).toBeDefined();
   });
 
   /*test('Percentage is calculated fine', () => {

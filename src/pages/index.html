@@ -52,20 +52,24 @@
               startValues: [-150, -100],
               sortValues: true,
               sortReverse: true,
-              tooltipPosition: 1,
+              tooltipReverse: true,
               additionalClasses: {
                 wrapper: 'slider',
                 result: 'slider__result'
               }
             });
             $('#slider2').slider({
-              min: 0,
-              max: 97,
-              step: 0.25,
+              min: -100,
+              max: 100,
+              step: 0,
+              roundTo: 1,
               progressBar: true,
-              roundTo: 2,
-              startValues: [25],
-              resultTemplate: '$1;',
+              reverse: true,
+              startValues: [-90],
+              showTooltip: true,
+              showBounds: false,
+              tooltipReverse: true,
+              resultTemplate: '$1',
               additionalClasses: {
                 wrapper: 'slider',
                 result: 'slider__result'
@@ -92,7 +96,7 @@
               roundTo: 0,
               range: true,
               startValues: [-30, 100, 150, 200],
-              handlersColors: ['#FBFEA4', '#FBFEA4', '#A4DEFE', '#A4DEFE'],
+              handlersColors: ['#B5FEA4', '#B5FEA4', '#A4DEFE', '#A4DEFE'],
               sortValues: true,
               sortOnlyPares: true,
               tooltipReverse: true,
@@ -122,7 +126,7 @@
             const colorSlider = $('#slider6').slider({
               min: 0,
               max: 255,
-              step: 1,
+              step: 0,
               vertical: true,
               startValues: [166, 181, 155],
               showTooltip: true,
@@ -137,8 +141,7 @@
             const opacitySlider = $('#slider7').slider({
               min: 0,
               max: 100,
-              step: 1,
-              roundTo: 3,
+              step: 0,
               vertical: true,
               progressBar: true,
               startValues: [100],
@@ -155,15 +158,17 @@
               }
             });
 
-            colorSlider.on('handlerMoved', ()=>{
-              const color = colorSlider.model.values;
-              const opacity = opacitySlider.model.values[0] / 100;
+            let color, opacity;
+
+            colorSlider.on('handlerUpdated', ()=>{
+              color = colorSlider.values;
+              opacity = opacitySlider.values[0] / 100;
               $('#color').css('background-color', 'rgba('+color.toString()+', '+opacity+')')
             });
 
-            opacitySlider.on('handlerMoved', ()=>{
-              const color = colorSlider.model.values;
-              const opacity = opacitySlider.model.values[0] / 100;
+            opacitySlider.on('handlerUpdated', ()=>{
+              color = colorSlider.values;
+              opacity = opacitySlider.values[0] / 100;
               $('#color').css('background-color', 'rgba('+color.toString()+', '+opacity+')')
             });
 

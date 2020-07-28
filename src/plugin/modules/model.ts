@@ -1,15 +1,10 @@
-import { Settings, Values } from '../types/slider';
-import $ from 'jquery';
 import BasicElementView from './subViews/basicElementView';
 import Presenter from './presenter';
-
-enum Align {
-  horizontal,
-  vertical
-}
+import { Settings, Values } from '../types/slider';
+import $ from 'jquery';
 
 class Model {
-  public presenter: Presenter;
+  public _presenter: Presenter;
   public settings: Settings = {
     min: 0,
     max: 100,
@@ -30,6 +25,7 @@ class Model {
     sortOnlyPares: false,
     sortReverse: false,
     resultTemplate: 'default',
+    handlersStateClasses: {},
     additionalClasses: {}
   };
 
@@ -112,36 +108,21 @@ class Model {
     if (settings.vertical) {
       devider = base.element.height();
       startCoords = base.element[0].getBoundingClientRect().top;
-      if (!settings.reverse) {
-        value = (coords - startCoords) / devider;
-        value *= settings.max - settings.min;
-        if (settings.max >= 0 && settings.min >= 0) {
-          value = settings.max - value;
-        } else if (settings.max < 0 && settings.min < 0) {
-          value = settings.max - settings.min - value;
-        } else {
-          value = settings.max - value + (settings.max - settings.min) / 1.5;
-        }
-      } else {
-        value = (coords - startCoords) / devider;
-        value *= settings.max - settings.min;
-      }
     } else {
       devider = base.element.width();
       startCoords = base.element[0].getBoundingClientRect().left;
-      if (!settings.reverse) {
-        value = (coords - startCoords) / devider;
-        value *= settings.max - settings.min;
+    }
+
+    value = (coords - startCoords) / devider;
+    value *= settings.max - settings.min;
+
+    if ((settings.reverse && !settings.vertical) || (!settings.reverse && settings.vertical)) {
+      if (settings.max >= 0 && settings.min >= 0) {
+        value = settings.max - value;
+      } else if (settings.max < 0 && settings.min < 0) {
+        value = settings.max - settings.min - value;
       } else {
-        value = (coords - startCoords) / devider;
-        value *= settings.max - settings.min;
-        if (settings.max >= 0 && settings.min >= 0) {
-          value = settings.max - value;
-        } else if (settings.max < 0 && settings.min < 0) {
-          value = settings.max - settings.min - value;
-        } else {
-          value = settings.max - value + (settings.max - settings.min) / 2;
-        }
+        value = settings.max * ((settings.max - settings.min) / settings.max) - value;
       }
     }
 
@@ -173,8 +154,8 @@ class Model {
   }
 
   public trigger(eventType: string, ...args: any) {
-    if (this.presenter) this.presenter.exec(eventType, ...args);
+    if (this._presenter) this._presenter.exec(eventType, ...args);
   }
 }
 
-export { Model, Align };
+export default Model;

@@ -1,4 +1,4 @@
-import { Model } from '../modules/model';
+import Model from '../modules/model';
 
 const model = new Model({
   min: 10,
@@ -20,6 +20,9 @@ const model = new Model({
   sortReverse: false,
   sortOnlyPares: true,
   resultTemplate: '$1 - $2',
+  handlersStateClasses: {
+    active: 'active'
+  },
   additionalClasses: {
     wrapper: 'test'
   }
@@ -47,6 +50,9 @@ describe('Model', () => {
       sortReverse: false,
       sortOnlyPares: true,
       resultTemplate: '$1 - $2',
+      handlersStateClasses: {
+        active: 'active'
+      },
       additionalClasses: {
         wrapper: 'test'
       }

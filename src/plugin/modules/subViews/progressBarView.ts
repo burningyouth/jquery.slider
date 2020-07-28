@@ -1,7 +1,6 @@
 import BasicElementView from './basicElementView';
 import HandlerView from './handlerView';
 import View from '../view';
-import { Align } from '../model';
 import $ from 'jquery';
 
 class ProgressBarView extends BasicElementView {

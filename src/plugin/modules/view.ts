@@ -1,16 +1,16 @@
 import * as slider from '../types/slider';
 import Presenter from './presenter';
 import BasicElementView from './subViews/basicElementView';
+import BaseView from './subViews/baseView';
 import BoundView from './subViews/boundView';
 import HandlerView from './subViews/handlerView';
 import ConnectorView from './subViews/connectorView';
+import ProgressBarView from './subViews/progressBarView';
 import ResultView from './subViews/resultView';
 import TooltipView from './subViews/tooltipView';
 import InputView from './subViews/inputView';
 import events from './mixins/eventsMixin';
 import $ from 'jquery';
-import ProgressBarView from './subViews/progressBarView';
-import { Align } from './model';
 
 class View {
   private _eventHandlers: Object = {};
@@ -19,7 +19,7 @@ class View {
   public off: Function;
 
   public input: JQuery<HTMLElement>; //поле, в которое записывается значения ползунков
-  public presenter: Presenter;
+  public _presenter: Presenter;
 
   public elements: slider.Elements = {};
 
@@ -34,7 +34,7 @@ class View {
   }
 
   get settings(): slider.Settings {
-    return this.presenter.model.settings;
+    return this._presenter.settings;
   }
 
   public addClasses(obj: slider.AdditionalClasses): View {
@@ -74,7 +74,7 @@ class View {
     this.elements.input = new InputView(
       this,
       this.input,
-      this.presenter.model.sortedValues,
+      this._presenter.sortedValues,
       this.elements.wrapper
     );
     return this;
@@ -90,11 +90,7 @@ class View {
   }
 
   public initBase(): View {
-    this.elements.base = new BasicElementView(
-      this,
-      $('<div class="js-slider__base"></div>'),
-      this.elements.baseWrapper.element
-    );
+    this.elements.base = new BaseView(this, this.elements.baseWrapper);
     return this;
   }
 
@@ -123,7 +119,7 @@ class View {
     if (this.settings.showResult) {
       this.elements.result = new ResultView(
         this,
-        this.presenter.model.formattedValues,
+        this._presenter.formattedValues,
         this.elements.wrapper.element
       );
     }
@@ -213,16 +209,30 @@ class View {
 
     this.settings.startValues.forEach((value, index) => {
       this.initHandler(value, index);
+      if (this.settings.handlersStateClasses.active) {
+        this.elements.handlers[
+          index
+        ].activeClass += ` ${this.settings.handlersStateClasses.active}`;
+      }
+      if (this.settings.handlersStateClasses.focus) {
+        this.elements.handlers[index].focusClass += ` ${this.settings.handlersStateClasses.focus}`;
+      }
     });
 
     this.addClasses(this.settings.additionalClasses);
 
     this.on('handlerStart', function(handler: HandlerView) {
-      handler.addClass('js-slider__handler_active');
+      handler.active = true;
+      this.elements.handlers.forEach((item: HandlerView) => {
+        if (item.focus) {
+          item.focus = false;
+        }
+      });
+      handler.focus = true;
     });
 
     this.on('handlerEnd', function(handler: HandlerView) {
-      handler.removeClass('js-slider__handler_active');
+      handler.active = false;
     });
 
     return this;
@@ -247,7 +257,7 @@ class View {
 
   public trigger(eventType: string, ...args: any) {
     this.exec(eventType, ...args);
-    this.presenter.trigger(eventType, ...args);
+    this._presenter.trigger(eventType, ...args);
   }
 }
 

@@ -2,12 +2,18 @@ import BasicElementView from './basicElementView';
 import ConnectorView from './connectorView';
 import TooltipView from './tooltipView';
 import View from '../view';
-import { Align } from '../model';
 import $ from 'jquery';
 import ProgressBarView from './progressBarView';
 
 class HandlerView extends BasicElementView {
   public static elementBase = $('<span class="js-slider__handler"></span>');
+
+  public activeClass = 'js-slider__handler_active';
+  public focusClass = 'js-slider__handler_focus';
+
+  private _active: boolean = false;
+  private _focus: boolean = false;
+
   public index: number;
   public percentage: number;
   public value: number;
@@ -44,7 +50,7 @@ class HandlerView extends BasicElementView {
         $(window).on('mouseup', function(e2) {
           if (e2.which == 1) {
             $(this).off('mousemove mouseup');
-            that.trigger('handlerEnd', that, e2[coordsAxis]);
+            that.trigger('handlerEnd', that);
           }
         });
       }
@@ -58,7 +64,7 @@ class HandlerView extends BasicElementView {
       });
       $(window).on('touchend', function(e2) {
         $(this).off('touchmove touchend');
-        that.trigger('handlerEnd', that, e2.touches[0][coordsAxis]);
+        that.trigger('handlerEnd', that);
       });
     });
   }
@@ -82,6 +88,32 @@ class HandlerView extends BasicElementView {
     if (this.tooltip) this.tooltip.update();
 
     return this;
+  }
+
+  set active(newValue: boolean) {
+    this._active = newValue;
+    if (newValue) {
+      this.addClass(this.activeClass);
+    } else {
+      this.removeClass(this.activeClass);
+    }
+  }
+
+  set focus(newValue: boolean) {
+    this._focus = newValue;
+    if (newValue) {
+      this.addClass(this.focusClass);
+    } else {
+      this.removeClass(this.focusClass);
+    }
+  }
+
+  get active(): boolean {
+    return this._active;
+  }
+
+  get focus(): boolean {
+    return this._focus;
   }
 }
 

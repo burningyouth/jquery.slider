@@ -1,4 +1,4 @@
-import { Model } from '../modules/model';
+import Model from '../modules/model';
 import View from '../modules/view';
 import Presenter from '../modules/presenter';
 

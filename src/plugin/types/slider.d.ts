@@ -6,13 +6,25 @@ import ProgressBarView from '../modules/subViews/progressBarView';
 import ResultView from '../modules/subViews/resultView';
 import TooltipView from '../modules/subViews/tooltipView';
 import InputView from '../modules/subViews/inputView';
+import BaseView from '../modules/subViews/baseView';
 
 interface AdditionalClasses {
+  parent?: string;
   wrapper?: string;
+  input?: string;
+  bounds?: string;
   base?: string;
+  baseWrapper?: string;
   handlers?: string;
+  tooltips?: string;
+  progressBar?: string;
   connectors?: string;
   result?: string;
+}
+
+interface HandlersStateClasses {
+  active?: string;
+  focus?: string;
 }
 
 interface Settings {
@@ -22,6 +34,7 @@ interface Settings {
   progressBar: boolean;
   startValues: Values;
   handlersColors: Array<string>;
+  handlersStateClasses: HandlersStateClasses;
   connectorsColors: Array<string>;
   showResult: boolean;
   showTooltip: boolean;
@@ -44,7 +57,7 @@ interface Elements {
   parent?: BasicElementView;
   input?: InputView;
   wrapper?: BasicElementView;
-  base?: BasicElementView;
+  base?: BaseView;
   baseWrapper?: BasicElementView;
   handlers?: Array<HandlerView>;
   bounds?: Array<BoundView>;
@@ -53,4 +66,4 @@ interface Elements {
   connectors?: Array<ConnectorView>;
   result?: ResultView;
 }
-export { AdditionalClasses, Settings, Values, Elements };
+export { AdditionalClasses, HandlersStateClasses, Settings, Values, Elements };
