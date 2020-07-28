@@ -14,8 +14,7 @@ class InputView extends BasicElementView {
     initCallback: Function = InputView.init
   ) {
     super(view, input, wrapper.element, initCallback);
-    this.values = values;
-    this.update();
+    this.update(values);
   }
 
   public static init(that: InputView) {
@@ -31,7 +30,7 @@ class InputView extends BasicElementView {
         value: this.values
       })
     );
-    this.trigger('inputUpdated');
+    this.trigger('inputUpdated', this);
 
     return this;
   }

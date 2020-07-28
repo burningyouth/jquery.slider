@@ -9,6 +9,8 @@ import TooltipView from './subViews/tooltipView';
 import InputView from './subViews/inputView';
 import events from './mixins/eventsMixin';
 import $ from 'jquery';
+import ProgressBarView from './subViews/progressBarView';
+import { Align } from './model';
 
 class View {
   private _eventHandlers: Object = {};
@@ -62,7 +64,7 @@ class View {
       $('<div class="js-slider"></div>'),
       this.elements.parent.element
     );
-    if (this.settings.align) {
+    if (this.settings.vertical) {
       this.elements.wrapper.element.addClass('js-slider_vertical');
     }
     return this;
@@ -72,7 +74,7 @@ class View {
     this.elements.input = new InputView(
       this,
       this.input,
-      this.settings.startValues,
+      this.presenter.model.sortedValues,
       this.elements.wrapper
     );
     return this;
@@ -97,17 +99,22 @@ class View {
   }
 
   public initBounds(): View {
-    if (this.settings.showBounds) {
+    const settings = this.settings;
+    if (settings.showBounds) {
       this.elements.bounds.push(
-        new BoundView(this, this.settings.min, this.elements.baseWrapper.element, function(
-          that: BoundView
-        ) {
-          that.element.prependTo(that.parent);
-        })
+        new BoundView(this, settings.min, this.elements.baseWrapper.element)
       );
       this.elements.bounds.push(
-        new BoundView(this, this.settings.max, this.elements.baseWrapper.element)
+        new BoundView(this, settings.max, this.elements.baseWrapper.element)
       );
+      const parent = this.elements.bounds[0].parent;
+      if ((!settings.reverse && settings.vertical) || (settings.reverse && !settings.vertical)) {
+        this.elements.bounds[1].element.prependTo(parent);
+        this.elements.bounds[0].element.appendTo(parent);
+      } else {
+        this.elements.bounds[0].element.prependTo(parent);
+        this.elements.bounds[1].element.appendTo(parent);
+      }
     }
     return this;
   }
@@ -127,10 +134,27 @@ class View {
     if (this.settings.showTooltip) {
       this.elements.tooltips.push(new TooltipView(this, this.elements.handlers[index]));
       this.elements.handlers[index].tooltip = this.elements.tooltips[index];
-      if (this.settings.align && this.settings.tooltipReverse) {
+      if (this.settings.vertical && this.settings.tooltipReverse) {
         this.elements.tooltips[index].addClass('js-slider__tooltip_left');
       } else if (this.settings.tooltipReverse) {
         this.elements.tooltips[index].addClass('js-slider__tooltip_bottom');
+      }
+    }
+    return this;
+  }
+
+  public initProgressBar(): View {
+    if (this.elements.handlers.length === 1 && this.settings.progressBar) {
+      this.elements.progressBar = new ProgressBarView(
+        this,
+        this.elements.handlers[0],
+        this.elements.base.element
+      );
+      this.elements.handlers[0].connector = this.elements.progressBar;
+      if (this.settings.connectorsColors[0]) {
+        this.elements.progressBar.css('background-color', this.settings.connectorsColors[0]);
+      } else if (this.settings.handlersColors[0]) {
+        this.elements.progressBar.css('background-color', this.settings.handlersColors[0]);
       }
     }
     return this;
@@ -172,7 +196,9 @@ class View {
     if (this.settings.handlersColors[index]) {
       this.elements.handlers[index].css('background-color', this.settings.handlersColors[index]);
     }
-    this.initTooltip(index).initConnector(index);
+    this.initTooltip(index)
+      .initConnector(index)
+      .initProgressBar();
     return this;
   }
 
@@ -205,7 +231,12 @@ class View {
   public getPercentage(value: number): number {
     //возвращает процентное соотношение value от min, max
     const settings = this.settings;
-    const percentage = ((value - settings.min) / (settings.max - settings.min)) * 100;
+    let percentage: number;
+    if ((!settings.reverse && settings.vertical) || (settings.reverse && !settings.vertical)) {
+      percentage = ((settings.max - value) / (settings.max - settings.min)) * 100;
+    } else {
+      percentage = ((value - settings.min) / (settings.max - settings.min)) * 100;
+    }
     if (percentage >= 0 && percentage <= 100) {
       return percentage;
     } else if (percentage > 100) {

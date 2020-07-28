@@ -1,7 +1,7 @@
 import { Settings, Values } from '../types/slider';
-import events from './mixins/eventsMixin';
 import $ from 'jquery';
 import BasicElementView from './subViews/basicElementView';
+import Presenter from './presenter';
 
 enum Align {
   horizontal,
@@ -9,22 +9,26 @@ enum Align {
 }
 
 class Model {
+  public presenter: Presenter;
   public settings: Settings = {
     min: 0,
     max: 100,
     range: false,
+    progressBar: false,
+    reverse: false,
     startValues: [30, 70],
     handlersColors: [],
     connectorsColors: [],
     step: 1,
     roundTo: 0,
-    align: Align.horizontal,
+    vertical: false,
     tooltipReverse: false,
     showTooltip: false,
     showResult: true,
     showBounds: true,
     sortValues: false,
     sortOnlyPares: false,
+    sortReverse: false,
     resultTemplate: 'default',
     additionalClasses: {}
   };
@@ -56,8 +60,16 @@ class Model {
             arr[i + 1] = tmp;
           }
         }
+        if (this.settings.sortReverse) {
+          return arr.reverse();
+        }
         return arr;
       } else {
+        if (this.settings.sortReverse) {
+          return this._values.slice(0).sort(function(a: number, b: number): number {
+            return b - a;
+          });
+        }
         return this._values.slice(0).sort(function(a: number, b: number): number {
           return a - b;
         });
@@ -85,7 +97,10 @@ class Model {
   }
 
   set values(newValues: Values) {
-    if (this.checkValue(newValues)) this._values = newValues;
+    if (this.checkValue(newValues)) {
+      this._values = newValues;
+      this.trigger('valueChanged', this);
+    }
   }
 
   public getValue(coords: number, base: BasicElementView): number {
@@ -94,16 +109,42 @@ class Model {
     const roundTo = 10 ** settings.roundTo;
 
     let value: number, devider: number, startCoords: number;
-    if (settings.align === Align.vertical) {
+    if (settings.vertical) {
       devider = base.element.height();
       startCoords = base.element[0].getBoundingClientRect().top;
+      if (!settings.reverse) {
+        value = (coords - startCoords) / devider;
+        value *= settings.max - settings.min;
+        if (settings.max >= 0 && settings.min >= 0) {
+          value = settings.max - value;
+        } else if (settings.max < 0 && settings.min < 0) {
+          value = settings.max - settings.min - value;
+        } else {
+          value = settings.max - value + (settings.max - settings.min) / 1.5;
+        }
+      } else {
+        value = (coords - startCoords) / devider;
+        value *= settings.max - settings.min;
+      }
     } else {
       devider = base.element.width();
       startCoords = base.element[0].getBoundingClientRect().left;
+      if (!settings.reverse) {
+        value = (coords - startCoords) / devider;
+        value *= settings.max - settings.min;
+      } else {
+        value = (coords - startCoords) / devider;
+        value *= settings.max - settings.min;
+        if (settings.max >= 0 && settings.min >= 0) {
+          value = settings.max - value;
+        } else if (settings.max < 0 && settings.min < 0) {
+          value = settings.max - settings.min - value;
+        } else {
+          value = settings.max - value + (settings.max - settings.min) / 2;
+        }
+      }
     }
 
-    value = (coords - startCoords) / devider;
-    value *= settings.max - settings.min;
     value = settings.step
       ? settings.min + Math.floor(value / settings.step + 0.5) * settings.step
       : settings.min + value; //форматируется значение в зависимости от step
@@ -129,6 +170,10 @@ class Model {
     } else {
       return value >= this.settings.min && value <= this.settings.max;
     }
+  }
+
+  public trigger(eventType: string, ...args: any) {
+    if (this.presenter) this.presenter.exec(eventType, ...args);
   }
 }
 

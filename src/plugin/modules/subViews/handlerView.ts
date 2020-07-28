@@ -4,14 +4,15 @@ import TooltipView from './tooltipView';
 import View from '../view';
 import { Align } from '../model';
 import $ from 'jquery';
+import ProgressBarView from './progressBarView';
 
 class HandlerView extends BasicElementView {
   public static elementBase = $('<span class="js-slider__handler"></span>');
   public index: number;
   public percentage: number;
   public value: number;
-  public connector: ConnectorView | undefined = undefined;
-  public tooltip: TooltipView | undefined = undefined;
+  public connector: ConnectorView | ProgressBarView;
+  public tooltip: TooltipView;
 
   constructor(
     view: View,
@@ -31,7 +32,7 @@ class HandlerView extends BasicElementView {
   public static init(that: HandlerView) {
     super.basicInit(that);
 
-    const coordsAxis = that.settings.align === Align.vertical ? 'clientY' : 'clientX';
+    const coordsAxis = that.settings.vertical ? 'clientY' : 'clientX';
 
     that.element.on('mousedown', function(e) {
       e.preventDefault();
@@ -69,7 +70,7 @@ class HandlerView extends BasicElementView {
     if (typeof percentage === 'number') this.percentage = percentage;
     if (typeof value === 'number') this.value = value;
 
-    if (this.settings.align === Align.vertical) {
+    if (this.settings.vertical) {
       this.element.css('top', `calc(${this.percentage}% - 7.5px`);
     } else {
       this.element.css('left', `calc(${this.percentage}% - 7.5px`);

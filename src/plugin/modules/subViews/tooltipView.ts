@@ -20,7 +20,7 @@ class TooltipView extends BasicElementView {
   public update(): TooltipView {
     this.element.text(this.value);
 
-    this.trigger('tooltipUpdated');
+    this.trigger('tooltipUpdated', this);
 
     return this;
   }

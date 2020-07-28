@@ -4,35 +4,36 @@
         <meta charset="UTF-8"/>
         <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
         <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
-        <title>Document</title>
+        <title>JQuery.slider</title>
         <link href="assets/css/jquery.slider.min.css" rel="stylesheet"/>
     </head>
-    <body class="body">
-        <form action="" class='basic-form'>
-          <h1 class='title'>JQuery.slider</h1>
-          <div style='margin-bottom: 50px;'>
-            <div>
-              <input id="slider1" type="text"/>
+    <body class="body" id="color" style="background-color: rgba(166, 181, 155, 0.35); ">
+        <form action="" class="basic-form">
+            <h1 class="title">JQuery.slider</h1>
+            <div style="margin-bottom: 50px;">
+                <div>
+                    <input id="slider1" type="text"/>
+                </div>
+                <div>
+                    <input id="slider2" type="text"/>
+                </div>
+                <div>
+                    <input id="slider3" type="text"/>
+                </div>
+                <div style="margin-top: 30px; margin-bottom: 60px;">
+                    <input id="slider4" type="text"/>
+                </div>
+                <div>
+                    <input id="slider5" type="text"/>
+                </div>
             </div>
-            <div>
-              <input id="slider2" type="text"/>
+
+            <div style="display: inline-block; width: 49%;">
+                <input id="slider6" type="text"/>
             </div>
-            <div>
-              <input id="slider3" type="text"/>
+            <div style=" display: inline-block; width: 50%;">
+                <input id="slider7" type="text"/>
             </div>
-            <div style='margin-top: 30px; margin-bottom: 60px;'>
-              <input id="slider4" type="text"/>
-            </div>
-            <div>
-              <input id="slider5" type="text"/>
-            </div>
-          </div>
-          <div style='display: inline-block; width: 49%;'>
-            <input id="slider6" type="text"/>
-          </div>
-          <div style='display: inline-block; width: 50%;'>
-            <input id="slider7" type="text"/>
-          </div>
         </form>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -41,14 +42,16 @@
         <script>
           $( document ).ready(function() {
             $('#slider1').slider({//не трогать настройки, нужны для корректной работы теста
-              min: -100,
+              min: -200,
               max: 100,
               step: 0,
               range: true,
+              reverse: true,
               showTooltip: true,
               roundTo: 1,
-              startValues: [-50, 50],
+              startValues: [-150, -100],
               sortValues: true,
+              sortReverse: true,
               tooltipPosition: 1,
               additionalClasses: {
                 wrapper: 'slider',
@@ -59,9 +62,10 @@
               min: 0,
               max: 97,
               step: 0.25,
+              progressBar: true,
               roundTo: 2,
-              startValues: [25, 50, 75],
-              resultTemplate: '$1; $2; $3;',
+              startValues: [25],
+              resultTemplate: '$1;',
               additionalClasses: {
                 wrapper: 'slider',
                 result: 'slider__result'
@@ -115,14 +119,14 @@
               }
             });
             
-            $('#slider6').slider({
+            const colorSlider = $('#slider6').slider({
               min: 0,
               max: 255,
               step: 1,
-              align: 1,
-              startValues: [90, 150, 67],
+              vertical: true,
+              startValues: [166, 181, 155],
               showTooltip: true,
-              resultTemplate: 'Red: $1, Green: $2, Blue: $3',
+              resultTemplate: 'rgb($1, $2, $3)',
               handlersColors: ['#FC6A6A', '#8CFC6A', '#6AB2FC'],
               additionalClasses: {
                 wrapper: 'slider',
@@ -130,27 +134,42 @@
               }
             });
 
-            $('#slider7').slider({ //не трогать, нужны для тестов
+            const opacitySlider = $('#slider7').slider({
               min: 0,
-              max: 500,
-              step: 5,
-              align: 1,
-              range: true,
-              startValues: [90, 150, 205, 420],
+              max: 100,
+              step: 1,
+              roundTo: 3,
+              vertical: true,
+              progressBar: true,
+              startValues: [100],
               sortValues: true,
               sortOnlyPares: true,
               showTooltip: true,
               showBounds: false,
               tooltipReverse: true,
-              resultTemplate: '$1 - $2; $3 - $4',
+              resultTemplate: 'opacity: $1%',
+              connectorsColors: ['#B5FEA4'],
               additionalClasses: {
                 wrapper: 'slider',
                 result: 'slider__result'
               }
             });
 
+            colorSlider.on('handlerMoved', ()=>{
+              const color = colorSlider.model.values;
+              const opacity = opacitySlider.model.values[0] / 100;
+              $('#color').css('background-color', 'rgba('+color.toString()+', '+opacity+')')
+            });
+
+            opacitySlider.on('handlerMoved', ()=>{
+              const color = colorSlider.model.values;
+              const opacity = opacitySlider.model.values[0] / 100;
+              $('#color').css('background-color', 'rgba('+color.toString()+', '+opacity+')')
+            });
+
           });
         </script>
+    </body>
     </body>
     </body>
 </html>

@@ -33,7 +33,7 @@ class ConnectorView extends BasicElementView {
       this.percentage = [pairedPercentage, 100 - percentage];
     }
 
-    if (this.settings.align === Align.vertical) {
+    if (this.settings.vertical) {
       this.element.css('top', `${this.percentage[0]}%`);
       this.element.css('bottom', `${this.percentage[1]}%`);
     } else {
@@ -41,7 +41,7 @@ class ConnectorView extends BasicElementView {
       this.element.css('right', `${this.percentage[1]}%`);
     }
 
-    this.element.trigger('connectorUpdated');
+    this.element.trigger('connectorUpdated', this);
 
     return this;
   }

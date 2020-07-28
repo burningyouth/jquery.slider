@@ -15,6 +15,7 @@ class Presenter {
 
   constructor(model: Model, view: View) {
     this.model = model;
+    this.model.presenter = this;
     this.view = view;
     this.view.presenter = this;
     this.on('handlerMoved', function(handler: HandlerView, coords: number) {
@@ -27,9 +28,17 @@ class Presenter {
       }
     });
     this.on('handlerEnd', function() {
-      if (view.elements.input) {
-        view.elements.input.update(this.model.sortedValues);
+      view.elements.input.update(this.model.sortedValues);
+    });
+    this.on('valueChanged', function() {
+      view.elements.input.update(this.model.sortedValues);
+      if (view.elements.result) {
+        view.elements.result.update(this.model.formattedValues);
       }
+      this.view.elements.handlers.forEach((handler: HandlerView, index: number) => {
+        const value = this.model.values[index];
+        handler.update(this.view.getPercentage(value), value);
+      });
     });
   }
 
