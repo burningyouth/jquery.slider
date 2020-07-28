@@ -52,8 +52,10 @@ class Presenter {
         view.elements.handlers.forEach(item => {
           item.focus = false;
           dif = Math.abs(item.percentage - percentage);
-          if (lastDif > dif) nearestHandler = item;
-          lastDif = dif;
+          if (lastDif > dif) {
+            nearestHandler = item;
+            lastDif = dif;
+          }
         });
       }
       if (nearestHandler) {
