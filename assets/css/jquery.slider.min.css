@@ -1,7 +1,7 @@
 .basic-form{display:block;padding:30px;border-radius:10px;background-color:#fbffd9;-webkit-box-shadow:0 0 15px rgba(0,0,0,.2);box-shadow:0 0 15px rgba(0,0,0,.2);max-width:700px;margin:auto}
 .body{padding:50px;font-family:Tahoma,Geneva,Verdana,sans-serif}*{-webkit-box-sizing:border-box;box-sizing:border-box}
 .js-slider__base-wrapper{display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:100%}
-.js-slider__base{display:inline-block;position:relative;width:100%;height:5px;border:1px solid hsla(0,0%,82.7%,.75);border-radius:2px}
+.js-slider__base{display:inline-block;position:relative;width:100%;height:5px;border:1px solid hsla(0,0%,82.7%,.75);border-radius:2px;cursor:pointer}
 .js-slider__bound{display:inline-block;color:#797979}.js-slider__bound:first-of-type{margin-right:10px}.js-slider__bound:last-of-type{margin-left:10px}
 .js-slider__connector{position:absolute;left:0;right:0;height:100%;-webkit-box-sizing:border-box;box-sizing:border-box;background:#86d1ff}
 .js-slider__handler_active{-webkit-transform:scale(1.4);-ms-transform:scale(1.4);transform:scale(1.4);z-index:100;cursor:-webkit-grabbing!important;cursor:grabbing!important}.js-slider__handler_active:after{content:"";position:absolute;top:-100vh;left:-100vh;display:block;width:200vw;height:200vh;opacity:0;z-index:10}.js-slider__handler_active .js-slider__tooltip{display:inline-block}
