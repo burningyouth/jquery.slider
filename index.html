@@ -145,8 +145,6 @@
               vertical: true,
               progressBar: true,
               startValues: [100],
-              sortValues: true,
-              sortOnlyPares: true,
               showTooltip: true,
               showBounds: false,
               tooltipReverse: true,
@@ -160,13 +158,13 @@
 
             let color, opacity;
 
-            colorSlider.on('handlerUpdated', ()=>{
+            colorSlider.on('handlerEnd', ()=>{
               color = colorSlider.values;
               opacity = opacitySlider.values[0] / 100;
               $('#color').css('background-color', 'rgba('+color.toString()+', '+opacity+')')
             });
 
-            opacitySlider.on('handlerUpdated', ()=>{
+            opacitySlider.on('handlerEnd', ()=>{
               color = colorSlider.values;
               opacity = opacitySlider.values[0] / 100;
               $('#color').css('background-color', 'rgba('+color.toString()+', '+opacity+')')
