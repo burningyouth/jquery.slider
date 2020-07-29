@@ -28,27 +28,27 @@ interface HandlersStateClasses {
 }
 
 interface Settings {
-  min: number;
-  max: number;
-  range: boolean;
-  progressBar: boolean;
-  startValues: Values;
-  handlersColors: Array<string>;
-  handlersStateClasses: HandlersStateClasses;
-  connectorsColors: Array<string>;
-  showResult: boolean;
-  showTooltip: boolean;
-  showBounds: boolean;
-  additionalClasses: AdditionalClasses;
-  step: number;
-  sortValues: boolean;
-  sortOnlyPares: boolean;
-  sortReverse: boolean;
-  reverse: boolean;
-  tooltipReverse: boolean;
-  vertical: boolean;
-  roundTo: number;
-  resultTemplate: string;
+  min?: number;
+  max?: number;
+  range?: boolean;
+  step?: number;
+  progressBar?: boolean;
+  startValues?: Values;
+  handlersColors?: Array<string>;
+  connectorsColors?: Array<string>;
+  showResult?: boolean;
+  showTooltip?: boolean;
+  showBounds?: boolean;
+  sortValues?: boolean;
+  sortOnlyPares?: boolean;
+  sortReverse?: boolean;
+  reverse?: boolean;
+  tooltipReverse?: boolean;
+  vertical?: boolean;
+  roundTo?: number;
+  resultTemplate?: string;
+  additionalClasses?: AdditionalClasses;
+  handlersStateClasses?: HandlersStateClasses;
 }
 
 type Values = number[];

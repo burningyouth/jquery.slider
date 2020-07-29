@@ -1,4 +1,7 @@
 import Model from '../modules/model';
+import BaseView from '../modules/subViews/basicElementView';
+import View from '../modules/view';
+import $ from 'jquery';
 
 const model = new Model({
   min: 10,
@@ -27,6 +30,9 @@ const model = new Model({
     wrapper: 'test'
   }
 });
+
+const view = new View();
+const base = new BaseView(view, $('<div style="width: 200px; height: 200px;"></div>'));
 
 describe('Model', () => {
   test('Settings are merged', () => {
@@ -85,15 +91,53 @@ describe('Model', () => {
     expect(model.sortedValues).toEqual([2, 32, 64, 89]);
   });
 
-  test('Pared sorting is working', () => {
+  test('Paired sorting is working', () => {
     model.settings.sortOnlyPares = true;
     expect(model.sortedValues).toEqual([32, 89, 2, 64]);
   });
 
+  test('Reversed sorting is working', () => {
+    model.settings.sortReverse = true;
+    expect(model.sortedValues).toEqual([89, 32, 64, 2]);
+    model.settings.sortOnlyPares = false;
+    expect(model.sortedValues).toEqual([89, 64, 32, 2]);
+  });
+
   test('Template is working fine', () => {
+    model.settings.sortOnlyPares = true;
     model.settings.resultTemplate = '$1 - $2;,,,, $22 - $12 -- $3 :: -$4';
-    expect(model.formattedValues).toBe('32 - 89;,,,, $22 - $12 -- 2 :: -64');
+    expect(model.formattedValues).toBe('89 - 32;,,,, $22 - $12 -- 64 :: -2');
     model.settings.resultTemplate = 'default';
-    expect(model.formattedValues).toBe('32,89,2,64');
+    expect(model.formattedValues).toBe('89,32,64,2');
+  });
+
+  test('getValue() is working fine', () => {
+    model.settings.min = 0;
+    model.settings.max = 100;
+    expect(model.getValue(100, base)).toBe(50);
+    model.settings.vertical = true;
+    expect(model.getValue(100, base)).toBe(50);
+    model.settings.vertical = false;
+    model.settings.min = -50;
+    model.settings.max = 150;
+    expect(model.getValue(50, base)).toBe(0);
+    model.settings.min = -350;
+    model.settings.max = -150;
+    expect(model.getValue(50, base)).toBe(-300);
+    model.settings.min = -50;
+    model.settings.max = 150;
+    model.settings.reverse = true;
+    expect(model.getValue(50, base)).toBe(100);
+    model.settings.vertical = true;
+    expect(model.getValue(100, base)).toBe(50);
+    model.settings.vertical = false;
+    model.settings.reverse = false;
+    model.settings.min = -150;
+    model.settings.max = 50;
+    expect(model.getValue(50, base)).toBe(-100);
+    expect(model.getValue(-50, base)).toBe(-150);
+    expect(model.getValue(100000, base)).toBe(50);
+    model.settings.reverse = true;
+    expect(model.getValue(50, base)).toBe(0);
   });
 });

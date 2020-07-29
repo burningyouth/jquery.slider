@@ -1,11 +1,11 @@
-import BasicElementView from './subViews/basicElementView';
+import BaseView from './subViews/baseView';
 import Presenter from './presenter';
 import { Settings, Values } from '../types/slider';
 import $ from 'jquery';
 
 class Model {
-  public _presenter: Presenter;
-  public settings: Settings = {
+  private _presenter: Presenter;
+  private _settings: Settings = {
     min: 0,
     max: 100,
     range: false,
@@ -31,13 +31,12 @@ class Model {
 
   private _values: Values;
 
-  constructor(options?: Object) {
-    if (options) this.settings = $.extend(this.settings, options);
-    if (this.checkValue(this.settings.startValues)) {
-      this.values = this.settings.startValues;
-    } else {
-      throw new RangeError('Start value is invalid (out of range)!');
-    }
+  constructor(options?: Settings) {
+    this.settings = options;
+  }
+
+  get settings(): Settings {
+    return this._settings;
   }
 
   get values(): Values {
@@ -45,23 +44,30 @@ class Model {
   }
 
   get sortedValues(): Values {
-    if (this.settings.sortValues) {
-      if (this.settings.sortOnlyPares && this._values.length % 2 === 0) {
+    if (this._settings.sortValues) {
+      if (this._settings.sortOnlyPares && this._values.length % 2 === 0) {
         //если нужно сортировать попарно и количество значений четно
         const arr = this._values.slice(0);
-        for (let i = 0; i < arr.length; i += 2) {
-          if (arr[i] > arr[i + 1]) {
-            let tmp = arr[i];
-            arr[i] = arr[i + 1];
-            arr[i + 1] = tmp;
+        if (this._settings.sortReverse) {
+          for (let i = 0; i < arr.length; i += 2) {
+            if (arr[i] < arr[i + 1]) {
+              let tmp = arr[i];
+              arr[i] = arr[i + 1];
+              arr[i + 1] = tmp;
+            }
           }
-        }
-        if (this.settings.sortReverse) {
-          return arr.reverse();
+        } else {
+          for (let i = 0; i < arr.length; i += 2) {
+            if (arr[i] > arr[i + 1]) {
+              let tmp = arr[i];
+              arr[i] = arr[i + 1];
+              arr[i + 1] = tmp;
+            }
+          }
         }
         return arr;
       } else {
-        if (this.settings.sortReverse) {
+        if (this._settings.sortReverse) {
           return this._values.slice(0).sort(function(a: number, b: number): number {
             return b - a;
           });
@@ -75,7 +81,7 @@ class Model {
   }
 
   get formattedValues(): string {
-    const resultTemplate = this.settings.resultTemplate;
+    const resultTemplate = this._settings.resultTemplate;
     const sortedValues = this.sortedValues;
     let formattedString = 'undefined';
     if (resultTemplate !== 'default') {
@@ -95,11 +101,25 @@ class Model {
   set values(newValues: Values) {
     if (this.checkValue(newValues)) {
       this._values = newValues;
-      this.trigger('valueChanged', this);
+      this.trigger('modelValueChanged');
     }
   }
 
-  public getValue(coords: number, base: BasicElementView): number {
+  set settings(newSettings: Settings) {
+    this._settings = $.extend(this._settings, newSettings);
+    if (this.checkValue(this._settings.startValues)) {
+      this._values = this._settings.startValues;
+    } else {
+      throw new RangeError('Start value is invalid (out of range)!');
+    }
+    this.trigger('modelSettingsUpdated');
+  }
+
+  set presenter(newPresenter: Presenter) {
+    this._presenter = newPresenter;
+  }
+
+  public getValue(coords: number, base: BaseView): number {
     //возвращает значение ползунка в зависимости от min, max, ширины базы, положения мыши, положения базы и настроек слайдера
     const settings = this.settings;
     const roundTo = 10 ** settings.roundTo;

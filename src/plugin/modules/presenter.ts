@@ -12,14 +12,14 @@ class Presenter {
   public on: Function;
   public off: Function;
 
-  public _model: Model;
-  public _view: View;
+  private _model: Model;
+  private _view: View;
 
   constructor(model: Model, view: View) {
     this._model = model;
-    this._model._presenter = this;
+    this._model.presenter = this;
     this._view = view;
-    this._view._presenter = this;
+    this._view.presenter = this;
     this.on('handlerMoved', function(handler: HandlerView, coords: number) {
       const value = model.getValue(coords, view.elements.base),
         percentage = view.getPercentage(value);
@@ -30,9 +30,12 @@ class Presenter {
       }
     });
     this.on('handlerEnd', function() {
-      view.elements.input.update(model.sortedValues);
+      if (view.elements.input) view.elements.input.update(model.sortedValues);
     });
-    this.on('valueChanged', function() {
+    this.on('modelSettingsUpdated', function() {
+      view.update();
+    });
+    this.on('modelValueChanged', function() {
       view.elements.input.update(model.sortedValues);
       if (view.elements.result) {
         view.elements.result.update(model.formattedValues);
@@ -61,17 +64,13 @@ class Presenter {
       if (nearestHandler) {
         nearestHandler.focus = true;
         model.values[nearestHandler.index] = value;
-        this.trigger('valueChanged', model);
+        this.trigger('modelValueChanged');
       }
     });
   }
 
   get values(): Values {
     return this._model.values;
-  }
-
-  set values(newValues: Values) {
-    this._model.values = newValues;
   }
 
   get sortedValues(): Values {
@@ -84,6 +83,14 @@ class Presenter {
 
   get settings(): Settings {
     return this._model.settings;
+  }
+
+  set settings(newSettings: Settings) {
+    this._model.settings = newSettings;
+  }
+
+  set values(newValues: Values) {
+    this._model.values = newValues;
   }
 
   public trigger(eventType: string, ...args: any) {

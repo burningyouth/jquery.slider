@@ -14,27 +14,35 @@ import $ from 'jquery';
 
 class View {
   private _eventHandlers: Object = {};
+  private _presenter: Presenter;
+
   public exec: Function;
   public on: Function;
   public off: Function;
 
   public input: JQuery<HTMLElement>; //поле, в которое записывается значения ползунков
-  public _presenter: Presenter;
+  public inputParent: JQuery<HTMLElement>; //поле, в которое записывается значения ползунков
 
-  public elements: slider.Elements = {};
+  public elements: slider.Elements = {
+    handlers: [],
+    connectors: [],
+    tooltips: [],
+    bounds: []
+  };
 
-  constructor(input: JQuery<HTMLElement>) {
-    this.elements = {
-      handlers: [],
-      connectors: [],
-      tooltips: [],
-      bounds: []
-    };
-    this.input = input;
+  constructor(input?: JQuery<HTMLElement>) {
+    if (input) {
+      this.input = input;
+      this.inputParent = input.parent();
+    }
   }
 
   get settings(): slider.Settings {
     return this._presenter.settings;
+  }
+
+  set presenter(newPresenter: Presenter) {
+    this._presenter = newPresenter;
   }
 
   public addClasses(obj: slider.AdditionalClasses): View {
@@ -54,7 +62,7 @@ class View {
   }
 
   public initParent(): View {
-    this.elements.parent = new BasicElementView(this, this.input.parent());
+    this.elements.parent = new BasicElementView(this, this.inputParent);
     return this;
   }
 
@@ -192,6 +200,12 @@ class View {
     if (this.settings.handlersColors[index]) {
       this.elements.handlers[index].css('background-color', this.settings.handlersColors[index]);
     }
+    if (this.settings.handlersStateClasses.active) {
+      this.elements.handlers[index].activeClass += ` ${this.settings.handlersStateClasses.active}`;
+    }
+    if (this.settings.handlersStateClasses.focus) {
+      this.elements.handlers[index].focusClass += ` ${this.settings.handlersStateClasses.focus}`;
+    }
     this.initTooltip(index)
       .initConnector(index)
       .initProgressBar();
@@ -209,14 +223,6 @@ class View {
 
     this.settings.startValues.forEach((value, index) => {
       this.initHandler(value, index);
-      if (this.settings.handlersStateClasses.active) {
-        this.elements.handlers[
-          index
-        ].activeClass += ` ${this.settings.handlersStateClasses.active}`;
-      }
-      if (this.settings.handlersStateClasses.focus) {
-        this.elements.handlers[index].focusClass += ` ${this.settings.handlersStateClasses.focus}`;
-      }
     });
 
     this.addClasses(this.settings.additionalClasses);
@@ -238,6 +244,20 @@ class View {
     return this;
   }
 
+  public update() {
+    if (this.elements.wrapper) {
+      this.elements.wrapper.remove();
+      this.elements = {
+        handlers: [],
+        connectors: [],
+        tooltips: [],
+        bounds: []
+      };
+    }
+    this.init();
+    this._presenter.trigger('viewUpdated');
+  }
+
   public getPercentage(value: number): number {
     //возвращает процентное соотношение value от min, max
     const settings = this.settings;
@@ -257,7 +277,7 @@ class View {
 
   public trigger(eventType: string, ...args: any) {
     this.exec(eventType, ...args);
-    this._presenter.trigger(eventType, ...args);
+    if (this._presenter) this._presenter.trigger(eventType, ...args);
   }
 }
 

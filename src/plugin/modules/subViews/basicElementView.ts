@@ -5,13 +5,14 @@ import $ from 'jquery';
 
 class BasicElementView {
   private _eventHandlers: Object = {};
+  private _view: View;
+
   public exec: Function;
   public on: Function;
   public off: Function;
 
   public parent: JQuery<HTMLElement>;
   public element: JQuery<HTMLElement>;
-  public view: View;
 
   constructor(
     view: View,
@@ -21,17 +22,17 @@ class BasicElementView {
   ) {
     this.element = element;
     this.parent = parent;
-    this.view = view;
+    this._view = view;
     initCallback(this);
   }
 
   get settings(): Settings {
-    return this.view.settings;
+    return this._view.settings;
   }
 
   public trigger(eventType: string, ...args: any) {
     this.exec(eventType, ...args);
-    this.view.trigger(eventType, ...args);
+    this._view.trigger(eventType, ...args);
   }
 
   public removeClass(className: string): any {
@@ -46,13 +47,21 @@ class BasicElementView {
 
   public css(
     propertyName: string,
-    value_function:
+    value_function?:
       | string
       | number
       | ((this: HTMLElement, index: number, value: string) => string | number | void)
   ): any {
-    this.element.css(propertyName, value_function);
-    return this;
+    if (value_function) {
+      this.element.css(propertyName, value_function);
+      return this;
+    } else {
+      return this.element.css(propertyName);
+    }
+  }
+
+  public remove(): void {
+    this.element.remove();
   }
 
   public static basicInit(that: BasicElementView): void {

@@ -1,18 +1,27 @@
 const events = {
   on(eventType: string, handler: Function) {
-    if (this._eventHandlers[eventType]) this._eventHandlers[eventType].push(handler);
-    else {
-      this._eventHandlers[eventType] = [handler];
-    }
+    const eventTypes = eventType.split(' ');
+    eventTypes.forEach(event => {
+      if (this._eventHandlers[event]) this._eventHandlers[event].push(handler);
+      else {
+        this._eventHandlers[event] = [handler];
+      }
+    });
   },
 
   off(eventType: string) {
-    if (this._eventHandlers[eventType]) delete this._eventHandlers[eventType];
+    const eventTypes = eventType.split(' ');
+    eventTypes.forEach(event => {
+      if (this._eventHandlers[event]) delete this._eventHandlers[event];
+    });
   },
 
   exec(eventType: string, ...args: any) {
-    if (this._eventHandlers[eventType])
-      this._eventHandlers[eventType].forEach((handler: Function) => handler.call(this, ...args));
+    const eventTypes = eventType.split(' ');
+    eventTypes.forEach(event => {
+      if (this._eventHandlers[event])
+        this._eventHandlers[event].forEach((handler: Function) => handler.call(this, ...args));
+    });
   }
 };
 
