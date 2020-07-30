@@ -42,8 +42,8 @@ class HandlerView extends BasicElementView {
 
     that.element.on('mousedown', function(e) {
       e.preventDefault();
-      that.trigger('handlerStart', that);
       if (e.which == 1) {
+        that.trigger('handlerStart', that);
         $(window).on('mousemove', function(e2) {
           that.trigger('handlerMoved', that, e2[coordsAxis]);
         });
@@ -58,7 +58,7 @@ class HandlerView extends BasicElementView {
 
     that.element.on('touchstart', function(e) {
       e.preventDefault();
-      $(this).trigger('handlerStart', that);
+      that.trigger('handlerStart', that);
       $(window).on('touchmove', function(e2) {
         that.trigger('handlerMoved', that, e2.touches[0][coordsAxis]);
       });

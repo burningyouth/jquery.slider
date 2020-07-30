@@ -29,8 +29,11 @@ class Model {
     handlersStateClasses: {},
     additionalClasses: {}
   };
-
   private _values: Values;
+
+  public baseStartCoords: number = 0;
+  public baseEndCoords: number = 0;
+  public devideTo: number = 1;
 
   constructor(options?: Settings) {
     this.settings = options;
@@ -125,7 +128,7 @@ class Model {
     const settings = this.settings;
     const roundTo = 10 ** settings.roundTo;
 
-    let value: number, devider: number, startCoords: number;
+    let value: number, devider: number, startCoords: number, endCoords: number;
     if (settings.vertical) {
       devider = base.element.height();
       startCoords = base.element[0].getBoundingClientRect().top;

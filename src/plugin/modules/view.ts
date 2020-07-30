@@ -21,8 +21,7 @@ class View {
   public off: Function;
 
   public input: JQuery<HTMLElement>; //поле, в которое записывается значения ползунков
-  public inputParent: JQuery<HTMLElement>; //поле, в которое записывается значения ползунков
-
+  public inputParent: JQuery<HTMLElement>;
   public elements: slider.Elements = {
     handlers: [],
     connectors: [],

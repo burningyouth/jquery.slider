@@ -35,36 +35,6 @@ const view = new View();
 const base = new BaseView(view, $('<div style="width: 200px; height: 200px;"></div>'));
 
 describe('Model', () => {
-  test('Settings are merged', () => {
-    expect(model.settings).toEqual({
-      min: 10,
-      max: 230,
-      range: true,
-      reverse: false,
-      progressBar: false,
-      startValues: [30, 70],
-      handlersColors: [],
-      connectorsColors: [],
-      step: 5,
-      roundTo: 2,
-      vertical: false,
-      tooltipReverse: true,
-      showTooltip: true,
-      showResult: false,
-      showBounds: false,
-      sortValues: true,
-      sortReverse: false,
-      sortOnlyPares: true,
-      resultTemplate: '$1 - $2',
-      handlersStateClasses: {
-        active: 'active'
-      },
-      additionalClasses: {
-        wrapper: 'test'
-      }
-    });
-  });
-
   test('checkValue() is working fine', () => {
     model.settings.min = 0;
     model.settings.max = 100;

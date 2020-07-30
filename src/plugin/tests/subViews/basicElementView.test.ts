@@ -4,6 +4,10 @@ import View from '../../modules/view';
 import Presenter from '../../modules/presenter';
 import $ from 'jquery';
 
+const input = $('<input id="test" type="text">');
+const body = $('<body style="width: 500px; height: 500px;"></body>');
+input.appendTo(body);
+
 const model = new Model({
   min: 10,
   max: 230,
@@ -31,9 +35,10 @@ const model = new Model({
     wrapper: 'test'
   }
 });
-const view = new View();
+const view = new View(input);
 const presenter = new Presenter(model, view);
-const basicElementView = new BasicElementView(view, $('<div>Test</div>'), $('<body></body>'));
+view.init();
+const basicElementView = view.elements.baseWrapper;
 
 describe('BasicElementView', () => {
   test('Parent and element is defined', () => {

@@ -16,6 +16,7 @@ const model = new Model({
   step: 1,
   roundTo: 0,
   tooltipReverse: false,
+  clickableBase: true,
   showTooltip: false,
   showResult: true,
   showBounds: true,
@@ -27,7 +28,6 @@ const model = new Model({
 
 const view = new View(input);
 const presenter = new Presenter(model, view);
-
 view.init();
 
 describe('Presenter', () => {
@@ -48,17 +48,28 @@ describe('Presenter', () => {
   });
 
   test('View events is working fine', () => {
-    const handler = view.elements.handlers[0],
+    let handler1 = view.elements.handlers[0],
+      handler2 = view.elements.handlers[1],
+      base = view.elements.base,
       input = view.input,
       inputValBefore = input.val(),
       modelValueBefore = model.values[0],
-      handlerValueBefore = handler.value,
-      handlerPercentageBefore = handler.percentage;
-    handler.trigger('handlerMoved', handler, 10);
-    handler.trigger('handlerEnd', handler);
-    expect(handlerValueBefore < handler.value).toBeTruthy();
+      handlerValueBefore = handler1.value,
+      handlerPercentageBefore = handler1.percentage;
+    handler1.trigger('handlerMoved', handler1, 10);
+    handler1.trigger('handlerEnd', handler1);
+    expect(handlerValueBefore < handler1.value).toBeTruthy();
     expect(modelValueBefore < model.values[0]).toBeTruthy();
-    expect(handlerPercentageBefore < handler.percentage).toBeTruthy();
+    expect(handlerPercentageBefore < handler1.percentage).toBeTruthy();
+    expect(inputValBefore != input.val()).toBeTruthy();
+    inputValBefore = input.val();
+    modelValueBefore = model.values[1];
+    handlerValueBefore = handler2.value;
+    handlerPercentageBefore = handler2.percentage;
+    handler1.trigger('baseClicked', base, -10);
+    expect(handlerValueBefore > handler2.value).toBeTruthy();
+    expect(modelValueBefore > model.values[1]).toBeTruthy();
+    expect(handlerPercentageBefore > handler2.percentage).toBeTruthy();
     expect(inputValBefore != input.val()).toBeTruthy();
   });
 
@@ -66,7 +77,6 @@ describe('Presenter', () => {
     let handler = view.elements.handlers[0];
     const input = view.input,
       inputValBefore = input.val(),
-      modelValueBefore = model.values[0],
       handlerValueBefore = handler.value,
       handlerPercentageBefore = handler.percentage;
     model.settings = {

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">8.33% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/12</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">66.67% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>4/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">9.09% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/11</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -103,7 +103,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -112,27 +112,27 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -146,33 +146,33 @@ class ProgressBarView extends BasicElementView {
   public static elementBase = $('&lt;div class="js-slider__connector"&gt;&lt;/div&gt;');
   public pairedHandler: HandlerView;
 &nbsp;
-<span class="fstat-no" title="function not covered" >  co</span>nstructor(
+  constructor(
     view: View,
     pairedHandler: HandlerView,
     parent: JQuery&lt;HTMLElement&gt; = <span class="branch-0 cbranch-no" title="branch not covered" >$('body'),</span>
-    initCallback: Function = <span class="branch-0 cbranch-no" title="branch not covered" >ProgressBarView.init</span>
+    initCallback: Function = ProgressBarView.init
   ) {
-<span class="cstat-no" title="statement not covered" >    super(view, ProgressBarView.elementBase.clone(), parent, initCallback);</span>
-<span class="cstat-no" title="statement not covered" >    this.pairedHandler = pairedHandler;</span>
-<span class="cstat-no" title="statement not covered" >    this.update();</span>
+    super(view, ProgressBarView.elementBase.clone(), parent, initCallback);
+    this.pairedHandler = pairedHandler;
+    this.update();
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  pu</span>blic update(): ProgressBarView {
-    const percentage = <span class="cstat-no" title="statement not covered" >this.pairedHandler.percentage;</span>
+  public update(): ProgressBarView {
+    const percentage = this.pairedHandler.percentage;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (this.settings.vertical) {</span>
-<span class="cstat-no" title="statement not covered" >      this.element.css('top', `${percentage}%`);</span>
+    if (this.settings.vertical) {
+      this.element.css('top', `${percentage}%`);
     } else {
-<span class="cstat-no" title="statement not covered" >      this.element.css('right', `${100 - percentage}%`);</span>
+      this.element.css('right', `${100 - percentage}%`);
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    this.element.trigger('progressBarUpdated', this);</span>
+    this.element.trigger('progressBarUpdated', this);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return this;</span>
+    return this;
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  pu</span>blic static init(that: ProgressBarView): void {
-<span class="cstat-no" title="statement not covered" >    if (that.parent) <span class="cstat-no" title="statement not covered" >that.parent.prepend(that.element);</span></span>
+  public static init(that: ProgressBarView): void {
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (that.parent) that.parent.prepend(that.element);
   }
 }
 &nbsp;
@@ -184,7 +184,7 @@ export default ProgressBarView;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Jul 29 2020 20:13:42 GMT+0400 (GMT+04:00)
+                at Thu Jul 30 2020 13:48:29 GMT+0400 (GMT+04:00)
             </div>
         </div>
         <script src="../../prettify.js"></script>
