@@ -42,6 +42,7 @@ interface Settings {
   sortValues?: boolean;
   sortOnlyPares?: boolean;
   sortReverse?: boolean;
+  clickableBase?: boolean;
   reverse?: boolean;
   tooltipReverse?: boolean;
   vertical?: boolean;

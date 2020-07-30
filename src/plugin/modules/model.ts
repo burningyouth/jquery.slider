@@ -21,6 +21,7 @@ class Model {
     showTooltip: false,
     showResult: true,
     showBounds: true,
+    clickableBase: true,
     sortValues: false,
     sortOnlyPares: false,
     sortReverse: false,

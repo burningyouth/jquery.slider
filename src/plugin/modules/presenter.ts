@@ -45,28 +45,30 @@ class Presenter {
         handler.update(view.getPercentage(value), value);
       });
     });
-    this.on('baseClicked', function(base: BaseView, coords: number) {
-      const value = model.getValue(coords, view.elements.base),
-        percentage = view.getPercentage(value);
-      let nearestHandler: HandlerView = view.elements.handlers[0];
-      if (view.elements.handlers.length > 1) {
-        let lastDif: number = 100,
-          dif: number;
-        view.elements.handlers.forEach(item => {
-          item.focus = false;
-          dif = Math.abs(item.percentage - percentage);
-          if (lastDif > dif) {
-            nearestHandler = item;
-            lastDif = dif;
-          }
-        });
-      }
-      if (nearestHandler) {
-        nearestHandler.focus = true;
-        model.values[nearestHandler.index] = value;
-        this.trigger('modelValueChanged');
-      }
-    });
+    if (model.settings.clickableBase) {
+      this.on('baseClicked', function(base: BaseView, coords: number) {
+        const value = model.getValue(coords, view.elements.base),
+          percentage = view.getPercentage(value);
+        let nearestHandler: HandlerView = view.elements.handlers[0];
+        if (view.elements.handlers.length > 1) {
+          let lastDif: number = 100,
+            dif: number;
+          view.elements.handlers.forEach(item => {
+            item.focus = false;
+            dif = Math.abs(item.percentage - percentage);
+            if (lastDif > dif) {
+              nearestHandler = item;
+              lastDif = dif;
+            }
+          });
+        }
+        if (nearestHandler) {
+          nearestHandler.focus = true;
+          model.values[nearestHandler.index] = value;
+          this.trigger('modelValueChanged');
+        }
+      });
+    }
   }
 
   get values(): Values {
