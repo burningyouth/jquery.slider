@@ -1,5 +1,6 @@
 import BasicElementView from './basicElementView';
 import HandlerView from './handlerView';
+import BaseView from './baseView';
 import View from '../view';
 import $ from 'jquery';
 
@@ -10,11 +11,18 @@ class ProgressBarView extends BasicElementView {
   constructor(
     view: View,
     pairedHandler: HandlerView,
-    parent: JQuery<HTMLElement> = $('body'),
+    base: BaseView,
     initCallback: Function = ProgressBarView.init
   ) {
-    super(view, ProgressBarView.elementBase.clone(), parent, initCallback);
+    super(view, ProgressBarView.elementBase.clone(), base.element, initCallback);
     this.pairedHandler = pairedHandler;
+
+    if (view.settings.connectorsColors[0]) {
+      this.css('background-color', view.settings.connectorsColors[0]);
+    } else if (view.settings.handlersColors[0]) {
+      this.css('background-color', view.settings.handlersColors[0]);
+    }
+
     this.update();
   }
 

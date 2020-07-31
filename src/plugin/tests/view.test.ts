@@ -139,7 +139,7 @@ describe('View', () => {
     const val4 = await input4.getProperty('value');
 
     expect(val1._remoteObject.value).toBe('{"value":[90,100]}');
-    expect(val2._remoteObject.value).toBe('{"value":[-90]}');
+    expect(val2._remoteObject.value).toBe('-90');
 
     expect(val3._remoteObject.value).toBe('{"value":[90,150,205,420]}');
     expect(val4._remoteObject.value).toBe('{"value":[-150,-430]}');

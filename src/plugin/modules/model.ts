@@ -1,17 +1,21 @@
-import BaseView from './subViews/baseView';
 import Presenter from './presenter';
 import { Settings, Values } from '../types/slider';
 import $ from 'jquery';
+import BaseView from './subViews/baseView';
 
 class Model {
   private _presenter: Presenter;
   private _settings: Settings = {
+    //default settings
     min: 0,
     max: 100,
     range: false,
     progressBar: false,
     reverse: false,
     startValues: [30, 70],
+    showMarks: false,
+    marksCount: 10,
+    clickableMark: true,
     handlersColors: [],
     connectorsColors: [],
     step: 1,
@@ -21,6 +25,8 @@ class Model {
     showTooltip: false,
     showResult: true,
     showBounds: true,
+    showMarkValue: true,
+    markValueReverse: false,
     clickableBase: true,
     sortValues: false,
     sortOnlyPares: false,
@@ -105,7 +111,7 @@ class Model {
   set values(newValues: Values) {
     if (this.checkValue(newValues)) {
       this._values = newValues;
-      this.trigger('modelValueChanged');
+      this.trigger('valueChanged');
     }
   }
 
@@ -116,25 +122,62 @@ class Model {
     } else {
       throw new RangeError('Start value is invalid (out of range)!');
     }
-    this.trigger('modelSettingsUpdated');
+    this.trigger('settingsUpdated');
   }
 
   set presenter(newPresenter: Presenter) {
     this._presenter = newPresenter;
   }
 
-  public getValue(coords: number, base: BaseView): number {
-    //возвращает значение ползунка в зависимости от min, max, ширины базы, положения мыши, положения базы и настроек слайдера
+  public valueFromPercentage(percentage: number): number {
     const settings = this.settings;
     const roundTo = 10 ** settings.roundTo;
 
-    let value: number, devider: number, startCoords: number, endCoords: number;
-    if (settings.vertical) {
-      devider = base.element.height();
-      startCoords = base.element[0].getBoundingClientRect().top;
+    let value = percentage / 100;
+    value *= settings.max - settings.min;
+
+    if ((settings.reverse && !settings.vertical) || (!settings.reverse && settings.vertical)) {
+      if (settings.max >= 0 && settings.min >= 0) {
+        value = settings.max - value;
+      } else if (settings.max < 0 && settings.min < 0) {
+        value = settings.max - settings.min - value;
+      } else {
+        value = settings.max * ((settings.max - settings.min) / settings.max) - value;
+      }
+    }
+
+    value = settings.step
+      ? settings.min + Math.floor(value / settings.step + 0.5) * settings.step
+      : settings.min + value; //форматируется значение в зависимости от step
+    value = roundTo ? Math.floor(value * roundTo) / roundTo : value; //округление числа до roundTo
+
+    if (value >= settings.min && value <= settings.max) {
+      //если значение не попадает в границы, то мы берем за значение эти границы
+      return value;
+    } else if (value > settings.max) {
+      return settings.max;
+    }
+    return settings.min;
+  }
+
+  public valueFromCoords(coords: number, base?: BaseView): number {
+    //возвращает значение ползунка в зависимости от min, max, ширины базы, положения мыши, положения базы и настроек слайдера
+    const settings = this.settings,
+      roundTo = 10 ** settings.roundTo;
+    let baseView: BaseView;
+    if (base) {
+      baseView = base;
     } else {
-      devider = base.element.width();
-      startCoords = base.element[0].getBoundingClientRect().left;
+      baseView = this._presenter.base;
+    }
+
+    let value: number, devider: number, startCoords: number;
+    if (settings.vertical) {
+      devider = baseView.element.height();
+      startCoords = baseView.element[0].getBoundingClientRect().top;
+    } else {
+      devider = baseView.element.width();
+      startCoords = baseView.element[0].getBoundingClientRect().left;
     }
 
     value = (coords - startCoords) / devider;

@@ -1,4 +1,5 @@
 import BasicElementView from './basicElementView';
+import BaseView from './baseView';
 import HandlerView from './handlerView';
 import View from '../view';
 import $ from 'jquery';
@@ -13,12 +14,19 @@ class ConnectorView extends BasicElementView {
     view: View,
     index: number = 0,
     pairedHandlers: HandlerView[],
-    parent: JQuery<HTMLElement> = $('body'),
+    base: BaseView,
     initCallback: Function = ConnectorView.init
   ) {
-    super(view, ConnectorView.elementBase.clone(), parent, initCallback);
+    super(view, ConnectorView.elementBase.clone(), base.element, initCallback);
     this.index = index;
     this.pairedHandlers = pairedHandlers;
+
+    if (view.settings.connectorsColors[index]) {
+      this.css('background-color', view.settings.connectorsColors[index]);
+    } else if (view.settings.handlersColors[index * 2]) {
+      this.css('background-color', view.settings.handlersColors[index * 2]);
+    }
+
     this.update();
   }
 

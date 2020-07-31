@@ -24,12 +24,16 @@ class InputView extends BasicElementView {
 
   public update(values?: Values): InputView {
     if (values) this.values = values;
-    this.element.attr(
-      'value',
-      JSON.stringify({
-        value: this.values
-      })
-    );
+    if (this.values.length > 1) {
+      this.element.attr(
+        'value',
+        JSON.stringify({
+          value: this.values
+        })
+      );
+    } else {
+      this.element.attr('value', this.values[0]);
+    }
     this.trigger('inputUpdated', this);
 
     return this;

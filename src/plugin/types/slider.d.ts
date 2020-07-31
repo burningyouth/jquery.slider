@@ -7,6 +7,7 @@ import ResultView from '../modules/subViews/resultView';
 import TooltipView from '../modules/subViews/tooltipView';
 import InputView from '../modules/subViews/inputView';
 import BaseView from '../modules/subViews/baseView';
+import MarkView from '../modules/subViews/markView';
 
 interface AdditionalClasses {
   parent?: string;
@@ -34,6 +35,10 @@ interface Settings {
   step?: number;
   progressBar?: boolean;
   startValues?: Values;
+  showMarks?: boolean;
+  marksCount?: number;
+  clickableMark?: boolean;
+  showMarkValue?: boolean;
   handlersColors?: Array<string>;
   connectorsColors?: Array<string>;
   showResult?: boolean;
@@ -45,6 +50,7 @@ interface Settings {
   clickableBase?: boolean;
   reverse?: boolean;
   tooltipReverse?: boolean;
+  markValueReverse?: boolean;
   vertical?: boolean;
   roundTo?: number;
   resultTemplate?: string;
@@ -58,10 +64,12 @@ interface Elements {
   parent?: BasicElementView;
   input?: InputView;
   wrapper?: BasicElementView;
-  base?: BaseView;
   baseWrapper?: BasicElementView;
-  handlers?: Array<HandlerView>;
   bounds?: Array<BoundView>;
+  base?: BaseView;
+  marksWrapper?: BasicElementView;
+  marks?: Array<MarkView>;
+  handlers?: Array<HandlerView>;
   tooltips?: Array<TooltipView>;
   progressBar?: ProgressBarView;
   connectors?: Array<ConnectorView>;

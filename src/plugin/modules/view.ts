@@ -2,6 +2,7 @@ import * as slider from '../types/slider';
 import Presenter from './presenter';
 import BasicElementView from './subViews/basicElementView';
 import BaseView from './subViews/baseView';
+import MarkView from './subViews/markView';
 import BoundView from './subViews/boundView';
 import HandlerView from './subViews/handlerView';
 import ConnectorView from './subViews/connectorView';
@@ -19,6 +20,7 @@ class View {
   public exec: Function;
   public on: Function;
   public off: Function;
+  public valueFromPercentage: Function;
 
   public input: JQuery<HTMLElement>; //поле, в которое записывается значения ползунков
   public inputParent: JQuery<HTMLElement>;
@@ -26,7 +28,8 @@ class View {
     handlers: [],
     connectors: [],
     tooltips: [],
-    bounds: []
+    bounds: [],
+    marks: []
   };
 
   constructor(input?: JQuery<HTMLElement>) {
@@ -101,9 +104,29 @@ class View {
     return this;
   }
 
+  public initMarksWrapper(): View {
+    if (this.settings.showMarks) {
+      this.elements.marksWrapper = new BasicElementView(
+        this,
+        $('<div class="js-slider__marks-wrapper"></div>'),
+        this.elements.base.element
+      );
+    }
+    return this;
+  }
+
+  public initMarks(): View {
+    if (this.elements.marksWrapper) {
+      for (let i = 0; i <= this.settings.marksCount; i++) {
+        this.elements.marks.push(new MarkView(this, i, this.elements.marksWrapper));
+      }
+    }
+    return this;
+  }
+
   public initBounds(): View {
     const settings = this.settings;
-    if (settings.showBounds) {
+    if (settings.showBounds && !settings.showMarks) {
       this.elements.bounds.push(
         new BoundView(this, settings.min, this.elements.baseWrapper.element)
       );
@@ -137,11 +160,6 @@ class View {
     if (this.settings.showTooltip) {
       this.elements.tooltips.push(new TooltipView(this, this.elements.handlers[index]));
       this.elements.handlers[index].tooltip = this.elements.tooltips[index];
-      if (this.settings.vertical && this.settings.tooltipReverse) {
-        this.elements.tooltips[index].addClass('js-slider__tooltip_left');
-      } else if (this.settings.tooltipReverse) {
-        this.elements.tooltips[index].addClass('js-slider__tooltip_bottom');
-      }
     }
     return this;
   }
@@ -151,14 +169,9 @@ class View {
       this.elements.progressBar = new ProgressBarView(
         this,
         this.elements.handlers[0],
-        this.elements.base.element
+        this.elements.base
       );
       this.elements.handlers[0].connector = this.elements.progressBar;
-      if (this.settings.connectorsColors[0]) {
-        this.elements.progressBar.css('background-color', this.settings.connectorsColors[0]);
-      } else if (this.settings.handlersColors[0]) {
-        this.elements.progressBar.css('background-color', this.settings.handlersColors[0]);
-      }
     }
     return this;
   }
@@ -171,22 +184,11 @@ class View {
           this,
           connectorIndex,
           [this.elements.handlers[index - 1], this.elements.handlers[index]],
-          this.elements.base.element
+          this.elements.base
         )
       );
       this.elements.handlers[index - 1].connector = this.elements.connectors[connectorIndex];
       this.elements.handlers[index].connector = this.elements.connectors[connectorIndex];
-      if (this.settings.connectorsColors[connectorIndex]) {
-        this.elements.connectors[connectorIndex].css(
-          'background-color',
-          this.settings.connectorsColors[connectorIndex]
-        );
-      } else if (this.settings.handlersColors[index]) {
-        this.elements.connectors[connectorIndex].css(
-          'background-color',
-          this.settings.handlersColors[index]
-        );
-      }
     }
 
     return this;
@@ -196,15 +198,6 @@ class View {
     this.elements.handlers.push(
       new HandlerView(this, index, this.getPercentage(value), value, this.elements.base)
     );
-    if (this.settings.handlersColors[index]) {
-      this.elements.handlers[index].css('background-color', this.settings.handlersColors[index]);
-    }
-    if (this.settings.handlersStateClasses.active) {
-      this.elements.handlers[index].activeClass += ` ${this.settings.handlersStateClasses.active}`;
-    }
-    if (this.settings.handlersStateClasses.focus) {
-      this.elements.handlers[index].focusClass += ` ${this.settings.handlersStateClasses.focus}`;
-    }
     this.initTooltip(index)
       .initConnector(index)
       .initProgressBar();
@@ -217,8 +210,10 @@ class View {
       .initInput()
       .initBaseWrapper()
       .initBase()
-      .initBounds()
-      .initResult();
+      .initMarksWrapper()
+      .initResult()
+      .initMarks()
+      .initBounds();
 
     this.settings.startValues.forEach((value, index) => {
       this.initHandler(value, index);
@@ -243,14 +238,15 @@ class View {
     return this;
   }
 
-  public update() {
+  public reset() {
     if (this.elements.wrapper) {
       this.elements.wrapper.remove();
       this.elements = {
         handlers: [],
         connectors: [],
         tooltips: [],
-        bounds: []
+        bounds: [],
+        marks: []
       };
     }
     this.init();
@@ -272,6 +268,23 @@ class View {
       return 100;
     }
     return 0;
+  }
+
+  public nearestHandler(percentage: number): HandlerView {
+    let nearestHandler: HandlerView = this.elements.handlers[0];
+    if (this.elements.handlers.length > 1) {
+      let lastDif: number = 100,
+        dif: number;
+      this.elements.handlers.forEach(item => {
+        item.focus = false;
+        dif = Math.abs(item.percentage - percentage);
+        if (lastDif > dif) {
+          nearestHandler = item;
+          lastDif = dif;
+        }
+      });
+    }
+    return nearestHandler;
   }
 
   public trigger(eventType: string, ...args: any) {

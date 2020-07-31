@@ -8,7 +8,7 @@ class BaseView extends BasicElementView {
 
   constructor(view: View, baseWrapper: BasicElementView, initCallback: Function = BaseView.init) {
     super(view, BaseView.elementBase.clone(), baseWrapper.element, initCallback);
-    if (view.settings.clickableBase) {
+    if (view.settings.clickableBase && !view.settings.showMarks) {
       this.addClass(this.clickableClass);
     }
   }

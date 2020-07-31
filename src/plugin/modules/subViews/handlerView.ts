@@ -1,4 +1,5 @@
 import BasicElementView from './basicElementView';
+import BaseView from './baseView';
 import ConnectorView from './connectorView';
 import TooltipView from './tooltipView';
 import View from '../view';
@@ -25,13 +26,24 @@ class HandlerView extends BasicElementView {
     index: number = 0,
     percentage: number = 0,
     value: number = 0,
-    base: BasicElementView,
+    base: BaseView,
     initCallback: Function = HandlerView.init
   ) {
     super(view, HandlerView.elementBase.clone(), base.element, initCallback);
     this.index = index;
     this.percentage = percentage;
     this.value = value;
+
+    if (view.settings.handlersColors[index]) {
+      this.css('background-color', view.settings.handlersColors[index]);
+    }
+    if (view.settings.handlersStateClasses.active) {
+      this.activeClass += ` ${view.settings.handlersStateClasses.active}`;
+    }
+    if (view.settings.handlersStateClasses.focus) {
+      this.focusClass += ` ${view.settings.handlersStateClasses.focus}`;
+    }
+
     this.update();
   }
 

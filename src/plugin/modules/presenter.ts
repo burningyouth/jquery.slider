@@ -5,6 +5,7 @@ import HandlerView from './subViews/handlerView';
 import events from './mixins/eventsMixin';
 import $ from 'jquery';
 import BaseView from './subViews/baseView';
+import MarkView from './subViews/markView';
 
 class Presenter {
   private _eventHandlers: Object = {};
@@ -20,8 +21,9 @@ class Presenter {
     this._model.presenter = this;
     this._view = view;
     this._view.presenter = this;
+    view.valueFromPercentage = model.valueFromPercentage;
     this.on('handlerMoved', function(handler: HandlerView, coords: number) {
-      const value = model.getValue(coords, view.elements.base),
+      const value = model.valueFromCoords(coords),
         percentage = view.getPercentage(value);
       model.values[handler.index] = value;
       handler.update(percentage, value);
@@ -32,10 +34,34 @@ class Presenter {
     this.on('handlerEnd', function() {
       if (view.elements.input) view.elements.input.update(model.sortedValues);
     });
-    this.on('modelSettingsUpdated', function() {
-      view.update();
+    if (model.settings.clickableBase && !model.settings.showMarks) {
+      this.on('baseClicked', function(base: BaseView, coords: number) {
+        const value = model.valueFromCoords(coords),
+          percentage = view.getPercentage(value),
+          nearestHandler = view.nearestHandler(percentage);
+        if (nearestHandler) {
+          nearestHandler.focus = true;
+          model.values[nearestHandler.index] = value;
+          this.trigger('valueChanged');
+        }
+      });
+    }
+    if (model.settings.clickableMark && model.settings.showMarks) {
+      this.on('markClicked', function(mark: MarkView) {
+        const value = model.valueFromPercentage(mark.percentage),
+          nearestHandler = view.nearestHandler(mark.percentage);
+        if (nearestHandler) {
+          nearestHandler.focus = true;
+          model.values[nearestHandler.index] = value;
+          this.trigger('valueChanged');
+        }
+      });
+    }
+
+    this.on('settingsUpdated', function() {
+      view.reset();
     });
-    this.on('modelValueChanged', function() {
+    this.on('valueChanged', function() {
       view.elements.input.update(model.sortedValues);
       if (view.elements.result) {
         view.elements.result.update(model.formattedValues);
@@ -45,30 +71,10 @@ class Presenter {
         handler.update(view.getPercentage(value), value);
       });
     });
-    if (model.settings.clickableBase) {
-      this.on('baseClicked', function(base: BaseView, coords: number) {
-        const value = model.getValue(coords, view.elements.base),
-          percentage = view.getPercentage(value);
-        let nearestHandler: HandlerView = view.elements.handlers[0];
-        if (view.elements.handlers.length > 1) {
-          let lastDif: number = 100,
-            dif: number;
-          view.elements.handlers.forEach(item => {
-            item.focus = false;
-            dif = Math.abs(item.percentage - percentage);
-            if (lastDif > dif) {
-              nearestHandler = item;
-              lastDif = dif;
-            }
-          });
-        }
-        if (nearestHandler) {
-          nearestHandler.focus = true;
-          model.values[nearestHandler.index] = value;
-          this.trigger('modelValueChanged');
-        }
-      });
-    }
+  }
+
+  get base(): BaseView {
+    return this._view.elements.base;
   }
 
   get values(): Values {
