@@ -30,10 +30,15 @@ class Presenter {
       if (view.elements.result) {
         view.elements.result.update(model.formattedValues);
       }
+      this.trigger('valueUpdated');
+      this.trigger('sliderUpdated');
     });
+
     this.on('handlerEnd', function() {
       if (view.elements.input) view.elements.input.update(model.sortedValues);
+      this.trigger('sliderEnd');
     });
+
     if (model.settings.clickableBase && !model.settings.showMarks) {
       this.on('baseClicked', function(base: BaseView, coords: number) {
         const value = model.valueFromCoords(coords),
@@ -42,10 +47,12 @@ class Presenter {
         if (nearestHandler) {
           nearestHandler.focus = true;
           model.values[nearestHandler.index] = value;
-          this.trigger('valueChanged');
+          this.trigger('valueUpdated');
+          this.trigger('valueEnd');
         }
       });
     }
+
     if (model.settings.clickableMark && model.settings.showMarks) {
       this.on('markClicked', function(mark: MarkView) {
         const value = model.valueFromPercentage(mark.percentage),
@@ -53,15 +60,17 @@ class Presenter {
         if (nearestHandler) {
           nearestHandler.focus = true;
           model.values[nearestHandler.index] = value;
-          this.trigger('valueChanged');
+          this.trigger('valueUpdated');
+          this.trigger('valueEnd');
         }
       });
     }
 
-    this.on('settingsUpdated', function() {
+    this.on('settingsEnd', function() {
       view.reset();
     });
-    this.on('valueChanged', function() {
+
+    this.on('valueEnd', function() {
       view.elements.input.update(model.sortedValues);
       if (view.elements.result) {
         view.elements.result.update(model.formattedValues);
@@ -70,6 +79,8 @@ class Presenter {
         const value = model.values[index];
         handler.update(view.getPercentage(value), value);
       });
+      this.trigger('sliderUpdated');
+      this.trigger('sliderEnd');
     });
   }
 

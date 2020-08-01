@@ -109,10 +109,13 @@ class Model {
   }
 
   set values(newValues: Values) {
-    if (this.checkValue(newValues)) {
-      this._values = newValues;
-      this.trigger('valueChanged');
-    }
+    if (Array.isArray(newValues)) {
+      if (this.checkValue(newValues)) {
+        this._values = newValues;
+        this.trigger('valueUpdated');
+        this.trigger('valueEnd');
+      } else throw new RangeError('Value is out of range!');
+    } else throw new TypeError('New value must be an Array!');
   }
 
   set settings(newSettings: Settings) {
@@ -122,7 +125,7 @@ class Model {
     } else {
       throw new RangeError('Start value is invalid (out of range)!');
     }
-    this.trigger('settingsUpdated');
+    this.trigger('settingsEnd');
   }
 
   set presenter(newPresenter: Presenter) {

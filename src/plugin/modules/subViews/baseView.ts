@@ -20,7 +20,7 @@ class BaseView extends BasicElementView {
 
     that.element.on('click touch', function(e) {
       e.preventDefault();
-      that.trigger('baseClicked', that, e[coordsAxis]);
+      if (e.target === that.element[0]) that.trigger('baseClicked', that, e[coordsAxis]);
     });
   }
 }

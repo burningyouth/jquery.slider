@@ -44,13 +44,12 @@ describe('Model', () => {
     expect(model.checkValue(0)).toBe(true);
   });
 
-  test("Values doesn't change if out of range", () => {
-    model.values = [89, 32, 64, 2];
-    model.values = [124, -24];
-    expect(model.values).toEqual([89, 32, 64, 2]);
-  });
+  /*test("Values doesn't change if out of range", () => {
+    expect((model.values = [124, -24])).toThrowError();
+  });*/
 
   test("Values doesn't sort if settings is false", () => {
+    model.values = [89, 32, 64, 2];
     model.settings.sortValues = false;
     model.settings.sortOnlyPares = false;
     expect(model.sortedValues).toEqual([89, 32, 64, 2]);
