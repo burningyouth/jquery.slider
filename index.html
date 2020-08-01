@@ -28,11 +28,16 @@
                 </div>
             </div>
 
-            <div style="display: inline-block; width: 49%;">
-                <input id="slider6" type="text"/>
+            <div style="display: flex; justify-content: flex-start;">
+                <div style="width: 50%;">
+                    <input id="slider6" type="text"/>
+                </div>
+                <div>
+                    <input id="slider7" type="text"/>
+                </div>
             </div>
-            <div style=" display: inline-block; width: 50%;">
-                <input id="slider7" type="text"/>
+            <div id="color-result" style="margin-top: 20px; color: gray;">
+                rgba(166, 181, 155, 0.35)
             </div>
         </form>
 
@@ -61,7 +66,7 @@
                 result: 'slider__result'
               }
             });
-            $('#slider2').slider({
+             $('#slider2').slider({
               min: -100,
               max: 100,
               step: 0,
@@ -136,7 +141,7 @@
               vertical: true,
               startValues: [166, 181, 155],
               showTooltip: true,
-              resultTemplate: 'rgb($1, $2, $3)',
+              showResult: false,
               handlersColors: ['#FC6A6A', '#8CFC6A', '#6AB2FC'],
               additionalClasses: {
                 wrapper: 'slider',
@@ -155,7 +160,7 @@
               showMarks: true,
               showBounds: false,
               tooltipReverse: true,
-              resultTemplate: 'opacity: $1%',
+              showResult: false,
               connectorsColors: ['#B5FEA4'],
               additionalClasses: {
                 wrapper: 'slider',
@@ -165,20 +170,23 @@
 
             let color, opacity;
 
-            colorSlider.on('valueChanged', ()=>{
+            colorSlider.on('sliderEnd', ()=>{
               color = colorSlider.values;
               opacity = opacitySlider.values[0] / 100;
-              $('#color').css('background-color', 'rgba('+color.toString()+', '+opacity+')')
+              $('#color').css('background-color', 'rgba('+color.toString()+', '+opacity+')');
+              $('#color-result').text('rgba('+color.toString()+', '+opacity+')');
             });
 
-            opacitySlider.on('valueChanged', ()=>{
+            opacitySlider.on('sliderEnd', ()=>{
               color = colorSlider.values;
               opacity = opacitySlider.values[0] / 100;
-              $('#color').css('background-color', 'rgba('+color.toString()+', '+opacity+')')
+              $('#color').css('background-color', 'rgba('+color.toString()+', '+opacity+')');
+              $('#color-result').text('rgba('+color.toString()+', '+opacity+')');
             });
 
           });
         </script>
+    </body>
     </body>
     </body>
     </body>
