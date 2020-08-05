@@ -198,9 +198,7 @@ class View {
     this.elements.handlers.push(
       new HandlerView(this, index, this.getPercentage(value), value, this.elements.base)
     );
-    this.initTooltip(index)
-      .initConnector(index)
-      .initProgressBar();
+    this.initTooltip(index).initConnector(index);
     return this;
   }
 
@@ -219,6 +217,8 @@ class View {
       this.initHandler(value, index);
     });
 
+    this.initProgressBar();
+
     this.addClasses(this.settings.additionalClasses);
 
     this.on('handlerStart', function(handler: HandlerView) {
@@ -235,6 +235,8 @@ class View {
       handler.active = false;
     });
 
+    this._presenter.trigger('sliderInit');
+
     return this;
   }
 
@@ -250,7 +252,7 @@ class View {
       };
     }
     this.init();
-    this._presenter.trigger('viewUpdated');
+    this._presenter.trigger('viewReset');
   }
 
   public getPercentage(value: number): number {

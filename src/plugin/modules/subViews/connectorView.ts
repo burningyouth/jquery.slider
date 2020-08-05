@@ -55,6 +55,13 @@ class ConnectorView extends BasicElementView {
 
   public static init(that: ConnectorView): void {
     if (that.parent) that.parent.prepend(that.element);
+
+    const coordsAxis = that.settings.vertical ? 'clientY' : 'clientX';
+
+    that.element.on('click touch', function(e) {
+      e.preventDefault();
+      if (e.target === that.element[0]) that.trigger('connectorClicked', that, e[coordsAxis]);
+    });
   }
 }
 

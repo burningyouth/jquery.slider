@@ -170,19 +170,24 @@
 
             let color, opacity;
 
-            colorSlider.on('sliderEnd', ()=>{
+            colorSlider.on('sliderEnd sliderInit', ()=>{
               color = colorSlider.values;
               opacity = opacitySlider.values[0] / 100;
               $('#color').css('background-color', 'rgba('+color.toString()+', '+opacity+')');
               $('#color-result').text('rgba('+color.toString()+', '+opacity+')');
             });
 
-            opacitySlider.on('sliderEnd', ()=>{
+            opacitySlider.on('sliderEnd sliderInit', ()=>{
               color = colorSlider.values;
               opacity = opacitySlider.values[0] / 100;
               $('#color').css('background-color', 'rgba('+color.toString()+', '+opacity+')');
               $('#color-result').text('rgba('+color.toString()+', '+opacity+')');
             });
+
+            /*opacitySlider.settings = {
+              startValues: [65, 100],
+              range: true
+            }*/
 
           });
         </script>

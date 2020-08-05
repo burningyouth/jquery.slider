@@ -5,7 +5,7 @@ import $ from 'jquery';
 
 class BasicElementView {
   private _eventHandlers: Object = {};
-  private _view: View;
+  protected _view: View;
 
   public exec: Function;
   public on: Function;
