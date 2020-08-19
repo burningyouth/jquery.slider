@@ -48,9 +48,9 @@ class MarkView extends BasicElementView {
   public static init(that: MarkView) {
     super.basicInit(that);
 
-    that.element.on('click touch', function(e) {
+    that.element.on('click touch', function (e) {
       e.preventDefault();
-      that.trigger('markClicked', that);
+      that._view.trigger('markClicked', that);
     });
   }
 }

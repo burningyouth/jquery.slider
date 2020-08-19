@@ -1,0 +1,17 @@
+.dropdown {
+  display: flex;
+  align-items: center;
+  color: inherit !important;
+  text-decoration: none !important;
+
+  &::after {
+    display: inline-block;
+    content: '▲';
+    font-size: 0.6rem;
+    margin-left: 5px;
+  }
+
+  &.collapsed::after {
+    transform: rotate(-180deg);
+  }
+}

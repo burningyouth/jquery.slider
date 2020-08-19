@@ -27,14 +27,12 @@ class InputView extends BasicElementView {
     if (this.values.length > 1) {
       this.element.attr(
         'value',
-        JSON.stringify({
-          value: this.values
-        })
+        this.values.toString()
       );
     } else {
       this.element.attr('value', this.values[0]);
     }
-    this.trigger('inputUpdated', this);
+    this._view.trigger('inputUpdated', this);
 
     return this;
   }

@@ -19,7 +19,7 @@ class BoundView extends BasicElementView {
 
   public update(): void {
     this.element.text(this.value);
-    this.element.trigger('boundUpdated', this);
+    this._view.trigger('boundUpdated', this);
   }
 }
 

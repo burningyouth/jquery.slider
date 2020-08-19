@@ -22,7 +22,7 @@ class ResultView extends BasicElementView {
       this.text = text;
     }
     this.element.text(this.text);
-    this.trigger('resultUpdated', this);
+    this._view.trigger('resultUpdated', this);
 
     return this;
   }

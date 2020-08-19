@@ -56,33 +56,41 @@ describe('Presenter', () => {
       modelValueBefore = model.values[0],
       handlerValueBefore = handler1.value,
       handlerPercentageBefore = handler1.percentage;
-    handler1.trigger('handlerMoved', handler1, 10);
-    handler1.trigger('handlerEnd', handler1);
+
+    view.trigger('handlerMoved', handler1, 10);
+    view.trigger('handlerEnd', handler1);
+
     expect(handlerValueBefore < handler1.value).toBeTruthy();
     expect(modelValueBefore < model.values[0]).toBeTruthy();
     expect(handlerPercentageBefore < handler1.percentage).toBeTruthy();
     expect(inputValBefore != input.val()).toBeTruthy();
+
     inputValBefore = input.val();
     modelValueBefore = model.values[1];
     handlerValueBefore = handler2.value;
     handlerPercentageBefore = handler2.percentage;
-    handler1.trigger('baseClicked', base, -10);
+    view.trigger('baseClicked', base, -10);
+
     expect(handlerValueBefore > handler2.value).toBeTruthy();
     expect(modelValueBefore > model.values[1]).toBeTruthy();
     expect(handlerPercentageBefore > handler2.percentage).toBeTruthy();
     expect(inputValBefore != input.val()).toBeTruthy();
   });
 
-  test('Model events is working fine', () => {
+  test('Changing the model changes the view', () => {
     let handler = view.elements.handlers[0];
+
     const input = view.input,
       inputValBefore = input.val(),
       handlerValueBefore = handler.value,
       handlerPercentageBefore = handler.percentage;
+
     model.settings = {
       startValues: [10, 30, 50]
     };
+
     handler = view.elements.handlers[0];
+
     expect(view.elements.handlers.length === 3).toBeTruthy();
     expect(inputValBefore != input.val()).toBeTruthy();
     expect(handlerValueBefore != handler.value).toBeTruthy();

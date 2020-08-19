@@ -52,31 +52,31 @@ class HandlerView extends BasicElementView {
 
     const coordsAxis = that.settings.vertical ? 'clientY' : 'clientX';
 
-    that.element.on('mousedown', function(e) {
+    that.element.on('mousedown', function (e) {
       e.preventDefault();
       if (e.which == 1) {
-        that.trigger('handlerStart', that);
-        $(window).on('mousemove', function(e2) {
-          that.trigger('handlerMoved', that, e2[coordsAxis]);
+        that._view.trigger('handlerStart', that);
+        $(window).on('mousemove', function (e2) {
+          that._view.trigger('handlerMoved', that, e2[coordsAxis]);
         });
-        $(window).on('mouseup', function(e2) {
+        $(window).on('mouseup', function (e2) {
           if (e2.which == 1) {
             $(this).off('mousemove mouseup');
-            that.trigger('handlerEnd', that);
+            that._view.trigger('handlerEnd', that);
           }
         });
       }
     });
 
-    that.element.on('touchstart', function(e) {
+    that.element.on('touchstart', function (e) {
       e.preventDefault();
-      that.trigger('handlerStart', that);
-      $(window).on('touchmove', function(e2) {
-        that.trigger('handlerMoved', that, e2.touches[0][coordsAxis]);
+      that._view.trigger('handlerStart', that);
+      $(window).on('touchmove', function (e2) {
+        that._view.trigger('handlerMoved', that, e2.touches[0][coordsAxis]);
       });
-      $(window).on('touchend', function(e2) {
+      $(window).on('touchend', function (e2) {
         $(this).off('touchmove touchend');
-        that.trigger('handlerEnd', that);
+        that._view.trigger('handlerEnd', that);
       });
     });
   }
@@ -94,7 +94,7 @@ class HandlerView extends BasicElementView {
       this.element.css('left', `calc(${this.percentage}% - 7.5px`);
     }
 
-    this.trigger('handlerUpdated', this);
+    this._view.trigger('handlerUpdated', this);
 
     if (this.connector) this.connector.update();
     if (this.tooltip) this.tooltip.update();

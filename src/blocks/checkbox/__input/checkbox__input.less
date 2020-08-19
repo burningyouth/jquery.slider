@@ -1,0 +1,32 @@
+.checkbox__input {
+  display: inline-block;
+  appearance: none !important;
+  position: relative;
+
+  width: 0;
+  height: 20px;
+  outline: none;
+  margin-left: 25px;
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    bottom: 0;
+    left: -25px;
+
+    border: 1px solid gray;
+    box-sizing: border-box;
+    border-radius: 5px;
+
+    opacity: 0.4;
+  }
+
+  &:checked::before {
+    opacity: 1;
+    background: url('../img/check.svg') no-repeat 50% 40%;
+  }
+}

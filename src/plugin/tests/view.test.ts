@@ -138,11 +138,11 @@ describe('View', () => {
     const input4 = await page.$('#slider4');
     const val4 = await input4.getProperty('value');
 
-    expect(val1._remoteObject.value).toBe('{"value":[90,100]}');
+    expect(val1._remoteObject.value).toBe('90,100');
     expect(val2._remoteObject.value).toBe('-90');
 
-    expect(val3._remoteObject.value).toBe('{"value":[90,150,205,420]}');
-    expect(val4._remoteObject.value).toBe('{"value":[-150,-430]}');
+    expect(val3._remoteObject.value).toBe('90,150,205,420');
+    expect(val4._remoteObject.value).toBe('-150,-430');
   });
   test('Correct init', async () => {
     const wrapper = await page.$('.js-slider'),
@@ -320,30 +320,6 @@ describe('View', () => {
 
     expect(+tooltipTextBefore > +tooltipTextAfter).toBe(true);
   });
-
-  /*test('Clicking on base is moving handler and connector', async () => {
-    const base1 = await page.$('#horizontal-test1 .js-slider__base'),
-      handler1 = await page.$('#horizontal-test1 .js-slider__handler'),
-      connector1 = await page.$('#horizontal-test1 .js-slider__connector');
-    const handler2 = await page.$('#vertical-test1 .js-slider__handler'),
-      connector2 = await page.$('#vertical-test1 .js-slider__connector');
-
-    //first
-    let baseBoundingBox = await base1.boundingBox(),
-      handlerBoundingBoxBefore = centerCoords(await handler1.boundingBox()),
-      connectorBoundingBoxBefore = centerCoords(await connector1.boundingBox());
-
-    await page.mouse.move(baseBoundingBox.x + 20, handlerBoundingBoxBefore.y);
-    await page.mouse.down();
-    let classes = await handler1.getProperty('className');
-    expect(classes._remoteObject.value).toMatch(/js-slider__handler_focus/);
-
-    let handlerBoundingBoxAfter = centerCoords(await handler1.boundingBox()),
-      connectorBoundingBoxAfter = centerCoords(await connector1.boundingBox());
-
-    expect(handlerBoundingBoxAfter.x - handlerBoundingBoxBefore.x).toBeCloseTo(20, 0);
-    expect(connectorBoundingBoxAfter.x - connectorBoundingBoxBefore.x).toBeCloseTo(10, 0);
-  });*/
 });
 
 afterAll(async () => {

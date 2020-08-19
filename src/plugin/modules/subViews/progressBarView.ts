@@ -35,7 +35,7 @@ class ProgressBarView extends BasicElementView {
       this.element.css('right', `${100 - percentage}%`);
     }
 
-    this.element.trigger('progressBarUpdated', this);
+    this._view.trigger('progressBarUpdated', this);
 
     return this;
   }
@@ -45,9 +45,9 @@ class ProgressBarView extends BasicElementView {
 
     const coordsAxis = that.settings.vertical ? 'clientY' : 'clientX';
 
-    that.element.on('click touch', function(e) {
+    that.element.on('click touch', function (e) {
       e.preventDefault();
-      if (e.target === that.element[0]) that.trigger('progressBarClicked', that, e[coordsAxis]);
+      if (e.target === that.element[0]) that._view.trigger('progressBarClicked', that, e[coordsAxis]);
     });
   }
 }

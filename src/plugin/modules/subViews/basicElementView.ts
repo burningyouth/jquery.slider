@@ -30,11 +30,6 @@ class BasicElementView {
     return this._view.settings;
   }
 
-  public trigger(eventType: string, ...args: any) {
-    this.exec(eventType, ...args);
-    this._view.trigger(eventType, ...args);
-  }
-
   public removeClass(className: string): any {
     this.element.removeClass(className);
     return this;

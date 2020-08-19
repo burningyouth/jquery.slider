@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.87% </span>
+                <span class="strong">84.47% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>86/99</span>
+                <span class='fraction'>87/103</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.83% </span>
+                <span class="strong">73.81% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>63/82</span>
+                <span class='fraction'>62/84</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.32% </span>
+                <span class="strong">84.85% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>82/95</span>
+                <span class='fraction'>84/99</span>
             </div>
         
             
@@ -285,7 +285,10 @@
 <a name='L226'></a><a href='#L226'>226</a>
 <a name='L227'></a><a href='#L227'>227</a>
 <a name='L228'></a><a href='#L228'>228</a>
-<a name='L229'></a><a href='#L229'>229</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L229'></a><a href='#L229'>229</a>
+<a name='L230'></a><a href='#L230'>230</a>
+<a name='L231'></a><a href='#L231'>231</a>
+<a name='L232'></a><a href='#L232'>232</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -333,11 +336,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">598x</span>
+<span class="cline-any cline-yes">594x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">24x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -396,10 +399,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -496,19 +502,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">50x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">31x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">35x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">47x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -624,10 +630,13 @@ class Model {
   }
 &nbsp;
   set values(newValues: Values) {
-    if (this.checkValue(newValues)) {
-      this._values = newValues;
-      this.trigger('valueChanged');
-    }
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (Array.isArray(newValues)) {
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (this.checkValue(newValues)) {
+        this._values = newValues;
+        this.trigger('valueUpdated');
+        this.trigger('valueEnd');
+      } else <span class="cstat-no" title="statement not covered" >throw new RangeError('Value is out of range!');</span>
+    } else <span class="cstat-no" title="statement not covered" >throw new TypeError('New value must be an Array!');</span>
   }
 &nbsp;
   set settings(newSettings: Settings) {
@@ -637,7 +646,7 @@ class Model {
     } else {
 <span class="cstat-no" title="statement not covered" >      throw new RangeError('Start value is invalid (out of range)!');</span>
     }
-    this.trigger('settingsUpdated');
+    this.trigger('settingsEnd');
   }
 &nbsp;
   set presenter(newPresenter: Presenter) {
@@ -727,7 +736,7 @@ class Model {
     if (Array.isArray(value)) {
       let result = true;
       value.forEach(item =&gt; {
-        if (!this.checkValue(item)) result = false;
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkValue(item)) <span class="cstat-no" title="statement not covered" >result = false;</span>
       });
       return result;
     } else {
@@ -748,7 +757,7 @@ export default Model;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Fri Jul 31 2020 17:25:00 GMT+0400 (GMT+04:00)
+                at Sat Aug 15 2020 12:56:27 GMT+0400 (GMT+04:00)
             </div>
         </div>
         <script src="../prettify.js"></script>

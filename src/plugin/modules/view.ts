@@ -235,7 +235,7 @@ class View {
       handler.active = false;
     });
 
-    this._presenter.trigger('sliderInit');
+    if (this._presenter) this._presenter.exec('viewInit');
 
     return this;
   }
@@ -252,7 +252,8 @@ class View {
       };
     }
     this.init();
-    this._presenter.trigger('viewReset');
+
+    if (this._presenter) this._presenter.exec('viewReset');
   }
 
   public getPercentage(value: number): number {
@@ -291,7 +292,7 @@ class View {
 
   public trigger(eventType: string, ...args: any) {
     this.exec(eventType, ...args);
-    if (this._presenter) this._presenter.trigger(eventType, ...args);
+    if (this._presenter) this._presenter.exec(eventType, ...args);
   }
 }
 

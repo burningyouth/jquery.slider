@@ -11,29 +11,29 @@ class Model {
     max: 100,
     range: false,
     progressBar: false,
-    reverse: false,
     startValues: [30, 70],
-    showMarks: false,
     marksCount: 10,
-    clickableMark: true,
-    handlersColors: [],
-    connectorsColors: [],
     step: 1,
     roundTo: 0,
     vertical: false,
+    reverse: false,
     tooltipReverse: false,
+    markValueReverse: false,
+    showMarks: false,
     showTooltip: false,
     showResult: true,
     showBounds: true,
     showMarkValue: true,
-    markValueReverse: false,
     clickableBase: true,
+    clickableMark: true,
     sortValues: false,
     sortOnlyPares: false,
     sortReverse: false,
     resultTemplate: 'default',
     handlersStateClasses: {},
-    additionalClasses: {}
+    additionalClasses: {},
+    handlersColors: [],
+    connectorsColors: []
   };
   private _values: Values;
 
@@ -91,8 +91,8 @@ class Model {
   }
 
   get formattedValues(): string {
-    const resultTemplate = this._settings.resultTemplate;
-    const sortedValues = this.sortedValues;
+    const resultTemplate = this._settings.resultTemplate,
+      sortedValues = this.sortedValues;
     let formattedString = 'undefined';
     if (resultTemplate !== 'default') {
       formattedString = resultTemplate.replace(/\$(\d+)/g, function(

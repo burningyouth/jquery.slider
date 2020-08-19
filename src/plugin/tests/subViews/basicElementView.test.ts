@@ -56,38 +56,6 @@ describe('BasicElementView', () => {
     basicElementView.css('color', 'red');
     expect(basicElementView.css('color')).toBe('red');
   });
-  test('Events is working correctly', () => {
-    let counter = 0;
-    basicElementView.on('test', () => {
-      counter++;
-    });
-    view.on('test', () => {
-      counter++;
-    });
-    presenter.on('test', () => {
-      counter++;
-    });
-    basicElementView.on('test2', () => {
-      counter++;
-    });
-    view.on('test2', () => {
-      counter++;
-    });
-    presenter.on('test2', () => {
-      counter++;
-    });
-    basicElementView.trigger('test');
-    expect(counter).toBe(3);
-    basicElementView.trigger('test test2');
-    expect(counter).toBe(9);
-    basicElementView.exec('test test2');
-    expect(counter).toBe(11);
-    basicElementView.off('test test2');
-    view.off('test test2');
-    presenter.off('test test2');
-    basicElementView.trigger('test test2');
-    expect(counter).toBe(11);
-  });
   test('remove() is working correctly', () => {
     basicElementView.remove();
     expect(basicElementView.parent.find(basicElementView.element).length).toBe(0);

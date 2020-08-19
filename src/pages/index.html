@@ -5,159 +5,399 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
         <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
         <title>JQuery.slider</title>
+        <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" rel="stylesheet">
         <link href="assets/css/jquery.slider.min.css" rel="stylesheet"/>
     </head>
-    <body class="body" id="color" style="background-color: rgba(166, 181, 155, 0.35); ">
-        <form action="" class="basic-form">
-            <h1 class="title">JQuery.slider</h1>
-            <div style="margin-bottom: 50px;">
-                <div style="margin-top: 50px;">
-                    <input id="slider1" type="text"/>
+    <body class="body" id="color">
+        <div class="modal" id="settings-modal" role="dialog" tabindex="-1">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <form id="settings-form">
+                        <input id="sliderIndex" name="sliderIndex" type="hidden" value="0">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Settings</h5>
+                            <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="startValues">
+                                    Start values
+                                </label>
+                                <input class="form-control" id="startValues" name="startValues" type="text" value="0 65 180"/>
+                                <small class="form-text text-muted">
+                                    1. Put a space between values<br>2. Values must be in range [min; max]<br>3. Values must be numbers
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <label for="marksCount">
+                                    Marks count
+                                </label>
+                                <input class="form-control" id="marksCount" min="1" name="marksCount" type="number" value="10"/>
+                                <small class="form-text text-muted">
+                                    How much marks to draw
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <a aria-controls="colors" aria-expanded="false" class="dropdown collapsed mb-2" data-toggle="collapse" href="#colors" role="button">
+                                    Colors
+                                </a>
+                            </div>
+                            <div class="collapse" id="colors">
+                                <div class="form-group">
+                                    <label for="handlersColors">
+                                        Handlers colors
+                                    </label>
+                                    <input class="form-control" id="handlersColors" name="handlersColors" type="text" value="red green blue"/>
+                                    <small class="form-text text-muted">
+                                        Put a space between values
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="connectorsColors">
+                                        Connectors colors
+                                    </label>
+                                    <input class="form-control" id="connectorsColors" name="connectorsColors" type="text" value=""/>
+                                    <small class="form-text text-muted">
+                                        Put a space between values
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <a aria-controls="colors" aria-expanded="false" class="dropdown collapsed mb-2" data-toggle="collapse" href="#range" role="button">
+                                    Range of values
+                                </a>
+                            </div>
+                            <div class="row collapse" id="range">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="min">
+                                            Min
+                                        </label>
+                                        <input class="form-control" id="min" name="min" type="number" value="0"/>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="max">
+                                            Max
+                                        </label>
+                                        <input class="form-control" id="max" name="max" type="number" value="255"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <a aria-controls="colors" aria-expanded="false" class="dropdown collapsed mb-2" data-toggle="collapse" href="#format" role="button">
+                                    Value format
+                                </a>
+                            </div>
+                            <div class="row collapse" id="format">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="step">
+                                            Step
+                                        </label>
+                                        <input class="form-control" id="step" min="0" name="step" type="number" value="1"/>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="roundTo">
+                                            Round to
+                                        </label>
+                                        <input class="form-control" id="roundTo" min="0" name="roundTo" type="number" value="0"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="resultTemplate">
+                                        Result template
+                                    </label>
+                                    <input class="form-control" id="resultTemplate" name="resultTemplate" type="text" value="default"/>
+                                    <small class="form-text text-muted">
+                                        Example: $1 - $2, $3 - $4
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <a aria-controls="colors" aria-expanded="false" class="dropdown collapsed mb-2" data-toggle="collapse" href="#elements" role="button">
+                                    Elements
+                                </a>
+                            </div>
+                            <div class="form-group row collapse" id="elements">
+                                <div class="col-6">
+                                    <div class="toggle mb-2">
+                                        <input class="toggle__input" id="showTooltip" name="showTooltip" type="checkbox"/>
+                                        <label class="toggle__label" for="showTooltip">Show tooltip
+                                        </label>
+                                    </div>
+
+                                    <div class="toggle mb-2">
+                                        <input checked class="toggle__input" id="showResult" name="showResult" type="checkbox"/>
+                                        <label class="toggle__label" for="showResult">Show result
+                                        </label>
+                                    </div>
+
+                                    <div class="toggle">
+                                        <input class="toggle__input" id="showMarkValue" name="showMarkValue" type="checkbox"/>
+                                        <label class="toggle__label" for="showMarkValue">Show mark value
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="toggle mb-2">
+                                        <input class="toggle__input" id="showBounds" name="showBounds" type="checkbox"/>
+                                        <label class="toggle__label" for="showBounds">Show bounds
+                                        </label>
+                                    </div>
+
+                                    <div class="toggle">
+                                        <input class="toggle__input" id="showMarks" name="showMarks" type="checkbox"/>
+                                        <label class="toggle__label" for="showMarks">Show marks
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <a aria-controls="colors" aria-expanded="false" class="dropdown collapsed mb-2" data-toggle="collapse" href="#sorting" role="button">
+                                    Sorting
+                                </a>
+                            </div>
+                            <div class="form-group row collapse" id="sorting">
+                                <div class="col-6">
+                                    <div class="toggle mb-2" data-tooltip="Sort the values of the sliders">
+                                        <input checked class="toggle__input" id="sortValues" name="sortValues" type="checkbox"/>
+                                        <label class="toggle__label" for="sortValues">Sort
+                                        </label>
+                                    </div>
+
+                                    <div class="toggle mb-2">
+                                        <input class="toggle__input" id="sortOnlyPares" name="sortOnlyPares" type="checkbox"/>
+                                        <label class="toggle__label" for="sortOnlyPares">Sort only pares
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="toggle" data-tooltip="Sort in descending order">
+                                        <input class="toggle__input" id="sortReverse" name="sortReverse" type="checkbox"/>
+                                        <label class="toggle__label" for="sortReverse">Sort reverse
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <a aria-controls="colors" aria-expanded="false" class="dropdown collapsed mb-2" data-toggle="collapse" href="#reverse" role="button">
+                                    Reverse
+                                </a>
+                            </div>
+                            <div class="form-group row collapse" id="reverse">
+                                <div class="col-6">
+                                    <div class="toggle mb-2">
+                                        <input class="toggle__input" id="reverse" name="reverse" type="checkbox"/>
+                                        <label class="toggle__label" for="reverse">Reverse
+                                        </label>
+                                    </div>
+                                    <div class="toggle">
+                                        <input class="toggle__input" id="markValueReverse" name="markValueReverse" type="checkbox"/>
+                                        <label class="toggle__label" for="markValueReverse">Mark value reverse
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="toggle" data-tooltip="Tooltip appears at the bottom">
+                                        <input class="toggle__input" id="tooltipReverse" name="tooltipReverse" type="checkbox"/>
+                                        <label class="toggle__label" for="tooltipReverse">Tooltip reverse
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="toggle mb-2" data-tooltip="Connects two handlers with a bar">
+                                        <input checked class="toggle__input" id="range" name="range" type="checkbox"/>
+                                        <label class="toggle__label" for="range">Range
+                                        </label>
+                                    </div>
+                                    <div class="toggle mb-2">
+                                        <input class="toggle__input" id="progressBar" name="progressBar" type="checkbox"/>
+                                        <label class="toggle__label" for="progressBar">Progress bar
+                                        </label>
+                                    </div>
+                                    <div class="toggle" data-tooltip="Makes slider vertical">
+                                        <input class="toggle__input" id="vertical" name="vertical" type="checkbox"/>
+                                        <label class="toggle__label" for="vertical">Vertical
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+
+                                    <div class="toggle mb-2" data-tooltip="Clicking on base will move nearest handler">
+                                        <input checked class="toggle__input" id="clickableBase" name="clickableBase" type="checkbox"/>
+                                        <label class="toggle__label" for="clickableBase">Clickable base
+                                        </label>
+                                    </div>
+                                    <div class="toggle" data-tooltip="Clicking on mark will move nearest handler">
+                                        <input class="toggle__input" id="clickableMark" name="clickableMark" type="checkbox"/>
+                                        <label class="toggle__label" for="clickableMark">Clickable mark
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-outline btn-outline-primary" type="submit">Update</button>
+                            <button class="btn btn-outline btn-outline-danger" data-dismiss="modal" type="button">Close</button>
+                        </div>
+                    </form>
                 </div>
-                <div>
-                    <input id="slider2" type="text"/>
-                </div>
-                <div>
+            </div>
+        </div>
+        <h1 class="title">JQuery.slider
+            <small id="color-result" style="font-size: 0.75rem;"></small>
+        </h1>
+        <div class="d-flex justify-content-center w-75 mx-auto">
+            <div class="w-100 mr-5">
+                <input id="slider0" type="text"/>
+
+            </div>
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                <a class="link" data-slider="0" data-target="#settings-modal" data-toggle="modal">
+                    <svg class="bi bi-gear-fill" fill="currentColor" height="1.2rem" viewbox="0 0 16 16" width="1.2rem" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z" fill-rule="evenodd"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center w-75 mx-auto">
+            <div class="w-100 mr-5">
+                <input id="slider1" type="text"/>
+
+            </div>
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                <a class="link" data-slider="1" data-target="#settings-modal" data-toggle="modal">
+                    <svg class="bi bi-gear-fill" fill="currentColor" height="1.2rem" viewbox="0 0 16 16" width="1.2rem" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z" fill-rule="evenodd"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center w-75 mx-auto mt-5 mb-5">
+            <div class="w-100 mr-5">
+                <input id="slider2" type="text"/>
+
+            </div>
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                <a class="link" data-slider="2" data-target="#settings-modal" data-toggle="modal">
+                    <svg class="bi bi-gear-fill" fill="currentColor" height="1.2rem" viewbox="0 0 16 16" width="1.2rem" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z" fill-rule="evenodd"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center w-75 mx-auto">
+
+            <div class="d-flex justify-content-center mr-5">
+                <div class="mr-5">
                     <input id="slider3" type="text"/>
+
                 </div>
-                <div style="margin-top: 30px; margin-bottom: 60px;">
+                <div class="d-flex justify-content-center align-items-center mb-3">
+                    <a class="link" data-slider="3" data-target="#settings-modal" data-toggle="modal">
+                        <svg class="bi bi-gear-fill" fill="currentColor" height="1.2rem" viewbox="0 0 16 16" width="1.2rem" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z" fill-rule="evenodd"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center ml-5">
+                <div class="mr-5">
                     <input id="slider4" type="text"/>
+
                 </div>
-                <div>
-                    <input id="slider5" type="text"/>
+                <div class="d-flex justify-content-center align-items-center mb-3">
+                    <a class="link" data-slider="4" data-target="#settings-modal" data-toggle="modal">
+                        <svg class="bi bi-gear-fill" fill="currentColor" height="1.2rem" viewbox="0 0 16 16" width="1.2rem" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z" fill-rule="evenodd"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
 
-            <div style="display: flex; justify-content: flex-start;">
-                <div style="width: 50%;">
-                    <input id="slider6" type="text"/>
-                </div>
-                <div>
-                    <input id="slider7" type="text"/>
-                </div>
-            </div>
-            <div id="color-result" style="margin-top: 20px; color: gray;">
-                rgba(166, 181, 155, 0.35)
-            </div>
-        </form>
+        </div>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="assets/js/misc.min.js"></script>
+        <script crossorigin="anonymous" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script crossorigin="anonymous" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script crossorigin="anonymous" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
         <script src="assets/js/jquery.slider.min.js"></script>
         <script>
           $( document ).ready(function() {
-            $('#slider1').slider({//не трогать настройки, нужны для корректной работы теста
-              min: -200,
-              max: 100,
-              step: 50,
-              range: true,
-              reverse: true,
-              showTooltip: false,
-              tooltipReverse: true,
-              clickableBase: false,
-              showMarks: true,
-              marksCount: 6,
-              roundTo: 1,
-              startValues: [-150, -100],
-              sortValues: true,
-              sortReverse: true,
-              additionalClasses: {
-                wrapper: 'slider',
-                result: 'slider__result'
-              }
-            });
-             $('#slider2').slider({
-              min: -100,
-              max: 100,
-              step: 0,
-              roundTo: 1,
-              progressBar: true,
-              reverse: true,
-              startValues: [-90],
-              showTooltip: true,
-              showBounds: false,
-              tooltipReverse: true,
-              resultTemplate: '$1',
-              additionalClasses: {
-                wrapper: 'slider',
-                result: 'slider__result'
-              }
-            });
-            $('#slider3').slider({
-              min: 21,
-              max: 125,
-              step: 0.75,
-              roundTo: 2,
-              range: true,
-              startValues: [25, 100],
-              sortValues: true,
-              resultTemplate: '$1 - $2',
-              additionalClasses: {
-                wrapper: 'slider',
-                result: 'slider__result'
-              }
-            });
-            $('#slider4').slider({
-              min: -50,
-              max: 350,
-              step: 10,
-              roundTo: 0,
-              range: true,
-              startValues: [-50, 100, 150, 200],
-              handlersColors: ['#B5FEA4', '#B5FEA4', '#A4DEFE', '#A4DEFE'],
-              sortValues: true,
-              sortOnlyPares: true,
-              tooltipReverse: true,
-              showMarks: true,
-              showMarkValue: false,
-              marksCount: 8,
-              showBounds: false,
-              showResult: false,
-              showTooltip: true,
-              additionalClasses: {
-                wrapper: 'slider',
-                result: 'slider__result'
-              }
-            });
-            $('#slider5').slider({
-              min: 0,
-              max: 1000,
-              step: 25,
-              range: true,
-              startValues: [0, 100, 225, 350, 400, 675],
-              connectorsColors: ['#A4E8FE', '#B5FEA4', '#E1A4FE'],
-              showTooltip: true,
-              showResult: false,
-              additionalClasses: {
-                wrapper: 'slider',
-                result: 'slider__result'
-              }
-            });
-            
-            const colorSlider = $('#slider6').slider({
-              min: 0,
-              max: 255,
-              step: 0,
-              vertical: true,
-              startValues: [166, 181, 155],
-              showTooltip: true,
-              showResult: false,
-              handlersColors: ['#FC6A6A', '#8CFC6A', '#6AB2FC'],
-              additionalClasses: {
-                wrapper: 'slider',
-                result: 'slider__result'
-              }
-            });
-
-            const opacitySlider = $('#slider7').slider({
+            const sliders = [
+              $('#slider0').slider({
+                additionalClasses: {
+                  wrapper: 'slider',
+                  result: 'slider__result'
+                }
+              }), 
+              $('#slider1').slider({
+                min: 21,
+                max: 125,
+                step: 0.75,
+                roundTo: 2,
+                range: true,
+                startValues: [25, 100],
+                sortValues: true,
+                resultTemplate: '$1 - $2',
+                additionalClasses: {
+                  wrapper: 'slider',
+                  result: 'slider__result'
+                }
+              }), 
+              $('#slider2').slider({
+                min: 0,
+                max: 1000,
+                step: 25,
+                range: true,
+                startValues: [0, 100, 225, 350, 400, 675],
+                showMarks: true,
+                tooltipReverse: true,
+                connectorsColors: ['#A4E8FE', '#B5FEA4', '#E1A4FE'],
+                showTooltip: true,
+                showResult: false,
+                additionalClasses: {
+                  wrapper: 'slider',
+                  result: 'slider__result'
+                }
+              }), 
+              $('#slider3').slider({
+                min: 0,
+                max: 255,
+                step: 0,
+                vertical: true,
+                startValues: [166, 181, 155],
+                showTooltip: true,
+                tooltipReverse: true,
+                showResult: false,
+                handlersColors: ['#FC6A6A', '#8CFC6A', '#6AB2FC'],
+                additionalClasses: {
+                  wrapper: 'slider',
+                  result: 'slider__result'
+                }
+              }),
+              $('#slider4').slider({
               min: 0,
               max: 100,
               step: 0,
               vertical: true,
               progressBar: true,
-              startValues: [100],
+              startValues: [10],
               showTooltip: true,
-              showMarks: true,
               showBounds: false,
               tooltipReverse: true,
               showResult: false,
@@ -165,34 +405,80 @@
               additionalClasses: {
                 wrapper: 'slider',
                 result: 'slider__result'
-              }
+              }})
+            ],
+            modal = $('#settings-modal'),
+            form = $('#settings-form'),
+            sliderIndexInput = form.find('#sliderIndex'),
+            inputs = form.find('input:not([type="hidden"])');
+
+            modal.on('show.bs.modal', function (e) {
+              const sliderIndex = $(e.relatedTarget).data('slider'),
+                slider = sliders[sliderIndex],
+                settings = slider.settings;
+
+              sliderIndexInput.val(sliderIndex);
+              $.each(inputs, (index, elem)=>{
+                const id = $(elem).attr('id');
+                if(Array.isArray(settings[id])) settings[id] = settings[id].join(' ');
+                if (elem.type != 'checkbox')
+                $(elem).val(settings[id]);
+                else
+                $(elem).attr('checked', settings[id]);
+              });
+            });
+
+            form.on('submit', function (e) {
+              const slider = sliders[sliderIndexInput.val()];
+              let settings = {};
+              e.preventDefault();
+              modal.modal('hide');
+              $.each(inputs, (index, elem)=>{
+                const id = $(elem).attr('id');
+                let value = elem.value;
+                if (id == 'startValues' && value){
+                  value = value.split(' ');
+                  value = value.map((item)=>{
+                    return +item;
+                  })
+                }
+                if ((id == 'handlersColors' || id == 'connectorsColors') && value){
+                  value = value.split(' ');
+                }
+                if (elem.type === 'checkbox'){
+                  if($(elem).is(':checked')){
+                    value = true;
+                  }
+                  else { 
+                    value = false;
+                  }
+                }else if (elem.type === 'number'){
+                  value = +value;
+                }
+                settings[id] = value;
+              });
+              slider.settings = settings;
             });
 
             let color, opacity;
 
-            colorSlider.on('sliderEnd sliderInit', ()=>{
+            const colorSlider = sliders[3], opacitySlider = sliders[4];
+
+            function colorChange() {
               color = colorSlider.values;
               opacity = opacitySlider.values[0] / 100;
-              $('#color').css('background-color', 'rgba('+color.toString()+', '+opacity+')');
-              $('#color-result').text('rgba('+color.toString()+', '+opacity+')');
-            });
+              $('#color').css('background-color', 'rgba('+color.toString()+','+opacity+')');
+              $('#color-result').text('rgba('+color.toString()+','+opacity+')');
+            }
 
-            opacitySlider.on('sliderEnd sliderInit', ()=>{
-              color = colorSlider.values;
-              opacity = opacitySlider.values[0] / 100;
-              $('#color').css('background-color', 'rgba('+color.toString()+', '+opacity+')');
-              $('#color-result').text('rgba('+color.toString()+', '+opacity+')');
-            });
-
-            /*opacitySlider.settings = {
-              startValues: [65, 100],
-              range: true
-            }*/
+            colorSlider.on('sliderEnd sliderReset', ()=>colorChange());
+            opacitySlider.on('sliderEnd sliderReset', ()=>colorChange());
 
           });
-        </script>
+      </script>
     </body>
+</html>    
     </body>
-    </body>
+</html> 
     </body>
 </html>
