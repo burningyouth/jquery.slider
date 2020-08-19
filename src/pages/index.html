@@ -380,7 +380,7 @@
                 max: 255,
                 step: 0,
                 vertical: true,
-                startValues: [166, 181, 155],
+                startValues: [255, 200, 150],
                 showTooltip: true,
                 tooltipReverse: true,
                 showResult: false,
@@ -396,7 +396,7 @@
               step: 0,
               vertical: true,
               progressBar: true,
-              startValues: [10],
+              startValues: [60],
               showTooltip: true,
               showBounds: false,
               tooltipReverse: true,
@@ -465,11 +465,19 @@
             const colorSlider = sliders[3], opacitySlider = sliders[4];
 
             function colorChange() {
-              color = colorSlider.values;
-              opacity = opacitySlider.values[0] / 100;
-              $('#color').css('background-color', 'rgba('+color.toString()+','+opacity+')');
-              $('#color-result').text('rgba('+color.toString()+','+opacity+')');
+                if (colorSlider.values.length === 3 && opacitySlider.values.length === 1){
+                    color = colorSlider.values;
+                    opacity = opacitySlider.values[0] / 100;
+                    const fullColor = 'rgba('+color.toString()+','+opacity+')',
+                    halfOpacityColor =  'rgba('+color.toString()+','+opacity/2+')';
+                    $('#color').css('background', 'linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba('+color.toString()+','+opacity/9+') 80% ,rgba('+color.toString()+','+opacity/6+') 85%, rgba('+color.toString()+','+opacity/3+') 90%, rgba('+color.toString()+','+opacity/1.5+') 95%, rgba('+color.toString()+','+opacity+') 100%) no-repeat');
+                    $('#color-result').text('rgba('+color.toString()+','+opacity+')');
+                }else{
+                    $('#color-result').text('Warning: color sliders values is invalid!');
+                }
             }
+
+            colorChange();
 
             colorSlider.on('sliderEnd sliderReset', ()=>colorChange());
             opacitySlider.on('sliderEnd sliderReset', ()=>colorChange());
@@ -480,5 +488,6 @@
 </html>    
     </body>
 </html> 
+    </body>
     </body>
 </html>
