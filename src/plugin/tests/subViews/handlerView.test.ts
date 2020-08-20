@@ -10,7 +10,7 @@ input.appendTo(body);
 const model = new Model({
   min: 0,
   max: 100,
-  range: true,
+  showRange: true,
   reverse: false,
   startValues: [50, 30],
   handlersColors: [],
@@ -18,7 +18,7 @@ const model = new Model({
   step: 5,
   roundTo: 2,
   vertical: true,
-  progressBar: false,
+  showProgressBar: false,
   tooltipReverse: true,
   showTooltip: true,
   showResult: false,
@@ -41,7 +41,7 @@ view.init();
 $.event.special.leftclick = {
   bindType: 'mousedown',
   delegateType: 'mousedown',
-  handle: function(e) {
+  handle: function (e) {
     e.which = 1;
     let handleObj = e.handleObj;
 

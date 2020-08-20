@@ -11,7 +11,7 @@ input.appendTo(body);
 const model = new Model({
   min: 0,
   max: 100,
-  range: false,
+  showRange: false,
   startValues: [30, 70],
   step: 1,
   roundTo: 0,

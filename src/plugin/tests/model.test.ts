@@ -6,7 +6,7 @@ import $ from 'jquery';
 const model = new Model({
   min: 10,
   max: 230,
-  range: true,
+  showRange: true,
   reverse: false,
   startValues: [30, 70],
   handlersColors: [],
@@ -14,7 +14,7 @@ const model = new Model({
   step: 0,
   roundTo: 1,
   vertical: false,
-  progressBar: false,
+  showProgressBar: false,
   tooltipReverse: true,
   showTooltip: true,
   showResult: false,

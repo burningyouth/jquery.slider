@@ -10,7 +10,7 @@ input.appendTo(body);
 const model = new Model({
   min: 0,
   max: 100,
-  range: true,
+  showRange: true,
   reverse: false,
   startValues: [70, 30],
   handlersColors: [],
@@ -18,7 +18,7 @@ const model = new Model({
   step: 5,
   roundTo: 2,
   vertical: true,
-  progressBar: false,
+  showProgressBar: false,
   tooltipReverse: true,
   showTooltip: true,
   showResult: false,

@@ -17,7 +17,7 @@ const model = new Model({
   step: 5,
   roundTo: 2,
   vertical: true,
-  progressBar: true,
+  showProgressBar: true,
   tooltipReverse: true,
   showTooltip: true,
   showResult: false,
