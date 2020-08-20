@@ -126,6 +126,18 @@
                             </div>
                             <div class="form-group row collapse" id="elements">
                                 <div class="col-6">
+                                    <div class="toggle mb-2" data-tooltip="Connects two handlers with a bar">
+                                        <input checked class="toggle__input" id="showRange" name="showRange" type="checkbox"/>
+                                        <label class="toggle__label" for="showRange">Show range
+                                        </label>
+                                    </div>
+
+                                    <div class="toggle mb-2">
+                                        <input class="toggle__input" id="showProgressBar" name="showProgressBar" type="checkbox"/>
+                                        <label class="toggle__label" for="showProgressBar">Show progress bar
+                                        </label>
+                                    </div>
+
                                     <div class="toggle mb-2">
                                         <input class="toggle__input" id="showTooltip" name="showTooltip" type="checkbox"/>
                                         <label class="toggle__label" for="showTooltip">Show tooltip
@@ -138,11 +150,6 @@
                                         </label>
                                     </div>
 
-                                    <div class="toggle">
-                                        <input class="toggle__input" id="showMarkValue" name="showMarkValue" type="checkbox"/>
-                                        <label class="toggle__label" for="showMarkValue">Show mark value
-                                        </label>
-                                    </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="toggle mb-2">
@@ -151,9 +158,21 @@
                                         </label>
                                     </div>
 
-                                    <div class="toggle">
+                                    <div class="toggle mb-2">
                                         <input class="toggle__input" id="showMarks" name="showMarks" type="checkbox"/>
                                         <label class="toggle__label" for="showMarks">Show marks
+                                        </label>
+                                    </div>
+
+                                    <div class="toggle mb-2">
+                                        <input class="toggle__input" id="showMarkValue" name="showMarkValue" type="checkbox"/>
+                                        <label class="toggle__label" for="showMarkValue">Show mark value
+                                        </label>
+                                    </div>
+
+                                    <div class="toggle">
+                                        <input class="toggle__input" id="showInput" name="showInput" type="checkbox"/>
+                                        <label class="toggle__label" for="showInput">Show input
                                         </label>
                                     </div>
 
@@ -188,42 +207,15 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <a aria-controls="colors" aria-expanded="false" class="dropdown collapsed mb-2" data-toggle="collapse" href="#reverse" role="button">
-                                    Reverse
+                                <a aria-controls="colors" aria-expanded="false" class="dropdown collapsed mb-2" data-toggle="collapse" href="#positioning" role="button">
+                                    Slider positioning
                                 </a>
                             </div>
-                            <div class="form-group row collapse" id="reverse">
-                                <div class="col-6">
+                            <div class="form-group row collapse" id="positioning">
+                                <div class="col-6 d-flex flex-column">
                                     <div class="toggle mb-2">
                                         <input class="toggle__input" id="reverse" name="reverse" type="checkbox"/>
                                         <label class="toggle__label" for="reverse">Reverse
-                                        </label>
-                                    </div>
-                                    <div class="toggle">
-                                        <input class="toggle__input" id="markValueReverse" name="markValueReverse" type="checkbox"/>
-                                        <label class="toggle__label" for="markValueReverse">Mark value reverse
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="toggle" data-tooltip="Tooltip appears at the bottom">
-                                        <input class="toggle__input" id="tooltipReverse" name="tooltipReverse" type="checkbox"/>
-                                        <label class="toggle__label" for="tooltipReverse">Tooltip reverse
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="toggle mb-2" data-tooltip="Connects two handlers with a bar">
-                                        <input checked class="toggle__input" id="range" name="range" type="checkbox"/>
-                                        <label class="toggle__label" for="range">Range
-                                        </label>
-                                    </div>
-                                    <div class="toggle mb-2">
-                                        <input class="toggle__input" id="progressBar" name="progressBar" type="checkbox"/>
-                                        <label class="toggle__label" for="progressBar">Progress bar
                                         </label>
                                     </div>
                                     <div class="toggle" data-tooltip="Makes slider vertical">
@@ -233,12 +225,35 @@
                                     </div>
                                 </div>
                                 <div class="col-6">
+                                    <div class="toggle" data-tooltip="Tooltip appears at the bottom">
+                                        <input class="toggle__input" id="tooltipReverse" name="tooltipReverse" type="checkbox"/>
+                                        <label class="toggle__label" for="tooltipReverse">Tooltip reverse
+                                        </label>
+                                    </div>
+                                    <div class="toggle">
+                                        <input class="toggle__input" id="markValueReverse" name="markValueReverse" type="checkbox"/>
+                                        <label class="toggle__label" for="markValueReverse">Mark value reverse
+                                        </label>
+                                    </div>
 
-                                    <div class="toggle mb-2" data-tooltip="Clicking on base will move nearest handler">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <a aria-controls="clickability" aria-expanded="false" class="dropdown collapsed mb-2" data-toggle="collapse" href="#clickability" role="button">
+                                    Clickability
+                                </a>
+                            </div>
+
+                            <div class="form-group row collapse" id="clickability">
+                                <div class="col-6">
+                                    <div class="toggle" data-tooltip="Clicking on base will move nearest handler">
                                         <input checked class="toggle__input" id="clickableBase" name="clickableBase" type="checkbox"/>
                                         <label class="toggle__label" for="clickableBase">Clickable base
                                         </label>
                                     </div>
+                                </div>
+                                <div class="col-6">
                                     <div class="toggle" data-tooltip="Clicking on mark will move nearest handler">
                                         <input class="toggle__input" id="clickableMark" name="clickableMark" type="checkbox"/>
                                         <label class="toggle__label" for="clickableMark">Clickable mark
@@ -286,7 +301,7 @@
             </div>
         </div>
 
-        <div class="d-flex justify-content-center w-75 mx-auto mt-5 mb-5">
+        <div class="d-flex justify-content-center w-75 mx-auto mt-2 mb-5">
             <div class="w-100 mr-5">
                 <input id="slider2" type="text"/>
 
@@ -340,6 +355,9 @@
           $( document ).ready(function() {
             const sliders = [
               $('#slider0').slider({
+                startValues:[10, 20, 50, 60],
+                sortValues: true,
+                showInput: true,
                 additionalClasses: {
                   wrapper: 'slider',
                   result: 'slider__result'
@@ -350,7 +368,7 @@
                 max: 125,
                 step: 0.75,
                 roundTo: 2,
-                range: true,
+                showRange: true,
                 startValues: [25, 100],
                 sortValues: true,
                 resultTemplate: '$1 - $2',
@@ -363,13 +381,14 @@
                 min: 0,
                 max: 1000,
                 step: 25,
-                range: true,
+                showRange: true,
                 startValues: [0, 100, 225, 350, 400, 675],
                 showMarks: true,
-                tooltipReverse: true,
+                showMarkValue: false,
                 connectorsColors: ['#A4E8FE', '#B5FEA4', '#E1A4FE'],
                 showTooltip: true,
                 showResult: false,
+                showInput: true,
                 additionalClasses: {
                   wrapper: 'slider',
                   result: 'slider__result'
@@ -395,10 +414,10 @@
               max: 100,
               step: 0,
               vertical: true,
-              progressBar: true,
+              showProgressBar: true,
               startValues: [60],
               showTooltip: true,
-              showBounds: false,
+              showBounds: true,
               tooltipReverse: true,
               showResult: false,
               connectorsColors: ['#B5FEA4'],
