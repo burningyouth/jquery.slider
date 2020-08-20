@@ -31,11 +31,8 @@ interface HandlersStateClasses {
 interface Settings {
   min?: number;
   max?: number;
-  range?: boolean;
   step?: number;
-  progressBar?: boolean;
   startValues?: Values;
-  showMarks?: boolean;
   marksCount?: number;
   clickableMark?: boolean;
   showMarkValue?: boolean;
@@ -44,6 +41,11 @@ interface Settings {
   showResult?: boolean;
   showTooltip?: boolean;
   showBounds?: boolean;
+  showInput?: boolean;
+  showProgressBar?: boolean;
+  showRange?: boolean;
+  showMarks?: boolean;
+  readonlyInput?: boolean;
   sortValues?: boolean;
   sortOnlyPares?: boolean;
   sortReverse?: boolean;

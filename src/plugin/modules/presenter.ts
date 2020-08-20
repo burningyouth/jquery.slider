@@ -6,6 +6,7 @@ import events from './mixins/eventsMixin';
 import $ from 'jquery';
 import BaseView from './subViews/baseView';
 import MarkView from './subViews/markView';
+import InputView from './subViews/inputView';
 
 class Presenter {
   private _eventHandlers: Object = {};
@@ -30,7 +31,7 @@ class Presenter {
 
   public initClickEvents() {
     if (this._model.settings.clickableBase && !this._model.settings.showMarks) {
-      this.on('baseClicked connectorClicked progressBarClicked', function(
+      this.on('baseClicked connectorClicked progressBarClicked', function (
         base: BaseView,
         coords: number
       ) {
@@ -47,7 +48,7 @@ class Presenter {
     }
 
     if (this.settings.clickableMark && this.settings.showMarks) {
-      this.on('markClicked', function(mark: MarkView) {
+      this.on('markClicked', function (mark: MarkView) {
         const value = this._model.valueFromPercentage(mark.percentage),
           nearestHandler = this._view.nearestHandler(mark.percentage);
         if (nearestHandler) {
@@ -61,7 +62,7 @@ class Presenter {
   }
 
   public initBasicEvents() {
-    this.on('handlerMoved', function(handler: HandlerView, coords: number) {
+    this.on('handlerMoved', function (handler: HandlerView, coords: number) {
       const value = this._model.valueFromCoords(coords),
         percentage = this._view.getPercentage(value);
       this._model.values[handler.index] = value;
@@ -73,18 +74,25 @@ class Presenter {
       this.exec('sliderUpdated');
     });
 
-    this.on('handlerEnd', function() {
+    this.on('handlerEnd', function () {
       if (this._view.elements.input) this._view.elements.input.update(this._model.sortedValues);
       this.exec('sliderEnd');
     });
 
-    this.on('settingsEnd', function() {
+    this.on('settingsEnd', function () {
       this._view.reset();
       this.reset();
       this.exec('sliderReset');
     });
 
-    this.on('valueEnd', function() {
+    this.on('inputChange', function (input: InputView) {
+      if (this._model.checkValue(input.values)) {
+        this._model.values = input.values;
+        this.exec('valueEnd');
+      }
+    });
+
+    this.on('valueEnd', function () {
       this._view.elements.input.update(this._model.sortedValues);
       if (this._view.elements.result) {
         this._view.elements.result.update(this._model.formattedValues);

@@ -80,16 +80,6 @@ class View {
     return this;
   }
 
-  public initInput(): View {
-    this.elements.input = new InputView(
-      this,
-      this.input,
-      this._presenter.sortedValues,
-      this.elements.wrapper
-    );
-    return this;
-  }
-
   public initBaseWrapper(): View {
     this.elements.baseWrapper = new BasicElementView(
       this,
@@ -150,9 +140,19 @@ class View {
       this.elements.result = new ResultView(
         this,
         this._presenter.formattedValues,
-        this.elements.wrapper.element
+        this.elements.wrapper
       );
     }
+    return this;
+  }
+
+  public initInput(): View {
+    this.elements.input = new InputView(
+      this,
+      this.input,
+      this._presenter.sortedValues,
+      this.elements.wrapper
+    );
     return this;
   }
 
@@ -165,7 +165,7 @@ class View {
   }
 
   public initProgressBar(): View {
-    if (this.elements.handlers.length === 1 && this.settings.progressBar) {
+    if (this.elements.handlers.length === 1 && this.settings.showProgressBar) {
       this.elements.progressBar = new ProgressBarView(
         this,
         this.elements.handlers[0],
@@ -177,7 +177,7 @@ class View {
   }
 
   public initConnector(index: number): View {
-    if (this.settings.range && index % 2 === 1) {
+    if (this.settings.showRange && index % 2 === 1) {
       const connectorIndex = Math.floor(index / 2);
       this.elements.connectors.push(
         new ConnectorView(
@@ -205,13 +205,13 @@ class View {
   public init(): View {
     this.initParent()
       .initWrapper()
-      .initInput()
       .initBaseWrapper()
       .initBase()
       .initMarksWrapper()
       .initResult()
       .initMarks()
-      .initBounds();
+      .initBounds()
+      .initInput();
 
     this.settings.startValues.forEach((value, index) => {
       this.initHandler(value, index);
@@ -221,7 +221,7 @@ class View {
 
     this.addClasses(this.settings.additionalClasses);
 
-    this.on('handlerStart', function(handler: HandlerView) {
+    this.on('handlerStart', function (handler: HandlerView) {
       handler.active = true;
       this.elements.handlers.forEach((item: HandlerView) => {
         if (item.focus) {
@@ -231,7 +231,7 @@ class View {
       handler.focus = true;
     });
 
-    this.on('handlerEnd', function(handler: HandlerView) {
+    this.on('handlerEnd', function (handler: HandlerView) {
       handler.active = false;
     });
 

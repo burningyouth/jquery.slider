@@ -9,10 +9,10 @@ class ResultView extends BasicElementView {
   constructor(
     view: View,
     text: string = 'undef.',
-    parent: JQuery<HTMLElement> = $('body'),
+    wrapper: BasicElementView,
     initCallback?: Function
   ) {
-    super(view, ResultView.elementBase.clone(), parent, initCallback);
+    super(view, ResultView.elementBase.clone(), wrapper.element, initCallback);
     this.text = text;
     this.update();
   }

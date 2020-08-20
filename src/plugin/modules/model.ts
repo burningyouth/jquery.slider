@@ -9,8 +9,8 @@ class Model {
     //default settings
     min: 0,
     max: 100,
-    range: false,
-    progressBar: false,
+    showRange: false,
+    showProgressBar: false,
     startValues: [30, 70],
     marksCount: 10,
     step: 1,
@@ -24,6 +24,8 @@ class Model {
     showResult: true,
     showBounds: true,
     showMarkValue: true,
+    showInput: false,
+    readonlyInput: false,
     clickableBase: true,
     clickableMark: true,
     sortValues: false,
@@ -78,11 +80,11 @@ class Model {
         return arr;
       } else {
         if (this._settings.sortReverse) {
-          return this._values.slice(0).sort(function(a: number, b: number): number {
+          return this._values.slice(0).sort(function (a: number, b: number): number {
             return b - a;
           });
         }
-        return this._values.slice(0).sort(function(a: number, b: number): number {
+        return this._values.slice(0).sort(function (a: number, b: number): number {
           return a - b;
         });
       }
@@ -95,7 +97,7 @@ class Model {
       sortedValues = this.sortedValues;
     let formattedString = 'undefined';
     if (resultTemplate !== 'default') {
-      formattedString = resultTemplate.replace(/\$(\d+)/g, function(
+      formattedString = resultTemplate.replace(/\$(\d+)/g, function (
         substr: string,
         index: string
       ): string {

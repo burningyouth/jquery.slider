@@ -4,7 +4,7 @@ import { Values } from '../../types/slider';
 import $ from 'jquery';
 
 class InputView extends BasicElementView {
-  public values: Values;
+  public _values: Values;
 
   constructor(
     view: View,
@@ -19,23 +19,45 @@ class InputView extends BasicElementView {
 
   public static init(that: InputView) {
     that.element.remove();
-    that.element.prependTo(that.parent);
+    that.element.appendTo(that.parent);
+
+    that.addClass('js-slider__input');
+    if (that.settings.showInput) {
+      that.addClass('js-slider__input_show');
+    } else {
+      that.removeClass('js-slider__input_show');
+    }
+    if (that.settings.readonlyInput) {
+      that.element.attr('readonly', 'true');
+    }
+
+    that.element.on('change', function (e) {
+      that.values = (that.element.val() as string).split(',').map((item) => {
+        return +item;
+      });
+      that._view.trigger('inputChange', that);
+    });
   }
 
   public update(values?: Values): InputView {
-    if (values) this.values = values;
-    if (this.values.length > 1) {
-      this.element.attr(
-        'value',
-        this.values.toString()
-      );
-    } else {
-      this.element.attr('value', this.values[0]);
-    }
-    this._view.trigger('inputUpdated', this);
-
+    this.values = values;
     return this;
   }
+
+  set values(newValues: Values) {
+    this._values = newValues;
+    if (this._values.length > 1) {
+      this.element.val(this.values.toString());
+    } else {
+      this.element.val(this.values[0]);
+    }
+    this._view.trigger('inputUpdated', this);
+  }
+
+  get values(): Values {
+    return this._values;
+  }
+
 }
 
 export default InputView;
