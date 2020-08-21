@@ -6,7 +6,6 @@ function importAll(r) {
   });
 }
 
-importAll(require.context('../assets/', true, /\.css|\.less$/));
-importAll(require.context('../blocks/', true, /(\.less|\.js|\.ts)$/));
+importAll(require.context('../blocks/js-slider/', true, /(\.less)$/));
 
 import '../plugin/slider/slider.ts';

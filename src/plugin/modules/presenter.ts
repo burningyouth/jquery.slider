@@ -68,7 +68,7 @@ class Presenter {
       this._model.values[handler.index] = value;
       handler.update(percentage, value);
       if (this._view.elements.result) {
-        this._view.elements.result.update(this._model.formattedValues);
+        this._view.elements.result.update(this._model.templateValues);
       }
       this.exec('valueUpdated');
       this.exec('sliderUpdated');
@@ -86,16 +86,18 @@ class Presenter {
     });
 
     this.on('inputChange', function (input: InputView) {
-      if (this._model.checkValue(input.values)) {
-        this._model.values = input.values;
-        this.exec('valueEnd');
-      }
+      let values = input.values;
+      values = values.map((value) => {
+        return this._model.getValueRelativeToBounds(this._model.getFormattedValue(value));
+      })
+      this._model.values = values;
+      this.exec('valueEnd');
     });
 
     this.on('valueEnd', function () {
       this._view.elements.input.update(this._model.sortedValues);
       if (this._view.elements.result) {
-        this._view.elements.result.update(this._model.formattedValues);
+        this._view.elements.result.update(this._model.templateValues);
       }
       this._view.elements.handlers.forEach((handler: HandlerView, index: number) => {
         const value = this._model.values[index];
@@ -123,8 +125,8 @@ class Presenter {
     return this._model.sortedValues;
   }
 
-  get formattedValues(): string {
-    return this._model.formattedValues;
+  get templateValues(): string {
+    return this._model.templateValues;
   }
 
   get settings(): Settings {

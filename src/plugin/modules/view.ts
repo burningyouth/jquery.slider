@@ -139,7 +139,7 @@ class View {
     if (this.settings.showResult) {
       this.elements.result = new ResultView(
         this,
-        this._presenter.formattedValues,
+        this._presenter.templateValues,
         this.elements.wrapper
       );
     }

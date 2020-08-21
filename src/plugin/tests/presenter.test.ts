@@ -35,7 +35,7 @@ describe('Presenter', () => {
     expect(presenter.settings).toBeDefined();
     expect(presenter.values).toBeDefined();
     expect(presenter.sortedValues).toBeDefined();
-    expect(presenter.formattedValues).toBeDefined();
+    expect(presenter.templateValues).toBeDefined();
   });
 
   test('Settings and values is changable', () => {

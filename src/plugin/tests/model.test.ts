@@ -71,9 +71,9 @@ describe('Model', () => {
   test('Template is working fine', () => {
     model.settings.sortOnlyPares = true;
     model.settings.resultTemplate = '$1 - $2;,,,, $22 - $12 -- $3 :: -$4';
-    expect(model.formattedValues).toBe('89 - 32;,,,, $22 - $12 -- 64 :: -2');
+    expect(model.templateValues).toBe('89 - 32;,,,, $22 - $12 -- 64 :: -2');
     model.settings.resultTemplate = 'default';
-    expect(model.formattedValues).toBe('89,32,64,2');
+    expect(model.templateValues).toBe('89,32,64,2');
   });
 
   test('valueFromPercentage() is working fine', () => {

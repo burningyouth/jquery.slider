@@ -92,12 +92,12 @@ class Model {
     return this._values;
   }
 
-  get formattedValues(): string {
+  get templateValues(): string {
     const resultTemplate = this._settings.resultTemplate,
       sortedValues = this.sortedValues;
-    let formattedString = 'undefined';
+    let templateString = 'undefined';
     if (resultTemplate !== 'default') {
-      formattedString = resultTemplate.replace(/\$(\d+)/g, function (
+      templateString = resultTemplate.replace(/\$(\d+)/g, function (
         substr: string,
         index: string
       ): string {
@@ -107,7 +107,7 @@ class Model {
     } else {
       return sortedValues.toString();
     }
-    return formattedString;
+    return templateString;
   }
 
   set values(newValues: Values) {
@@ -134,9 +134,32 @@ class Model {
     this._presenter = newPresenter;
   }
 
-  public valueFromPercentage(percentage: number): number {
+  public getValueRelativeToBounds(value: number): number {
+    const settings = this.settings;
+
+    if (value >= settings.min && value <= settings.max) {
+      //если значение не попадает в границы, то мы берем за значение эти границы
+      return value;
+    } else if (value > settings.max) {
+      return settings.max;
+    }
+    return settings.min;
+  }
+
+  public getFormattedValue(value: number): number {
     const settings = this.settings;
     const roundTo = 10 ** settings.roundTo;
+
+    let tmp = settings.step
+      ? settings.min + Math.floor(value / settings.step + 0.5) * settings.step
+      : settings.min + value; //форматируется значение в зависимости от step
+    tmp = roundTo ? Math.floor(tmp * roundTo) / roundTo : tmp; //округление числа до roundTo
+
+    return tmp;
+  }
+
+  public valueFromPercentage(percentage: number): number {
+    const settings = this.settings;
 
     let value = percentage / 100;
     value *= settings.max - settings.min;
@@ -151,24 +174,14 @@ class Model {
       }
     }
 
-    value = settings.step
-      ? settings.min + Math.floor(value / settings.step + 0.5) * settings.step
-      : settings.min + value; //форматируется значение в зависимости от step
-    value = roundTo ? Math.floor(value * roundTo) / roundTo : value; //округление числа до roundTo
+    value = this.getFormattedValue(value);
 
-    if (value >= settings.min && value <= settings.max) {
-      //если значение не попадает в границы, то мы берем за значение эти границы
-      return value;
-    } else if (value > settings.max) {
-      return settings.max;
-    }
-    return settings.min;
+    return this.getValueRelativeToBounds(value);
   }
 
   public valueFromCoords(coords: number, base?: BaseView): number {
     //возвращает значение ползунка в зависимости от min, max, ширины базы, положения мыши, положения базы и настроек слайдера
-    const settings = this.settings,
-      roundTo = 10 ** settings.roundTo;
+    const settings = this.settings;
     let baseView: BaseView;
     if (base) {
       baseView = base;
@@ -198,18 +211,9 @@ class Model {
       }
     }
 
-    value = settings.step
-      ? settings.min + Math.floor(value / settings.step + 0.5) * settings.step
-      : settings.min + value; //форматируется значение в зависимости от step
-    value = roundTo ? Math.floor(value * roundTo) / roundTo : value; //округление числа до roundTo
+    value = this.getFormattedValue(value);
 
-    if (value >= settings.min && value <= settings.max) {
-      //если значение не попадает в границы, то мы берем за значение эти границы
-      return value;
-    } else if (value > settings.max) {
-      return settings.max;
-    }
-    return settings.min;
+    return this.getValueRelativeToBounds(value);
   }
 
   public checkValue(value: number | Values): boolean {
