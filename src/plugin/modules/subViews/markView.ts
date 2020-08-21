@@ -24,16 +24,17 @@ class MarkView extends BasicElementView {
 
     if (view.settings.showMarkValue) {
       this.value = MarkView.valueBase.clone();
-      this.value.text(view.valueFromPercentage(this.percentage));
       this.value.appendTo(this.element);
+
+      this._view.trigger('markValueElementAppend', this);
     }
     if (view.settings.markValueReverse) {
       this.value.addClass(this.reversedValueClass);
     }
-
     if (view.settings.clickableMark) {
       this.addClass(this.clickableClass);
     }
+
     this.update();
   }
 
@@ -52,6 +53,7 @@ class MarkView extends BasicElementView {
       e.preventDefault();
       that._view.trigger('markClicked', that);
     });
+
   }
 }
 
