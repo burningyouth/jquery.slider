@@ -15,7 +15,7 @@ class ConnectorView extends BasicElementView {
     index: number = 0,
     pairedHandlers: HandlerView[],
     base: BaseView,
-    initCallback: Function = ConnectorView.init
+    initCallback: Function = ConnectorView.init,
   ) {
     super(view, ConnectorView.elementBase.clone(), base.element, initCallback);
     this.index = index;
@@ -60,7 +60,8 @@ class ConnectorView extends BasicElementView {
 
     that.element.on('click touch', function (e) {
       e.preventDefault();
-      if (e.target === that.element[0]) that._view.trigger('connectorClicked', that, e[coordsAxis]);
+      if (e.target === that.element[0])
+        that._view.trigger('connectorClicked', that, e[coordsAxis]);
     });
   }
 }

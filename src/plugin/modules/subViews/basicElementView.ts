@@ -18,7 +18,7 @@ class BasicElementView {
     view: View,
     element: JQuery<HTMLElement>,
     parent: JQuery<HTMLElement> | undefined = undefined,
-    initCallback: Function = BasicElementView.basicInit
+    initCallback: Function = BasicElementView.basicInit,
   ) {
     this.element = element;
     this.parent = parent;
@@ -45,7 +45,11 @@ class BasicElementView {
     value_function?:
       | string
       | number
-      | ((this: HTMLElement, index: number, value: string) => string | number | void)
+      | ((
+          this: HTMLElement,
+          index: number,
+          value: string,
+        ) => string | number | void),
   ): any {
     if (value_function) {
       this.element.css(propertyName, value_function);

@@ -28,11 +28,11 @@ const model = new Model({
   sortOnlyPares: true,
   resultTemplate: '$1 - $2',
   handlersStateClasses: {
-    active: 'active'
+    active: 'active',
   },
   additionalClasses: {
-    wrapper: 'test'
-  }
+    wrapper: 'test',
+  },
 });
 const view = new View(input);
 const presenter = new Presenter(model, view);
@@ -52,7 +52,7 @@ describe('ConnectorView', () => {
     expect(connector.percentage).toBeDefined();
     expect(connector.percentage).toEqual([30, 30]);
     model.settings = {
-      startValues: [40, 80]
+      startValues: [40, 80],
     };
     connector = view.elements.connectors[0];
     expect(connector.percentage).toEqual([20, 40]);

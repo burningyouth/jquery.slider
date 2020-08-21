@@ -24,15 +24,18 @@ const model = new Model({
   sortOnlyPares: true,
   resultTemplate: '$1 - $2',
   handlersStateClasses: {
-    active: 'active'
+    active: 'active',
   },
   additionalClasses: {
-    wrapper: 'test'
-  }
+    wrapper: 'test',
+  },
 });
 
 const view = new View();
-const base = new BaseView(view, $('<div style="width: 200px; height: 200px;"></div>'));
+const base = new BaseView(
+  view,
+  $('<div style="width: 200px; height: 200px;"></div>'),
+);
 
 describe('Model', () => {
   test('checkValue() is working fine', () => {

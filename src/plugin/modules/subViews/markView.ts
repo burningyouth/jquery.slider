@@ -16,7 +16,7 @@ class MarkView extends BasicElementView {
     view: View,
     index: number,
     base: BasicElementView,
-    initCallback: Function = MarkView.init
+    initCallback: Function = MarkView.init,
   ) {
     super(view, MarkView.elementBase.clone(), base.element, initCallback);
     this.index = index;
@@ -53,7 +53,6 @@ class MarkView extends BasicElementView {
       e.preventDefault();
       that._view.trigger('markClicked', that);
     });
-
   }
 }
 

@@ -33,7 +33,7 @@ class Presenter {
     if (this._model.settings.clickableBase && !this._model.settings.showMarks) {
       this.on('baseClicked connectorClicked progressBarClicked', function (
         base: BaseView,
-        coords: number
+        coords: number,
       ) {
         const value = this._model.valueFromCoords(coords),
           percentage = this._view.getPercentage(value),
@@ -75,7 +75,8 @@ class Presenter {
     });
 
     this.on('handlerEnd', function () {
-      if (this._view.elements.input) this._view.elements.input.update(this._model.sortedValues);
+      if (this._view.elements.input)
+        this._view.elements.input.update(this._model.sortedValues);
       this.exec('sliderEnd');
     });
 
@@ -92,8 +93,10 @@ class Presenter {
     this.on('inputChange', function (input: InputView) {
       let values = input.values;
       values = values.map((value) => {
-        return this._model.getValueRelativeToBounds(this._model.getFormattedValue(value));
-      })
+        return this._model.getValueRelativeToBounds(
+          this._model.getFormattedValue(value),
+        );
+      });
       this._model.values = values;
       this.exec('valueEnd');
     });
@@ -103,10 +106,12 @@ class Presenter {
       if (this._view.elements.result) {
         this._view.elements.result.update(this._model.templateValues);
       }
-      this._view.elements.handlers.forEach((handler: HandlerView, index: number) => {
-        const value = this._model.values[index];
-        handler.update(this._view.getPercentage(value), value);
-      });
+      this._view.elements.handlers.forEach(
+        (handler: HandlerView, index: number) => {
+          const value = this._model.values[index];
+          handler.update(this._view.getPercentage(value), value);
+        },
+      );
       this.exec('sliderUpdated');
       this.exec('sliderEnd');
     });

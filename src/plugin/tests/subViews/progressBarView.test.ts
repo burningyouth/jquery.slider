@@ -27,11 +27,11 @@ const model = new Model({
   sortOnlyPares: true,
   resultTemplate: '$1 - $2',
   handlersStateClasses: {
-    active: 'active'
+    active: 'active',
   },
   additionalClasses: {
-    wrapper: 'test'
-  }
+    wrapper: 'test',
+  },
 });
 const view = new View(input);
 const presenter = new Presenter(model, view);
@@ -48,7 +48,7 @@ describe('ConnectorView', () => {
   test('Style is defined correctly', () => {
     expect(progressBar.element.attr('style')).toBe('top: 30%;');
     model.settings = {
-      vertical: false
+      vertical: false,
     };
     expect(view.elements.progressBar.element.attr('style')).toBe('right: 30%;');
   });

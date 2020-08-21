@@ -23,7 +23,7 @@ const model = new Model({
   sortValues: false,
   sortOnlyPares: false,
   resultTemplate: 'default',
-  additionalClasses: {}
+  additionalClasses: {},
 });
 
 const view = new View(input);
@@ -40,7 +40,7 @@ describe('Presenter', () => {
 
   test('Settings and values is changable', () => {
     presenter.settings = {
-      startValues: [10, 60]
+      startValues: [10, 60],
     };
     presenter.values = [1, 30];
     expect(presenter.settings.startValues).toEqual([10, 60]);
@@ -86,7 +86,7 @@ describe('Presenter', () => {
       handlerPercentageBefore = handler.percentage;
 
     model.settings = {
-      startValues: [10, 30, 50]
+      startValues: [10, 30, 50],
     };
 
     handler = view.elements.handlers[0];

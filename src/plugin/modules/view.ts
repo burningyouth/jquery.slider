@@ -29,7 +29,7 @@ class View {
     connectors: [],
     tooltips: [],
     bounds: [],
-    marks: []
+    marks: [],
   };
 
   constructor(input?: JQuery<HTMLElement>) {
@@ -52,7 +52,7 @@ class View {
     Object.keys(obj).forEach((key: keyof slider.AdditionalClasses) => {
       if (this.elements[key]) {
         if (Array.isArray(this.elements[key])) {
-          (this.elements[key] as Array<BasicElementView>).forEach(element => {
+          (this.elements[key] as Array<BasicElementView>).forEach((element) => {
             element.addClass(obj[key]);
           });
         } else {
@@ -72,7 +72,7 @@ class View {
     this.elements.wrapper = new BasicElementView(
       this,
       $('<div class="js-slider"></div>'),
-      this.elements.parent.element
+      this.elements.parent.element,
     );
     if (this.settings.vertical) {
       this.elements.wrapper.element.addClass('js-slider_vertical');
@@ -84,7 +84,7 @@ class View {
     this.elements.baseWrapper = new BasicElementView(
       this,
       $('<div class="js-slider__base-wrapper"></div>'),
-      this.elements.wrapper.element
+      this.elements.wrapper.element,
     );
     return this;
   }
@@ -99,7 +99,7 @@ class View {
       this.elements.marksWrapper = new BasicElementView(
         this,
         $('<div class="js-slider__marks-wrapper"></div>'),
-        this.elements.base.element
+        this.elements.base.element,
       );
     }
     return this;
@@ -108,7 +108,9 @@ class View {
   public initMarks(): View {
     if (this.elements.marksWrapper) {
       for (let i = 0; i <= this.settings.marksCount; i++) {
-        this.elements.marks.push(new MarkView(this, i, this.elements.marksWrapper));
+        this.elements.marks.push(
+          new MarkView(this, i, this.elements.marksWrapper),
+        );
       }
     }
     return this;
@@ -116,15 +118,21 @@ class View {
 
   public initBounds(): View {
     const settings = this.settings;
-    if (settings.showBounds && !settings.showMarks || settings.showMarks && settings.showBounds && !settings.showMarkValue) {
+    if (
+      (settings.showBounds && !settings.showMarks) ||
+      (settings.showMarks && settings.showBounds && !settings.showMarkValue)
+    ) {
       this.elements.bounds.push(
-        new BoundView(this, settings.min, this.elements.baseWrapper.element)
+        new BoundView(this, settings.min, this.elements.baseWrapper.element),
       );
       this.elements.bounds.push(
-        new BoundView(this, settings.max, this.elements.baseWrapper.element)
+        new BoundView(this, settings.max, this.elements.baseWrapper.element),
       );
       const parent = this.elements.bounds[0].parent;
-      if ((!settings.reverse && settings.vertical) || (settings.reverse && !settings.vertical)) {
+      if (
+        (!settings.reverse && settings.vertical) ||
+        (settings.reverse && !settings.vertical)
+      ) {
         this.elements.bounds[1].element.prependTo(parent);
         this.elements.bounds[0].element.appendTo(parent);
       } else {
@@ -140,7 +148,7 @@ class View {
       this.elements.result = new ResultView(
         this,
         this._presenter.templateValues,
-        this.elements.wrapper
+        this.elements.wrapper,
       );
     }
     return this;
@@ -151,14 +159,16 @@ class View {
       this,
       this.input,
       this._presenter.sortedValues,
-      this.elements.wrapper
+      this.elements.wrapper,
     );
     return this;
   }
 
   public initTooltip(index: number): View {
     if (this.settings.showTooltip) {
-      this.elements.tooltips.push(new TooltipView(this, this.elements.handlers[index]));
+      this.elements.tooltips.push(
+        new TooltipView(this, this.elements.handlers[index]),
+      );
       this.elements.handlers[index].tooltip = this.elements.tooltips[index];
     }
     return this;
@@ -169,7 +179,7 @@ class View {
       this.elements.progressBar = new ProgressBarView(
         this,
         this.elements.handlers[0],
-        this.elements.base
+        this.elements.base,
       );
       this.elements.handlers[0].connector = this.elements.progressBar;
     }
@@ -184,11 +194,15 @@ class View {
           this,
           connectorIndex,
           [this.elements.handlers[index - 1], this.elements.handlers[index]],
-          this.elements.base
-        )
+          this.elements.base,
+        ),
       );
-      this.elements.handlers[index - 1].connector = this.elements.connectors[connectorIndex];
-      this.elements.handlers[index].connector = this.elements.connectors[connectorIndex];
+      this.elements.handlers[index - 1].connector = this.elements.connectors[
+        connectorIndex
+      ];
+      this.elements.handlers[index].connector = this.elements.connectors[
+        connectorIndex
+      ];
     }
 
     return this;
@@ -196,7 +210,13 @@ class View {
 
   public initHandler(value: number, index: number): View {
     this.elements.handlers.push(
-      new HandlerView(this, index, this.getPercentage(value), value, this.elements.base)
+      new HandlerView(
+        this,
+        index,
+        this.getPercentage(value),
+        value,
+        this.elements.base,
+      ),
     );
     this.initTooltip(index).initConnector(index);
     return this;
@@ -248,7 +268,7 @@ class View {
         connectors: [],
         tooltips: [],
         bounds: [],
-        marks: []
+        marks: [],
       };
     }
     this.init();
@@ -260,10 +280,15 @@ class View {
     //возвращает процентное соотношение value от min, max
     const settings = this.settings;
     let percentage: number;
-    if ((!settings.reverse && settings.vertical) || (settings.reverse && !settings.vertical)) {
-      percentage = ((settings.max - value) / (settings.max - settings.min)) * 100;
+    if (
+      (!settings.reverse && settings.vertical) ||
+      (settings.reverse && !settings.vertical)
+    ) {
+      percentage =
+        ((settings.max - value) / (settings.max - settings.min)) * 100;
     } else {
-      percentage = ((value - settings.min) / (settings.max - settings.min)) * 100;
+      percentage =
+        ((value - settings.min) / (settings.max - settings.min)) * 100;
     }
     if (percentage >= 0 && percentage <= 100) {
       return percentage;
@@ -278,7 +303,7 @@ class View {
     if (this.elements.handlers.length > 1) {
       let lastDif: number = 100,
         dif: number;
-      this.elements.handlers.forEach(item => {
+      this.elements.handlers.forEach((item) => {
         item.focus = false;
         dif = Math.abs(item.percentage - percentage);
         if (lastDif > dif) {

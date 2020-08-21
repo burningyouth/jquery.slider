@@ -12,9 +12,14 @@ class ProgressBarView extends BasicElementView {
     view: View,
     pairedHandler: HandlerView,
     base: BaseView,
-    initCallback: Function = ProgressBarView.init
+    initCallback: Function = ProgressBarView.init,
   ) {
-    super(view, ProgressBarView.elementBase.clone(), base.element, initCallback);
+    super(
+      view,
+      ProgressBarView.elementBase.clone(),
+      base.element,
+      initCallback,
+    );
     this.pairedHandler = pairedHandler;
 
     if (view.settings.connectorsColors[0]) {
@@ -47,7 +52,8 @@ class ProgressBarView extends BasicElementView {
 
     that.element.on('click touch', function (e) {
       e.preventDefault();
-      if (e.target === that.element[0]) that._view.trigger('progressBarClicked', that, e[coordsAxis]);
+      if (e.target === that.element[0])
+        that._view.trigger('progressBarClicked', that, e[coordsAxis]);
     });
   }
 }

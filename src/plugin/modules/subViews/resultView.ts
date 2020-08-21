@@ -10,7 +10,7 @@ class ResultView extends BasicElementView {
     view: View,
     text: string = 'undef.',
     wrapper: BasicElementView,
-    initCallback?: Function
+    initCallback?: Function,
   ) {
     super(view, ResultView.elementBase.clone(), wrapper.element, initCallback);
     this.text = text;

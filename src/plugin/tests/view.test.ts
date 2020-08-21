@@ -30,7 +30,7 @@ interface BoundingBox {
 function centerCoords(boundingBox: BoundingBox): BoundingBox {
   return {
     x: boundingBox.x + boundingBox.width / 2,
-    y: boundingBox.y + boundingBox.height / 2
+    y: boundingBox.y + boundingBox.height / 2,
   };
 }
 
@@ -39,13 +39,21 @@ beforeAll(async () => {
   page = await browser.newPage();
   await page.setContent(contentHtml);
   await page.addStyleTag({
-    path: path.resolve(__dirname, '../../../dist/assets/css/', 'jquery.slider.min.css')
+    path: path.resolve(
+      __dirname,
+      '../../../dist/assets/css/',
+      'jquery.slider.min.css',
+    ),
   });
   await page.addScriptTag({
-    url: 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'
+    url: 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js',
   });
   await page.addScriptTag({
-    path: path.resolve(__dirname, '../../../dist/assets/js/', 'jquery.slider.min.js')
+    path: path.resolve(
+      __dirname,
+      '../../../dist/assets/js/',
+      'jquery.slider.min.js',
+    ),
   });
   await page.evaluate(() => {
     $('#slider1').slider({
@@ -61,8 +69,8 @@ beforeAll(async () => {
       tooltipPosition: 1,
       additionalClasses: {
         wrapper: 'slider',
-        result: 'slider__result'
-      }
+        result: 'slider__result',
+      },
     });
     $('#slider2').slider({
       min: -100,
@@ -78,8 +86,8 @@ beforeAll(async () => {
       resultTemplate: '$1',
       additionalClasses: {
         wrapper: 'slider',
-        result: 'slider__result'
-      }
+        result: 'slider__result',
+      },
     });
     $('#slider3').slider({
       min: 0,
@@ -97,8 +105,8 @@ beforeAll(async () => {
       resultTemplate: '$1 - $2; $3 - $4',
       additionalClasses: {
         wrapper: 'slider',
-        result: 'slider__result'
-      }
+        result: 'slider__result',
+      },
     });
     $('#slider4').slider({
       min: -500,
@@ -115,14 +123,18 @@ beforeAll(async () => {
       resultTemplate: '$1 --- $2',
       additionalClasses: {
         wrapper: 'slider',
-        result: 'slider__result'
-      }
+        result: 'slider__result',
+      },
     });
   });
-  const screenshotPath = path.resolve(__dirname, './screenshots/', 'loaded.jpeg');
+  const screenshotPath = path.resolve(
+    __dirname,
+    './screenshots/',
+    'loaded.jpeg',
+  );
   await page.screenshot({
     path: screenshotPath,
-    fullPage: true
+    fullPage: true,
   });
   console.dir(`Loaded screenshot: ${screenshotPath}`);
 });
@@ -172,47 +184,76 @@ describe('View', () => {
     let handlerBoundingBoxBefore = centerCoords(await handler1.boundingBox()),
       connectorBoundingBoxBefore = centerCoords(await connector1.boundingBox());
 
-    await page.mouse.move(handlerBoundingBoxBefore.x, handlerBoundingBoxBefore.y);
+    await page.mouse.move(
+      handlerBoundingBoxBefore.x,
+      handlerBoundingBoxBefore.y,
+    );
     await page.mouse.down();
     let classes = await handler1.getProperty('className');
     expect(classes._remoteObject.value).toMatch(/js-slider__handler_active/);
 
-    await page.mouse.move(handlerBoundingBoxBefore.x + 100, handlerBoundingBoxBefore.y);
+    await page.mouse.move(
+      handlerBoundingBoxBefore.x + 100,
+      handlerBoundingBoxBefore.y,
+    );
     await page.mouse.up();
 
     let handlerBoundingBoxAfter = centerCoords(await handler1.boundingBox()),
       connectorBoundingBoxAfter = centerCoords(await connector1.boundingBox());
 
-    expect(handlerBoundingBoxAfter.x - handlerBoundingBoxBefore.x).toBeCloseTo(100, 0);
-    expect(connectorBoundingBoxAfter.x - connectorBoundingBoxBefore.x).toBeCloseTo(50, 0);
+    expect(handlerBoundingBoxAfter.x - handlerBoundingBoxBefore.x).toBeCloseTo(
+      100,
+      0,
+    );
+    expect(
+      connectorBoundingBoxAfter.x - connectorBoundingBoxBefore.x,
+    ).toBeCloseTo(50, 0);
 
     //second
     handlerBoundingBoxBefore = centerCoords(await handler2.boundingBox());
     connectorBoundingBoxBefore = centerCoords(await connector2.boundingBox());
 
-    await page.mouse.move(handlerBoundingBoxBefore.x, handlerBoundingBoxBefore.y);
+    await page.mouse.move(
+      handlerBoundingBoxBefore.x,
+      handlerBoundingBoxBefore.y,
+    );
     await page.mouse.down();
     classes = await handler2.getProperty('className');
     expect(classes._remoteObject.value).toMatch(/js-slider__handler_active/);
 
-    await page.mouse.move(handlerBoundingBoxBefore.x - 100, handlerBoundingBoxBefore.y);
+    await page.mouse.move(
+      handlerBoundingBoxBefore.x - 100,
+      handlerBoundingBoxBefore.y,
+    );
     await page.mouse.up();
 
     handlerBoundingBoxAfter = centerCoords(await handler2.boundingBox());
     connectorBoundingBoxAfter = centerCoords(await connector2.boundingBox());
 
-    expect(handlerBoundingBoxBefore.x - handlerBoundingBoxAfter.x).toBeCloseTo(100, 0);
-    expect(connectorBoundingBoxBefore.x - connectorBoundingBoxAfter.x).toBeCloseTo(50, 0);
+    expect(handlerBoundingBoxBefore.x - handlerBoundingBoxAfter.x).toBeCloseTo(
+      100,
+      0,
+    );
+    expect(
+      connectorBoundingBoxBefore.x - connectorBoundingBoxAfter.x,
+    ).toBeCloseTo(50, 0);
   });
 
   test('Correct tooltip value (horizontal)', async () => {
     const handler1 = await page.$('#horizontal-test1 .js-slider__handler'),
-      tooltip1 = await page.$('#horizontal-test1 .js-slider__handler .js-slider__tooltip'),
+      tooltip1 = await page.$(
+        '#horizontal-test1 .js-slider__handler .js-slider__tooltip',
+      ),
       handler2 = await page.$('#horizontal-test2 .js-slider__handler'),
-      tooltip2 = await page.$('#horizontal-test2 .js-slider__handler .js-slider__tooltip');
+      tooltip2 = await page.$(
+        '#horizontal-test2 .js-slider__handler .js-slider__tooltip',
+      );
 
     let handlerBoundingBox = centerCoords(await handler1.boundingBox()),
-      tooltipTextBefore = await page.evaluate(tooltip => tooltip.textContent, tooltip1);
+      tooltipTextBefore = await page.evaluate(
+        (tooltip) => tooltip.textContent,
+        tooltip1,
+      );
 
     await page.mouse.move(handlerBoundingBox.x, handlerBoundingBox.y);
     await page.mouse.down();
@@ -220,7 +261,10 @@ describe('View', () => {
     await page.mouse.move(handlerBoundingBox.x + 100, handlerBoundingBox.y);
     await page.mouse.up();
 
-    let tooltipTextAfter = await page.evaluate(tooltip => tooltip.textContent, tooltip1);
+    let tooltipTextAfter = await page.evaluate(
+      (tooltip) => tooltip.textContent,
+      tooltip1,
+    );
 
     expect(tooltipTextBefore).toBe('110.8');
     expect(tooltipTextAfter).toBe('131.6');
@@ -228,7 +272,10 @@ describe('View', () => {
     //second
 
     handlerBoundingBox = centerCoords(await handler2.boundingBox());
-    tooltipTextBefore = await page.evaluate(tooltip => tooltip.textContent, tooltip2);
+    tooltipTextBefore = await page.evaluate(
+      (tooltip) => tooltip.textContent,
+      tooltip2,
+    );
 
     await page.mouse.move(handlerBoundingBox.x, handlerBoundingBox.y);
     await page.mouse.down();
@@ -236,65 +283,101 @@ describe('View', () => {
     await page.mouse.move(handlerBoundingBox.x + 100, handlerBoundingBox.y);
     await page.mouse.up();
 
-    tooltipTextAfter = await page.evaluate(tooltip => tooltip.textContent, tooltip2);
+    tooltipTextAfter = await page.evaluate(
+      (tooltip) => tooltip.textContent,
+      tooltip2,
+    );
 
     expect(tooltipTextBefore).toBe('-64.5');
     expect(tooltipTextAfter).toBe('-90.3');
   });
 
   test('Correct handle and connector moving (vertical)', async () => {
-    const handler1 = await page.$('#vertical-test1 .js-slider__handler:last-of-type'),
+    const handler1 = await page.$(
+        '#vertical-test1 .js-slider__handler:last-of-type',
+      ),
       connector1 = await page.$('#vertical-test1 .js-slider__connector'),
-      handler2 = await page.$('#vertical-test2 .js-slider__handler:last-of-type'),
+      handler2 = await page.$(
+        '#vertical-test2 .js-slider__handler:last-of-type',
+      ),
       connector2 = await page.$('#vertical-test2 .js-slider__connector');
 
     let handlerBoundingBoxBefore = centerCoords(await handler1.boundingBox()),
       connectorBoundingBoxBefore = centerCoords(await connector1.boundingBox());
 
-    await page.mouse.move(handlerBoundingBoxBefore.x, handlerBoundingBoxBefore.y);
+    await page.mouse.move(
+      handlerBoundingBoxBefore.x,
+      handlerBoundingBoxBefore.y,
+    );
     await page.mouse.down();
     let classes = await handler1.getProperty('className');
     expect(classes._remoteObject.value).toMatch(/js-slider__handler_active/);
 
-    await page.mouse.move(handlerBoundingBoxBefore.x, handlerBoundingBoxBefore.y + 10);
+    await page.mouse.move(
+      handlerBoundingBoxBefore.x,
+      handlerBoundingBoxBefore.y + 10,
+    );
     await page.mouse.up();
 
     let handlerBoundingBoxAfter = centerCoords(await handler1.boundingBox()),
       connectorBoundingBoxAfter = centerCoords(await connector1.boundingBox());
 
-    expect(handlerBoundingBoxAfter.y - handlerBoundingBoxBefore.y).toBeCloseTo(10.8, 0);
-    expect(connectorBoundingBoxAfter.y - connectorBoundingBoxBefore.y).toBeCloseTo(5.4, 0);
+    expect(handlerBoundingBoxAfter.y - handlerBoundingBoxBefore.y).toBeCloseTo(
+      10.8,
+      0,
+    );
+    expect(
+      connectorBoundingBoxAfter.y - connectorBoundingBoxBefore.y,
+    ).toBeCloseTo(5.4, 0);
 
     //second
     handlerBoundingBoxBefore = centerCoords(await handler2.boundingBox());
     connectorBoundingBoxBefore = centerCoords(await connector2.boundingBox());
 
-    await page.mouse.move(handlerBoundingBoxBefore.x, handlerBoundingBoxBefore.y);
+    await page.mouse.move(
+      handlerBoundingBoxBefore.x,
+      handlerBoundingBoxBefore.y,
+    );
     await page.mouse.down();
     classes = await handler2.getProperty('className');
     expect(classes._remoteObject.value).toMatch(/js-slider__handler_active/);
 
-    await page.mouse.move(handlerBoundingBoxBefore.x, handlerBoundingBoxBefore.y + 10);
+    await page.mouse.move(
+      handlerBoundingBoxBefore.x,
+      handlerBoundingBoxBefore.y + 10,
+    );
     await page.mouse.up();
 
     handlerBoundingBoxAfter = centerCoords(await handler2.boundingBox());
     connectorBoundingBoxAfter = centerCoords(await connector2.boundingBox());
 
-    expect(handlerBoundingBoxAfter.y - handlerBoundingBoxBefore.y).toBeCloseTo(10.8, 0);
-    expect(connectorBoundingBoxAfter.y - connectorBoundingBoxBefore.y).toBeCloseTo(5.4, 0);
+    expect(handlerBoundingBoxAfter.y - handlerBoundingBoxBefore.y).toBeCloseTo(
+      10.8,
+      0,
+    );
+    expect(
+      connectorBoundingBoxAfter.y - connectorBoundingBoxBefore.y,
+    ).toBeCloseTo(5.4, 0);
   });
 
   test('Correct tooltip value (vertical)', async () => {
-    const handler1 = await page.$('#vertical-test1 .js-slider__handler:last-of-type'),
-      tooltip1 = await page.$(
-        '#vertical-test1 .js-slider__handler:last-of-type .js-slider__tooltip'
+    const handler1 = await page.$(
+        '#vertical-test1 .js-slider__handler:last-of-type',
       ),
-      handler2 = await page.$('#vertical-test2 .js-slider__handler:last-of-type'),
+      tooltip1 = await page.$(
+        '#vertical-test1 .js-slider__handler:last-of-type .js-slider__tooltip',
+      ),
+      handler2 = await page.$(
+        '#vertical-test2 .js-slider__handler:last-of-type',
+      ),
       tooltip2 = await page.$(
-        '#vertical-test2 .js-slider__handler:last-of-type .js-slider__tooltip'
+        '#vertical-test2 .js-slider__handler:last-of-type .js-slider__tooltip',
       );
     let handlerBoundingBox = centerCoords(await handler1.boundingBox()),
-      tooltipTextBefore = await page.evaluate(tooltip => tooltip.textContent, tooltip1);
+      tooltipTextBefore = await page.evaluate(
+        (tooltip) => tooltip.textContent,
+        tooltip1,
+      );
 
     await page.mouse.move(handlerBoundingBox.x, handlerBoundingBox.y);
     await page.mouse.down();
@@ -302,13 +385,19 @@ describe('View', () => {
     await page.mouse.move(handlerBoundingBox.x, handlerBoundingBox.y + 50);
     await page.mouse.up();
 
-    let tooltipTextAfter = await page.evaluate(tooltip => tooltip.textContent, tooltip1);
+    let tooltipTextAfter = await page.evaluate(
+      (tooltip) => tooltip.textContent,
+      tooltip1,
+    );
 
     expect(+tooltipTextBefore > +tooltipTextAfter).toBe(true);
 
     //second
     handlerBoundingBox = centerCoords(await handler2.boundingBox());
-    tooltipTextBefore = await page.evaluate(tooltip => tooltip.textContent, tooltip2);
+    tooltipTextBefore = await page.evaluate(
+      (tooltip) => tooltip.textContent,
+      tooltip2,
+    );
 
     await page.mouse.move(handlerBoundingBox.x, handlerBoundingBox.y);
     await page.mouse.down();
@@ -316,17 +405,24 @@ describe('View', () => {
     await page.mouse.move(handlerBoundingBox.x, handlerBoundingBox.y + 20);
     await page.mouse.up();
 
-    tooltipTextAfter = await page.evaluate(tooltip => tooltip.textContent, tooltip2);
+    tooltipTextAfter = await page.evaluate(
+      (tooltip) => tooltip.textContent,
+      tooltip2,
+    );
 
     expect(+tooltipTextBefore > +tooltipTextAfter).toBe(true);
   });
 });
 
 afterAll(async () => {
-  const screenshotPath = path.resolve(__dirname, './screenshots/', 'tested.jpeg');
+  const screenshotPath = path.resolve(
+    __dirname,
+    './screenshots/',
+    'tested.jpeg',
+  );
   await page.screenshot({
     path: screenshotPath,
-    fullPage: true
+    fullPage: true,
   });
   console.dir(`Tested screenshot: ${screenshotPath}`);
   browser.close();

@@ -11,7 +11,7 @@ class InputView extends BasicElementView {
     input: JQuery<HTMLElement>,
     values: Values,
     wrapper: BasicElementView,
-    initCallback: Function = InputView.init
+    initCallback: Function = InputView.init,
   ) {
     super(view, input, wrapper.element, initCallback);
     this.update(values);
@@ -57,7 +57,6 @@ class InputView extends BasicElementView {
   get values(): Values {
     return this._values;
   }
-
 }
 
 export default InputView;

@@ -29,11 +29,11 @@ const model = new Model({
   sortOnlyPares: true,
   resultTemplate: '$1 - $2',
   handlersStateClasses: {
-    active: 'active'
+    active: 'active',
   },
   additionalClasses: {
-    wrapper: 'test'
-  }
+    wrapper: 'test',
+  },
 });
 const view = new View(input);
 const presenter = new Presenter(model, view);
@@ -46,7 +46,9 @@ describe('BasicElementView', () => {
     expect(basicElementView.element).toBeDefined();
   });
   test('Element is inside of parent', () => {
-    expect(basicElementView.parent.find(basicElementView.element).length).toBeGreaterThanOrEqual(1);
+    expect(
+      basicElementView.parent.find(basicElementView.element).length,
+    ).toBeGreaterThanOrEqual(1);
   });
   test('addClass(), removeClass() and css() is working correctly', () => {
     basicElementView.addClass('test');
@@ -58,6 +60,8 @@ describe('BasicElementView', () => {
   });
   test('remove() is working correctly', () => {
     basicElementView.remove();
-    expect(basicElementView.parent.find(basicElementView.element).length).toBe(0);
+    expect(basicElementView.parent.find(basicElementView.element).length).toBe(
+      0,
+    );
   });
 });

@@ -35,7 +35,7 @@ class Model {
     handlersStateClasses: {},
     additionalClasses: {},
     handlersColors: [],
-    connectorsColors: []
+    connectorsColors: [],
   };
   private _values: Values;
 
@@ -80,13 +80,17 @@ class Model {
         return arr;
       } else {
         if (this._settings.sortReverse) {
-          return this._values.slice(0).sort(function (a: number, b: number): number {
-            return b - a;
-          });
+          return this._values
+            .slice(0)
+            .sort(function (a: number, b: number): number {
+              return b - a;
+            });
         }
-        return this._values.slice(0).sort(function (a: number, b: number): number {
-          return a - b;
-        });
+        return this._values
+          .slice(0)
+          .sort(function (a: number, b: number): number {
+            return a - b;
+          });
       }
     }
     return this._values;
@@ -99,7 +103,7 @@ class Model {
     if (resultTemplate !== 'default') {
       templateString = resultTemplate.replace(/\$(\d+)/g, function (
         substr: string,
-        index: string
+        index: string,
       ): string {
         const value = sortedValues[+index - 1];
         return typeof value === 'number' ? String(value) : substr;
@@ -164,13 +168,17 @@ class Model {
     let value = percentage / 100;
     value *= settings.max - settings.min;
 
-    if ((settings.reverse && !settings.vertical) || (!settings.reverse && settings.vertical)) {
+    if (
+      (settings.reverse && !settings.vertical) ||
+      (!settings.reverse && settings.vertical)
+    ) {
       if (settings.max >= 0 && settings.min >= 0) {
         value = settings.max - value;
       } else if (settings.max < 0 && settings.min < 0) {
         value = settings.max - settings.min - value;
       } else {
-        value = settings.max * ((settings.max - settings.min) / settings.max) - value;
+        value =
+          settings.max * ((settings.max - settings.min) / settings.max) - value;
       }
     }
 
@@ -201,13 +209,17 @@ class Model {
     value = (coords - startCoords) / devider;
     value *= settings.max - settings.min;
 
-    if ((settings.reverse && !settings.vertical) || (!settings.reverse && settings.vertical)) {
+    if (
+      (settings.reverse && !settings.vertical) ||
+      (!settings.reverse && settings.vertical)
+    ) {
       if (settings.max >= 0 && settings.min >= 0) {
         value = settings.max - value;
       } else if (settings.max < 0 && settings.min < 0) {
         value = settings.max - settings.min - value;
       } else {
-        value = settings.max * ((settings.max - settings.min) / settings.max) - value;
+        value =
+          settings.max * ((settings.max - settings.min) / settings.max) - value;
       }
     }
 
@@ -220,7 +232,7 @@ class Model {
     //проверка значений на попадание в диапазон
     if (Array.isArray(value)) {
       let result = true;
-      value.forEach(item => {
+      value.forEach((item) => {
         if (!this.checkValue(item)) result = false;
       });
       return result;

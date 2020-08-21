@@ -9,28 +9,32 @@ const { CheckerPlugin } = require('awesome-typescript-loader');
 const PATHS = {
   src: path.join(__dirname, '../src'),
   dist: path.join(__dirname, '../dist'),
-  assets: 'assets/'
+  assets: 'assets/',
 };
 
 const PAGES_DIR = `${PATHS.src}/pages`;
-const PAGES_PUG = fs.readdirSync(PAGES_DIR).filter(fileName => fileName.endsWith('.pug'));
-const PAGES_HTML = fs.readdirSync(PAGES_DIR).filter(fileName => fileName.endsWith('.html'));
+const PAGES_PUG = fs
+  .readdirSync(PAGES_DIR)
+  .filter((fileName) => fileName.endsWith('.pug'));
+const PAGES_HTML = fs
+  .readdirSync(PAGES_DIR)
+  .filter((fileName) => fileName.endsWith('.html'));
 
 module.exports = {
   externals: {
     paths: PATHS,
-    jquery: 'jQuery'
+    jquery: 'jQuery',
   },
   entry: {
     misc: `${PATHS.src}/entries/misc.js`,
-    'jquery.slider': `${PATHS.src}/entries/slider.js`
+    'jquery.slider': `${PATHS.src}/entries/slider.js`,
   },
   output: {
     filename: `${PATHS.assets}js/[name].min.js`,
-    path: PATHS.dist
+    path: PATHS.dist,
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx']
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
   devtool: 'source-map',
   module: {
@@ -39,34 +43,34 @@ module.exports = {
         test: /\.pug$/,
         oneOf: [
           {
-            use: ['pug-loader']
-          }
-        ]
+            use: ['pug-loader'],
+          },
+        ],
       },
       {
         test: /\.tsx?$/,
-        loader: 'awesome-typescript-loader'
+        loader: 'awesome-typescript-loader',
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: '/node_modules/'
+        exclude: '/node_modules/',
       },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'file-loader',
         options: {
           outputPath: `${PATHS.assets}fonts`,
-          name: '[name].[ext]'
-        }
+          name: '[name].[ext]',
+        },
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         options: {
           outputPath: `${PATHS.assets}img`,
-          name: '[name].[ext]'
-        }
+          name: '[name].[ext]',
+        },
       },
       {
         test: /\.less$/,
@@ -77,18 +81,21 @@ module.exports = {
             loader: 'css-loader',
             options: {
               sourceMap: true,
-              url: false
-            }
+              url: false,
+            },
           },
           {
             loader: 'postcss-loader',
-            options: { sourceMap: true, config: { path: './postcss.config.js' } }
+            options: {
+              sourceMap: true,
+              config: { path: './postcss.config.js' },
+            },
           },
           {
             loader: 'less-loader',
-            options: { sourceMap: true }
-          }
-        ]
+            options: { sourceMap: true },
+          },
+        ],
       },
       {
         test: /\.css$/,
@@ -99,47 +106,50 @@ module.exports = {
             loader: 'css-loader',
             options: {
               sourceMap: true,
-              url: false
-            }
+              url: false,
+            },
           },
           {
             loader: 'postcss-loader',
-            options: { sourceMap: true, config: { path: './postcss.config.js' } }
-          }
-        ]
-      }
-    ]
+            options: {
+              sourceMap: true,
+              config: { path: './postcss.config.js' },
+            },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     new CheckerPlugin(),
     new MiniCssExtractPlugin({
-      filename: `${PATHS.assets}css/[name].min.css`
+      filename: `${PATHS.assets}css/[name].min.css`,
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
-      'window.$': 'jquery'
+      'window.$': 'jquery',
     }),
     new CopyWebpackPlugin([
       { from: `${PATHS.src}/${PATHS.assets}img`, to: `${PATHS.assets}img` },
-      { from: `${PATHS.src}/${PATHS.assets}fonts`, to: `${PATHS.assets}fonts` }
+      { from: `${PATHS.src}/${PATHS.assets}fonts`, to: `${PATHS.assets}fonts` },
     ]),
     ...PAGES_PUG.map(
-      page =>
+      (page) =>
         new HtmlWebpackPlugin({
           template: `${PAGES_DIR}/${page}`,
           inject: false,
-          filename: `./${page.replace(/\.pug/, '.html')}`
-        })
+          filename: `./${page.replace(/\.pug/, '.html')}`,
+        }),
     ),
     ...PAGES_HTML.map(
-      page =>
+      (page) =>
         new HtmlWebpackPlugin({
           template: `${PAGES_DIR}/${page}`,
           inject: false,
-          filename: `./${page}`
-        })
-    )
-  ]
+          filename: `./${page}`,
+        }),
+    ),
+  ],
 };

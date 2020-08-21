@@ -31,11 +31,11 @@ const model = new Model({
   sortOnlyPares: true,
   resultTemplate: '$1 - $2',
   handlersStateClasses: {
-    active: 'active'
+    active: 'active',
   },
   additionalClasses: {
-    wrapper: 'test'
-  }
+    wrapper: 'test',
+  },
 });
 const view = new View(input);
 const presenter = new Presenter(model, view);

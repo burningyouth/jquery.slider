@@ -27,7 +27,7 @@ class HandlerView extends BasicElementView {
     percentage: number = 0,
     value: number = 0,
     base: BaseView,
-    initCallback: Function = HandlerView.init
+    initCallback: Function = HandlerView.init,
   ) {
     super(view, HandlerView.elementBase.clone(), base.element, initCallback);
     this.index = index;
@@ -83,7 +83,7 @@ class HandlerView extends BasicElementView {
 
   public update(
     percentage: number | undefined = undefined,
-    value: number | undefined = undefined
+    value: number | undefined = undefined,
   ): HandlerView {
     if (typeof percentage === 'number') this.percentage = percentage;
     if (typeof value === 'number') this.value = value;

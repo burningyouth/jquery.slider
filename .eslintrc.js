@@ -1,21 +1,22 @@
 module.exports = {
   env: {
     browser: true,
-    es6: true
+    es6: true,
   },
-  extends: ['airbnb-base', 'prettier'],
+  extends: ['airbnb-base', 'prettier', 'plugin:fsd/all'],
   globals: {
     Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly'
+    SharedArrayBuffer: 'readonly',
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2018,
-    sourceType: 'module'
+    sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ['@typescript-eslint', 'fsd'],
   rules: {
     indent: ['error', 2],
+    'no-underscore-dangle': ['error', { allowAfterThis: true }],
     'no-tabs': ['error', { allowIndentationTabs: true }],
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
     'no-console': 'off',
@@ -23,11 +24,10 @@ module.exports = {
     'no-unused-vars': 'off',
     'import/no-extraneous-dependencies': 'off',
     'func-names': ['error', 'never'],
-    'prettier/prettier': ['error']
   },
   settings: {
     'import/extensions': {
-      extensions: ['.js', '.jsx', '.ts', '.tsx']
-    }
-  }
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    },
+  },
 };

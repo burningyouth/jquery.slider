@@ -4,7 +4,9 @@ import View from '../view';
 import $ from 'jquery';
 
 class TooltipView extends BasicElementView {
-  public static elementBase = $('<span class="js-slider__tooltip">undef.</span>');
+  public static elementBase = $(
+    '<span class="js-slider__tooltip">undef.</span>',
+  );
   public handler: HandlerView;
   public reversedClass = 'js-slider__tooltip_reversed';
 

@@ -6,8 +6,17 @@ class BaseView extends BasicElementView {
   public static elementBase = $('<div class="js-slider__base"></div>');
   public clickableClass = 'js-slider__base_clickable';
 
-  constructor(view: View, baseWrapper: BasicElementView, initCallback: Function = BaseView.init) {
-    super(view, BaseView.elementBase.clone(), baseWrapper.element, initCallback);
+  constructor(
+    view: View,
+    baseWrapper: BasicElementView,
+    initCallback: Function = BaseView.init,
+  ) {
+    super(
+      view,
+      BaseView.elementBase.clone(),
+      baseWrapper.element,
+      initCallback,
+    );
     if (view.settings.clickableBase && !view.settings.showMarks) {
       this.addClass(this.clickableClass);
     }
@@ -20,7 +29,8 @@ class BaseView extends BasicElementView {
 
     that.element.on('click touch', function (e) {
       e.preventDefault();
-      if (e.target === that.element[0]) that._view.trigger('baseClicked', that, e[coordsAxis]);
+      if (e.target === that.element[0])
+        that._view.trigger('baseClicked', that, e[coordsAxis]);
     });
   }
 }
