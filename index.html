@@ -31,14 +31,11 @@
                                     1. Put a space between values<br>2. Values must be in range [min; max]<br>3. Values must be numbers
                                 </small>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" data-tooltip="How much marks to draw">
                                 <label for="marksCount">
                                     Marks count
                                 </label>
                                 <input class="form-control" id="marksCount" min="1" name="marksCount" type="number" value="10"/>
-                                <small class="form-text text-muted">
-                                    How much marks to draw
-                                </small>
                             </div>
                             <div class="form-group">
                                 <a aria-controls="colors" aria-expanded="false" class="dropdown collapsed mb-2" data-toggle="collapse" href="#colors" role="button">
@@ -99,11 +96,11 @@
                                         <label for="step">
                                             Step
                                         </label>
-                                        <input class="form-control" id="step" min="0" name="step" type="number" value="1"/>
+                                        <input class="form-control" id="step" min="0" name="step" step="any" type="number" value="1"/>
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <div class="form-group">
+                                    <div class="form-group" data-tooltip="How many decaminals to show">
                                         <label for="roundTo">
                                             Round to
                                         </label>
