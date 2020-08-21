@@ -116,7 +116,7 @@ class View {
 
   public initBounds(): View {
     const settings = this.settings;
-    if (settings.showBounds && !settings.showMarks) {
+    if (settings.showBounds && !settings.showMarks || settings.showMarks && settings.showBounds && !settings.showMarkValue) {
       this.elements.bounds.push(
         new BoundView(this, settings.min, this.elements.baseWrapper.element)
       );
