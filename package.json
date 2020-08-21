@@ -19,10 +19,10 @@
   "author": "https://github.com/burningyouth",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/burningyouth/FSD-plugin.git"
+    "url": "git+https://github.com/burningyouth/jquery.slider.git"
   },
   "bugs": {
-    "url": "https://github.com/burningyouth/FSD-plugin/issues"
+    "url": "https://github.com/burningyouth/jquery.slider/issues"
   },
   "keywords": [
     "webpack",
