@@ -1,16 +1,20 @@
 .js-slider__tooltip {
-  display: none;
+  display: block;
   position: absolute;
-  bottom: 140%;
+  visibility: hidden;
+  bottom: 130%;
 
-  padding: 5px;
+  padding: 2px 5px;
 
   background: rgba(187, 187, 187, 0.25);
   border-radius: 5px;
   font-size: 1rem;
   color: rgb(121, 121, 121);
+  opacity: 0;
 
   transform: scale(0.71);
+
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
 
   &::after {
     content: '';
