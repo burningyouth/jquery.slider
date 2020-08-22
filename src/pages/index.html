@@ -1,25 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
-    <meta charset="UTF-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
-    <title>JQuery.slider</title>
-    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" rel="stylesheet">
-    <link href="assets/css/jquery.slider.min.css" rel="stylesheet"/>
-    <link href="assets/css/misc.min.css" rel="stylesheet"/>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+    <title>jQuery.slider</title>
+    <link
+      crossorigin="anonymous"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      rel="stylesheet"
+    />
+    <link href="assets/css/jquery.slider.min.css" rel="stylesheet" />
+    <link href="assets/css/misc.min.css" rel="stylesheet" />
   </head>
-
   <body class="body" id="color">
     <div class="modal" id="settings-modal" role="dialog" tabindex="-1">
-      <div class="modal-dialog ">
+      <div class="modal-dialog">
         <div class="modal-content">
           <form id="settings-form">
-            <input id="sliderIndex" name="sliderIndex" type="hidden" value="0">
+            <input
+              id="sliderIndex"
+              name="sliderIndex"
+              type="hidden"
+              value="0"
+            />
             <div class="modal-header">
               <h5 class="modal-title">Settings</h5>
-              <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+              <button
+                aria-label="Close"
+                class="close"
+                data-dismiss="modal"
+                type="button"
+              >
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -28,20 +41,38 @@
                 <label for="startValues">
                   Start values
                 </label>
-                <input class="form-control" id="startValues" name="startValues" type="text" value="0 65 180"/>
+                <input
+                  class="form-control"
+                  name="startValues"
+                  type="text"
+                  value="0 65 180"
+                />
                 <small class="form-text text-muted">
-                  1. Put a space between values<br>2. Values must be in range [min; max]<br>3. Values must
-                                                                                                                                                                                                                                                                                            be numbers
+                  1. Put a space between values<br />2. Values must be in range
+                  [min; max]<br />3. Values must be numbers
                 </small>
               </div>
               <div class="form-group" data-tooltip="How much marks to draw">
                 <label for="marksCount">
                   Marks count
                 </label>
-                <input class="form-control" id="marksCount" min="1" name="marksCount" type="number" value="10"/>
+                <input
+                  class="form-control"
+                  min="1"
+                  name="marksCount"
+                  type="number"
+                  value="10"
+                />
               </div>
               <div class="form-group">
-                <a aria-controls="colors" aria-expanded="false" class="dropdown collapsed mb-2" data-toggle="collapse" href="#colors" role="button">
+                <a
+                  aria-controls="colors"
+                  aria-expanded="false"
+                  class="dropdown collapsed mb-2"
+                  data-toggle="collapse"
+                  href="#colors"
+                  role="button"
+                >
                   Colors
                 </a>
               </div>
@@ -50,7 +81,12 @@
                   <label for="handlersColors">
                     Handlers colors
                   </label>
-                  <input class="form-control" id="handlersColors" name="handlersColors" type="text" value="red green blue"/>
+                  <input
+                    class="form-control"
+                    name="handlersColors"
+                    type="text"
+                    value="red green blue"
+                  />
                   <small class="form-text text-muted">
                     Put a space between values
                   </small>
@@ -59,14 +95,26 @@
                   <label for="connectorsColors">
                     Connectors colors
                   </label>
-                  <input class="form-control" id="connectorsColors" name="connectorsColors" type="text" value=""/>
+                  <input
+                    class="form-control"
+                    name="connectorsColors"
+                    type="text"
+                    value=""
+                  />
                   <small class="form-text text-muted">
                     Put a space between values
                   </small>
                 </div>
               </div>
               <div class="form-group">
-                <a aria-controls="colors" aria-expanded="false" class="dropdown collapsed mb-2" data-toggle="collapse" href="#range" role="button">
+                <a
+                  aria-controls="colors"
+                  aria-expanded="false"
+                  class="dropdown collapsed mb-2"
+                  data-toggle="collapse"
+                  href="#range"
+                  role="button"
+                >
                   Range of values
                 </a>
               </div>
@@ -76,7 +124,12 @@
                     <label for="min">
                       Min
                     </label>
-                    <input class="form-control" id="min" name="min" type="number" value="0"/>
+                    <input
+                      class="form-control"
+                      name="min"
+                      type="number"
+                      value="0"
+                    />
                   </div>
                 </div>
                 <div class="col-6">
@@ -84,12 +137,24 @@
                     <label for="max">
                       Max
                     </label>
-                    <input class="form-control" id="max" name="max" type="number" value="255"/>
+                    <input
+                      class="form-control"
+                      name="max"
+                      type="number"
+                      value="255"
+                    />
                   </div>
                 </div>
               </div>
               <div class="form-group">
-                <a aria-controls="colors" aria-expanded="false" class="dropdown collapsed mb-2" data-toggle="collapse" href="#format" role="button">
+                <a
+                  aria-controls="colors"
+                  aria-expanded="false"
+                  class="dropdown collapsed mb-2"
+                  data-toggle="collapse"
+                  href="#format"
+                  role="button"
+                >
                   Value format
                 </a>
               </div>
@@ -99,189 +164,364 @@
                     <label for="step">
                       Step
                     </label>
-                    <input class="form-control" id="step" min="0" name="step" step="any" type="number" value="1"/>
+                    <input
+                      class="form-control"
+                      min="0"
+                      name="step"
+                      step="any"
+                      type="number"
+                      value="1"
+                    />
                   </div>
                 </div>
                 <div class="col-6">
-                  <div class="form-group" data-tooltip="How many decaminals to show">
+                  <div
+                    class="form-group"
+                    data-tooltip="How many decaminals to show"
+                  >
                     <label for="roundTo">
                       Round to
                     </label>
-                    <input class="form-control" id="roundTo" min="0" name="roundTo" type="number" value="0"/>
+                    <input
+                      class="form-control"
+                      min="0"
+                      name="roundTo"
+                      type="number"
+                      value="0"
+                    />
                   </div>
                 </div>
                 <div class="form-group col-12">
                   <label for="resultTemplate">
                     Result template
                   </label>
-                  <input class="form-control" id="resultTemplate" name="resultTemplate" type="text" value="default"/>
+                  <input
+                    class="form-control"
+                    name="resultTemplate"
+                    type="text"
+                    value="default"
+                  />
                   <small class="form-text text-muted">
                     Example: $1 - $2, $3 - $4
                   </small>
                 </div>
               </div>
               <div class="form-group">
-                <a aria-controls="colors" aria-expanded="false" class="dropdown collapsed mb-2" data-toggle="collapse" href="#elements" role="button">
+                <a
+                  aria-controls="colors"
+                  aria-expanded="false"
+                  class="dropdown collapsed mb-2"
+                  data-toggle="collapse"
+                  href="#elements"
+                  role="button"
+                >
                   Elements
                 </a>
               </div>
               <div class="form-group row collapse" id="elements">
                 <div class="col-6">
-                  <div class="toggle mb-2" data-tooltip="Connects two handlers with a bar">
-                    <input checked class="toggle__input" id="showRange" name="showRange" type="checkbox"/>
-                    <label class="toggle__label" for="showRange">Show range
+                  <div
+                    class="toggle mb-2"
+                    data-tooltip="Connects two handlers with a bar"
+                  >
+                    <input
+                      checked
+                      class="toggle__input"
+                      name="showRange"
+                      type="checkbox"
+                    />
+                    <label class="toggle__label" for="showRange"
+                      >Show range
                     </label>
                   </div>
 
-                  <div class="toggle mb-2" data-tooltip="Connects only one handler with start of the slider">
-                    <input class="toggle__input" id="showProgressBar" name="showProgressBar" type="checkbox"/>
-                    <label class="toggle__label" for="showProgressBar">Show progress bar
+                  <div
+                    class="toggle mb-2"
+                    data-tooltip="Connects only one handler with start of the slider"
+                  >
+                    <input
+                      class="toggle__input"
+                      name="showProgressBar"
+                      type="checkbox"
+                    />
+                    <label class="toggle__label" for="showProgressBar"
+                      >Show progress bar
                     </label>
                   </div>
 
                   <div class="toggle mb-2">
-                    <input class="toggle__input" id="showTooltip" name="showTooltip" type="checkbox"/>
-                    <label class="toggle__label" for="showTooltip">Show tooltip
+                    <input
+                      class="toggle__input"
+                      name="showTooltip"
+                      type="checkbox"
+                    />
+                    <label class="toggle__label" for="showTooltip"
+                      >Show tooltip
                     </label>
                   </div>
 
                   <div class="toggle mb-2">
-                    <input checked class="toggle__input" id="showResult" name="showResult" type="checkbox"/>
-                    <label class="toggle__label" for="showResult">Show result
+                    <input
+                      checked
+                      class="toggle__input"
+                      name="showResult"
+                      type="checkbox"
+                    />
+                    <label class="toggle__label" for="showResult"
+                      >Show result
                     </label>
                   </div>
-
                 </div>
                 <div class="col-6">
                   <div class="toggle mb-2">
-                    <input class="toggle__input" id="showBounds" name="showBounds" type="checkbox"/>
-                    <label class="toggle__label" for="showBounds">Show bounds
+                    <input
+                      class="toggle__input"
+                      name="showBounds"
+                      type="checkbox"
+                    />
+                    <label class="toggle__label" for="showBounds"
+                      >Show bounds
                     </label>
                   </div>
 
                   <div class="toggle mb-2">
-                    <input class="toggle__input" id="showMarks" name="showMarks" type="checkbox"/>
-                    <label class="toggle__label" for="showMarks">Show marks
+                    <input
+                      class="toggle__input"
+                      name="showMarks"
+                      type="checkbox"
+                    />
+                    <label class="toggle__label" for="showMarks"
+                      >Show marks
                     </label>
                   </div>
 
                   <div class="toggle mb-2">
-                    <input class="toggle__input" id="showMarkValue" name="showMarkValue" type="checkbox"/>
-                    <label class="toggle__label" for="showMarkValue">Show mark value
+                    <input
+                      class="toggle__input"
+                      name="showMarkValue"
+                      type="checkbox"
+                    />
+                    <label class="toggle__label" for="showMarkValue"
+                      >Show mark value
                     </label>
                   </div>
 
                   <div class="toggle">
-                    <input class="toggle__input" id="showInput" name="showInput" type="checkbox"/>
-                    <label class="toggle__label" for="showInput">Show input
+                    <input
+                      class="toggle__input"
+                      name="showInput"
+                      type="checkbox"
+                    />
+                    <label class="toggle__label" for="showInput"
+                      >Show input
                     </label>
                   </div>
-
                 </div>
               </div>
               <div class="form-group">
-                <a aria-controls="colors" aria-expanded="false" class="dropdown collapsed mb-2" data-toggle="collapse" href="#sorting" role="button">
+                <a
+                  aria-controls="colors"
+                  aria-expanded="false"
+                  class="dropdown collapsed mb-2"
+                  data-toggle="collapse"
+                  href="#sorting"
+                  role="button"
+                >
                   Sorting
                 </a>
               </div>
               <div class="form-group row collapse" id="sorting">
                 <div class="col-6">
-                  <div class="toggle mb-2" data-tooltip="Sort the values of the sliders">
-                    <input checked class="toggle__input" id="sortValues" name="sortValues" type="checkbox"/>
-                    <label class="toggle__label" for="sortValues">Sort values
+                  <div
+                    class="toggle mb-2"
+                    data-tooltip="Sort the values of the sliders"
+                  >
+                    <input
+                      checked
+                      class="toggle__input"
+                      name="sortValues"
+                      type="checkbox"
+                    />
+                    <label class="toggle__label" for="sortValues"
+                      >Sort values
                     </label>
                   </div>
 
                   <div class="toggle mb-2">
-                    <input class="toggle__input" id="sortOnlyPares" name="sortOnlyPares" type="checkbox"/>
-                    <label class="toggle__label" for="sortOnlyPares">Sort only pares
+                    <input
+                      class="toggle__input"
+                      name="sortOnlyPares"
+                      type="checkbox"
+                    />
+                    <label class="toggle__label" for="sortOnlyPares"
+                      >Sort only pares
                     </label>
                   </div>
                 </div>
 
                 <div class="col-6">
                   <div class="toggle" data-tooltip="Sort in descending order">
-                    <input class="toggle__input" id="sortReverse" name="sortReverse" type="checkbox"/>
-                    <label class="toggle__label" for="sortReverse">Sort reverse
+                    <input
+                      class="toggle__input"
+                      name="sortReverse"
+                      type="checkbox"
+                    />
+                    <label class="toggle__label" for="sortReverse"
+                      >Sort reverse
                     </label>
                   </div>
                 </div>
               </div>
               <div class="form-group">
-                <a aria-controls="colors" aria-expanded="false" class="dropdown collapsed mb-2" data-toggle="collapse" href="#positioning" role="button">
+                <a
+                  aria-controls="colors"
+                  aria-expanded="false"
+                  class="dropdown collapsed mb-2"
+                  data-toggle="collapse"
+                  href="#positioning"
+                  role="button"
+                >
                   Slider positioning
                 </a>
               </div>
               <div class="form-group row collapse" id="positioning">
                 <div class="col-6 d-flex flex-column">
                   <div class="toggle mb-2">
-                    <input class="toggle__input" id="reverse" name="reverse" type="checkbox"/>
-                    <label class="toggle__label" for="reverse">Reverse
-                    </label>
+                    <input
+                      class="toggle__input"
+                      name="reverse"
+                      type="checkbox"
+                    />
+                    <label class="toggle__label" for="reverse">Reverse </label>
                   </div>
                   <div class="toggle" data-tooltip="Makes slider vertical">
-                    <input class="toggle__input" id="vertical" name="vertical" type="checkbox"/>
-                    <label class="toggle__label" for="vertical">Vertical
+                    <input
+                      class="toggle__input"
+                      name="vertical"
+                      type="checkbox"
+                    />
+                    <label class="toggle__label" for="vertical"
+                      >Vertical
                     </label>
                   </div>
                 </div>
                 <div class="col-6">
-                  <div class="toggle" data-tooltip="Tooltip appears at the bottom">
-                    <input class="toggle__input" id="tooltipReverse" name="tooltipReverse" type="checkbox"/>
-                    <label class="toggle__label" for="tooltipReverse">Tooltip reverse
+                  <div
+                    class="toggle"
+                    data-tooltip="Tooltip appears at the bottom"
+                  >
+                    <input
+                      class="toggle__input"
+                      name="tooltipReverse"
+                      type="checkbox"
+                    />
+                    <label class="toggle__label" for="tooltipReverse"
+                      >Tooltip reverse
                     </label>
                   </div>
                   <div class="toggle">
-                    <input class="toggle__input" id="markValueReverse" name="markValueReverse" type="checkbox"/>
-                    <label class="toggle__label" for="markValueReverse">Mark value reverse
+                    <input
+                      class="toggle__input"
+                      name="markValueReverse"
+                      type="checkbox"
+                    />
+                    <label class="toggle__label" for="markValueReverse"
+                      >Mark value reverse
                     </label>
                   </div>
                 </div>
               </div>
 
               <div class="form-group">
-                <a aria-controls="clickability" aria-expanded="false" class="dropdown collapsed mb-2" data-toggle="collapse" href="#clickability" role="button">
+                <a
+                  aria-controls="clickability"
+                  aria-expanded="false"
+                  class="dropdown collapsed mb-2"
+                  data-toggle="collapse"
+                  href="#clickability"
+                  role="button"
+                >
                   Clickability
                 </a>
               </div>
 
               <div class="form-group row collapse" id="clickability">
                 <div class="col-6">
-                  <div class="toggle" data-tooltip="Clicking on base will move nearest handler">
-                    <input checked class="toggle__input" id="clickableBase" name="clickableBase" type="checkbox"/>
-                    <label class="toggle__label" for="clickableBase">Clickable base
+                  <div
+                    class="toggle"
+                    data-tooltip="Clicking on base will move nearest handler"
+                  >
+                    <input
+                      checked
+                      class="toggle__input"
+                      name="clickableBase"
+                      type="checkbox"
+                    />
+                    <label class="toggle__label" for="clickableBase"
+                      >Clickable base
                     </label>
                   </div>
                 </div>
                 <div class="col-6">
-                  <div class="toggle" data-tooltip="Clicking on mark will move nearest handler">
-                    <input class="toggle__input" id="clickableMark" name="clickableMark" type="checkbox"/>
-                    <label class="toggle__label" for="clickableMark">Clickable mark
+                  <div
+                    class="toggle"
+                    data-tooltip="Clicking on mark will move nearest handler"
+                  >
+                    <input
+                      class="toggle__input"
+                      name="clickableMark"
+                      type="checkbox"
+                    />
+                    <label class="toggle__label" for="clickableMark"
+                      >Clickable mark
                     </label>
                   </div>
                 </div>
               </div>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-outline btn-outline-primary" type="submit">Update</button>
-              <button class="btn btn-outline btn-outline-danger" data-dismiss="modal" type="button">Close</button>
+              <button class="btn btn-outline btn-outline-primary" type="submit">
+                Update
+              </button>
+              <button
+                class="btn btn-outline btn-outline-danger"
+                data-dismiss="modal"
+                type="button"
+              >
+                Close
+              </button>
             </div>
           </form>
         </div>
       </div>
     </div>
-    <h1 class="title">JQuery.slider
+    <h1 class="title">
+      jQuery.slider
       <small id="color-result" style="font-size: 0.75rem;"></small>
     </h1>
     <div class="d-flex justify-content-center w-75 mx-auto">
       <div class="w-100 mr-5">
-        <input id="slider0" type="text"/>
-
+        <input id="slider0" type="text" />
       </div>
       <div class="d-flex justify-content-center align-items-center mb-3">
-        <a class="link" data-slider="0" data-target="#settings-modal" data-toggle="modal">
-          <svg class="bi bi-gear-fill" fill="currentColor" height="1.2rem" viewbox="0 0 16 16" width="1.2rem" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z" fill-rule="evenodd"/>
+        <a
+          class="link"
+          data-slider="0"
+          data-target="#settings-modal"
+          data-toggle="modal"
+        >
+          <svg
+            class="bi bi-gear-fill"
+            fill="currentColor"
+            height="1.2rem"
+            viewbox="0 0 16 16"
+            width="1.2rem"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z"
+              fill-rule="evenodd"
+            />
           </svg>
         </a>
       </div>
@@ -289,13 +529,27 @@
 
     <div class="d-flex justify-content-center w-75 mx-auto">
       <div class="w-100 mr-5">
-        <input id="slider1" type="text"/>
-
+        <input id="slider1" type="text" />
       </div>
       <div class="d-flex justify-content-center align-items-center mb-3">
-        <a class="link" data-slider="1" data-target="#settings-modal" data-toggle="modal">
-          <svg class="bi bi-gear-fill" fill="currentColor" height="1.2rem" viewbox="0 0 16 16" width="1.2rem" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z" fill-rule="evenodd"/>
+        <a
+          class="link"
+          data-slider="1"
+          data-target="#settings-modal"
+          data-toggle="modal"
+        >
+          <svg
+            class="bi bi-gear-fill"
+            fill="currentColor"
+            height="1.2rem"
+            viewbox="0 0 16 16"
+            width="1.2rem"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z"
+              fill-rule="evenodd"
+            />
           </svg>
         </a>
       </div>
@@ -303,201 +557,288 @@
 
     <div class="d-flex justify-content-center w-75 mx-auto mt-2 mb-5">
       <div class="w-100 mr-5">
-        <input id="slider2" type="text"/>
-
+        <input id="slider2" type="text" />
       </div>
       <div class="d-flex justify-content-center align-items-center mb-3">
-        <a class="link" data-slider="2" data-target="#settings-modal" data-toggle="modal">
-          <svg class="bi bi-gear-fill" fill="currentColor" height="1.2rem" viewbox="0 0 16 16" width="1.2rem" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z" fill-rule="evenodd"/>
+        <a
+          class="link"
+          data-slider="2"
+          data-target="#settings-modal"
+          data-toggle="modal"
+        >
+          <svg
+            class="bi bi-gear-fill"
+            fill="currentColor"
+            height="1.2rem"
+            viewbox="0 0 16 16"
+            width="1.2rem"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z"
+              fill-rule="evenodd"
+            />
           </svg>
         </a>
       </div>
     </div>
 
     <div class="d-flex justify-content-center w-75 mx-auto">
-
       <div class="d-flex justify-content-center mr-5">
         <div class="mr-5">
-          <input id="slider3" type="text"/>
-
+          <input id="slider3" type="text" />
         </div>
         <div class="d-flex justify-content-center align-items-center mb-3">
-          <a class="link" data-slider="3" data-target="#settings-modal" data-toggle="modal">
-            <svg class="bi bi-gear-fill" fill="currentColor" height="1.2rem" viewbox="0 0 16 16" width="1.2rem" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z" fill-rule="evenodd"/>
+          <a
+            class="link"
+            data-slider="3"
+            data-target="#settings-modal"
+            data-toggle="modal"
+          >
+            <svg
+              class="bi bi-gear-fill"
+              fill="currentColor"
+              height="1.2rem"
+              viewbox="0 0 16 16"
+              width="1.2rem"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z"
+                fill-rule="evenodd"
+              />
             </svg>
           </a>
         </div>
       </div>
-
       <div class="d-flex justify-content-center ml-5">
         <div class="mr-5">
-          <input id="slider4" type="text"/>
-
+          <input id="slider4" type="text" />
         </div>
         <div class="d-flex justify-content-center align-items-center mb-3">
-          <a class="link" data-slider="4" data-target="#settings-modal" data-toggle="modal">
-            <svg class="bi bi-gear-fill" fill="currentColor" height="1.2rem" viewbox="0 0 16 16" width="1.2rem" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z" fill-rule="evenodd"/>
+          <a
+            class="link"
+            data-slider="4"
+            data-target="#settings-modal"
+            data-toggle="modal"
+          >
+            <svg
+              class="bi bi-gear-fill"
+              fill="currentColor"
+              height="1.2rem"
+              viewbox="0 0 16 16"
+              width="1.2rem"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z"
+                fill-rule="evenodd"
+              />
             </svg>
           </a>
         </div>
       </div>
-
     </div>
 
-    <script crossorigin="anonymous" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script crossorigin="anonymous" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script crossorigin="anonymous" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script
+      crossorigin="anonymous"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    ></script>
+    <script
+      crossorigin="anonymous"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    ></script>
+    <script
+      crossorigin="anonymous"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    ></script>
     <script src="assets/js/jquery.slider.min.js"></script>
     <script>
-        $(document).ready(function () {
-          const sliders = [
-              $('#slider0').slider({
-                startValues: [10, 20, 50, 60],
-                sortValues: true,
-                showInput: true,
-                additionalClasses: {
-                    wrapper: 'slider',
-                    result: 'slider__result'
-                }
-              }),
-              $('#slider1').slider({
-                min: 21,
-                max: 125,
-                step: 0.75,
-                roundTo: 2,
-                showRange: true,
-                startValues: [25, 100],
-                sortValues: true,
-                resultTemplate: '$1 - $2',
-                additionalClasses: {
-                    wrapper: 'slider',
-                    result: 'slider__result'
-                }
-              }),
-              $('#slider2').slider({
-                min: 0,
-                max: 1000,
-                step: 25,
-                showRange: true,
-                startValues: [0, 100, 225, 350, 400, 675],
-                showMarks: true,
-                showMarkValue: false,
-                connectorsColors: ['#A4E8FE', '#B5FEA4', '#E1A4FE'],
-                showTooltip: true,
-                showResult: false,
-                showInput: true,
-                sortValues: true,
-                sortOnlyPares: true,
-                additionalClasses: {
-                    wrapper: 'slider',
-                    result: 'slider__result'
-                }
-              }),
-              $('#slider3').slider({
-                min: 0,
-                max: 255,
-                step: 0,
-                vertical: true,
-                startValues: [255, 200, 150],
-                showTooltip: true,
-                tooltipReverse: true,
-                showResult: false,
-                handlersColors: ['#FC6A6A', '#8CFC6A', '#6AB2FC'],
-                additionalClasses: {
-                    wrapper: 'slider',
-                    result: 'slider__result'
-                }
-              }),
-              $('#slider4').slider({
-                min: 0,
-                max: 100,
-                step: 0,
-                vertical: true,
-                showProgressBar: true,
-                startValues: [60],
-                showTooltip: true,
-                showBounds: true,
-                tooltipReverse: true,
-                showResult: false,
-                connectorsColors: ['#B5FEA4'],
-                additionalClasses: {
-                    wrapper: 'slider',
-                    result: 'slider__result'
-                }
-              })
+      $(document).ready(function () {
+        const sliders = [
+            $('#slider0').slider({
+              startValues: [10, 20, 50, 60],
+              sortValues: true,
+              showInput: true,
+              additionalClasses: {
+                wrapper: 'slider',
+                result: 'slider__result',
+              },
+            }),
+            $('#slider1').slider({
+              min: 21,
+              max: 125,
+              step: 0.75,
+              roundTo: 2,
+              showRange: true,
+              startValues: [25, 100],
+              sortValues: true,
+              resultTemplate: '$1 - $2',
+              additionalClasses: {
+                wrapper: 'slider',
+                result: 'slider__result',
+              },
+            }),
+            $('#slider2').slider({
+              min: 0,
+              max: 1000,
+              step: 25,
+              showRange: true,
+              startValues: [0, 100, 225, 350, 400, 675],
+              showMarks: true,
+              showMarkValue: false,
+              connectorsColors: ['#A4E8FE', '#B5FEA4', '#E1A4FE'],
+              showTooltip: true,
+              showResult: false,
+              showInput: true,
+              sortValues: true,
+              sortOnlyPares: true,
+              additionalClasses: {
+                wrapper: 'slider',
+                result: 'slider__result',
+              },
+            }),
+            $('#slider3').slider({
+              min: 0,
+              max: 255,
+              step: 0,
+              vertical: true,
+              startValues: [255, 200, 150],
+              showTooltip: true,
+              tooltipReverse: true,
+              showResult: false,
+              handlersColors: ['#FC6A6A', '#8CFC6A', '#6AB2FC'],
+              additionalClasses: {
+                wrapper: 'slider',
+                result: 'slider__result',
+              },
+            }),
+            $('#slider4').slider({
+              min: 0,
+              max: 100,
+              step: 0,
+              vertical: true,
+              showProgressBar: true,
+              startValues: [60],
+              showTooltip: true,
+              showBounds: true,
+              tooltipReverse: true,
+              showResult: false,
+              connectorsColors: ['#B5FEA4'],
+              additionalClasses: {
+                wrapper: 'slider',
+                result: 'slider__result',
+              },
+            }),
           ],
-              modal = $('#settings-modal'),
-              form = $('#settings-form'),
-              sliderIndexInput = form.find('#sliderIndex'),
-              inputs = form.find('input:not([type="hidden"])');
-          modal.on('show.bs.modal', function (e) {
-              const sliderIndex = $(e.relatedTarget).data('slider'),
-                  slider = sliders[sliderIndex],
-                  settings = slider.settings;
-              sliderIndexInput.val(sliderIndex);
-              $.each(inputs, (index, elem) => {
-                  const id = $(elem).attr('id');
-                  if (Array.isArray(settings[id])) settings[id] = settings[id].join(' ');
-                  if (elem.type != 'checkbox')
-                      $(elem).val(settings[id]);
-                  else
-                      $(elem).attr('checked', settings[id]);
-              });
+          modal = $('#settings-modal'),
+          form = $('#settings-form'),
+          sliderIndexInput = form.find('#sliderIndex'),
+          inputs = form.find('input:not([type="hidden"])');
+
+        modal.on('show.bs.modal', function (e) {
+          const sliderIndex = $(e.relatedTarget).data('slider'),
+            slider = sliders[sliderIndex],
+            settings = slider.settings;
+          sliderIndexInput.val(sliderIndex);
+          $.each(inputs, (index, elem) => {
+            const name = $(elem).attr('name');
+            if (Array.isArray(settings[name]))
+              settings[name] = settings[name].join(' ');
+            if (elem.type != 'checkbox') $(elem).val(settings[name]);
+            else $(elem).attr('checked', settings[name]);
           });
-          form.on('submit', function (e) {
-              const slider = sliders[sliderIndexInput.val()];
-              let settings = {};
-              e.preventDefault();
-              modal.modal('hide');
-              $.each(inputs, (index, elem) => {
-                  const id = $(elem).attr('id');
-                  let value = elem.value;
-                  if (id == 'startValues' && value) {
-                      value = value.split(' ');
-                      value = value.map((item) => {
-                          return +item;
-                      })
-                  }
-                  if ((id == 'handlersColors' || id == 'connectorsColors') && value) {
-                      value = value.split(' ');
-                  }
-                  if (elem.type === 'checkbox') {
-                      if ($(elem).is(':checked')) {
-                          value = true;
-                      }
-                      else {
-                          value = false;
-                      }
-                  } else if (elem.type === 'number') {
-                      value = +value;
-                  }
-                  settings[id] = value;
-              });
-              slider.settings = settings;
-          });
-          let color, opacity;
-          const colorSlider = sliders[3], opacitySlider = sliders[4];
-          function colorChange() {
-              if (colorSlider.values.length === 3 && opacitySlider.values.length === 1) {
-                  color = colorSlider.values;
-                  opacity = opacitySlider.values[0] / 100;
-                  const fullColor = 'rgba(' + color.toString() + ',' + opacity + ')',
-                      halfOpacityColor = 'rgba(' + color.toString() + ',' + opacity / 2 + ')';
-                  $('#color').css('background', 'linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(' + color.toString() + ',' + opacity / 9 + ') 80% ,rgba(' + color.toString() + ',' + opacity / 6 + ') 85%, rgba(' + color.toString() + ',' + opacity / 3 + ') 90%, rgba(' + color.toString() + ',' + opacity / 1.5 + ') 95%, rgba(' + color.toString() + ',' + opacity + ') 100%) no-repeat');
-                  $('#color-result').text('rgba(' + color.toString() + ',' + opacity + ')');
-              } else {
-                  $('#color-result').text('Warning: color sliders values is invalid!');
-              }
-          }
-          colorChange();
-          colorSlider.on('sliderEnd sliderReset', () => colorChange());
-          opacitySlider.on('sliderEnd sliderReset', () => colorChange());
         });
+
+        form.on('submit', function (e) {
+          const slider = sliders[sliderIndexInput.val()];
+          let settings = {};
+          e.preventDefault();
+          modal.modal('hide');
+          $.each(inputs, (index, elem) => {
+            const name = $(elem).attr('name');
+            let value = elem.value;
+            if (name == 'startValues' && value) {
+              value = value.split(' ');
+              value = value.map((item) => {
+                return +item;
+              });
+            }
+            if (
+              (name == 'handlersColors' || name == 'connectorsColors') &&
+              value
+            ) {
+              value = value.split(' ');
+            }
+            if (elem.type === 'checkbox') {
+              if ($(elem).is(':checked')) {
+                value = true;
+              } else {
+                value = false;
+              }
+            } else if (elem.type === 'number') {
+              value = +value;
+            }
+            settings[name] = value;
+          });
+          slider.settings = settings;
+        });
+
+        let color, opacity;
+        const colorSlider = sliders[3],
+          opacitySlider = sliders[4];
+
+        function colorChange() {
+          if (
+            colorSlider.values.length === 3 &&
+            opacitySlider.values.length === 1
+          ) {
+            color = colorSlider.values;
+            opacity = opacitySlider.values[0] / 100;
+            const fullColor = 'rgba(' + color.toString() + ',' + opacity + ')',
+              halfOpacityColor =
+                'rgba(' + color.toString() + ',' + opacity / 2 + ')';
+            $('#color').css(
+              'background',
+              'linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(' +
+                color.toString() +
+                ',' +
+                opacity / 9 +
+                ') 80% ,rgba(' +
+                color.toString() +
+                ',' +
+                opacity / 6 +
+                ') 85%, rgba(' +
+                color.toString() +
+                ',' +
+                opacity / 3 +
+                ') 90%, rgba(' +
+                color.toString() +
+                ',' +
+                opacity / 1.5 +
+                ') 95%, rgba(' +
+                color.toString() +
+                ',' +
+                opacity +
+                ') 100%) no-repeat',
+            );
+            $('#color-result').text(
+              'rgba(' + color.toString() + ',' + opacity + ')',
+            );
+          } else {
+            $('#color-result').text(
+              'Warning: color sliders values is invalid!',
+            );
+          }
+        }
+
+        colorChange();
+        colorSlider.on('sliderEnd sliderReset', () => colorChange());
+        opacitySlider.on('sliderEnd sliderReset', () => colorChange());
+      });
     </script>
-  </body>
-</html> 
   </body>
 </html>

@@ -65,8 +65,8 @@ class Presenter {
     this.on('handlerMoved', function (handler: HandlerView, coords: number) {
       const value = this._model.valueFromCoords(coords),
         percentage = this._view.getPercentage(value);
-      this._model.values[handler.index] = value;
       handler.update(percentage, value);
+      this._model.values[handler.index] = value;
       if (this._view.elements.result) {
         this._view.elements.result.update(this._model.templateValues);
       }
@@ -75,8 +75,7 @@ class Presenter {
     });
 
     this.on('handlerEnd', function () {
-      if (this._view.elements.input)
-        this._view.elements.input.update(this._model.sortedValues);
+      this._view.elements.input.update(this._model.sortedValues);
       this.exec('sliderEnd');
     });
 
@@ -102,18 +101,17 @@ class Presenter {
     });
 
     this.on('valueEnd', function () {
-      this._view.elements.input.update(this._model.sortedValues);
-      if (this._view.elements.result) {
-        this._view.elements.result.update(this._model.templateValues);
-      }
       this._view.elements.handlers.forEach(
         (handler: HandlerView, index: number) => {
           const value = this._model.values[index];
           handler.update(this._view.getPercentage(value), value);
         },
       );
+      if (this._view.elements.result) {
+        this._view.elements.result.update(this._model.templateValues);
+      }
       this.exec('sliderUpdated');
-      this.exec('sliderEnd');
+      this.exec('handlerEnd');
     });
   }
 
