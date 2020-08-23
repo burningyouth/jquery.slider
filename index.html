@@ -31,7 +31,7 @@
                 <input autofocus class="form-control" name="startValues" type="text" value="0 65 180"/>
                 <small class="form-text text-muted">
                   1. Put a space between values<br/>2. Values must be in range
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  [min; max]<br/>3. Values must be numbers
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      [min; max]<br/>3. Values must be numbers
                 </small>
               </div>
               <div class="form-group" data-tooltip="How much marks to draw">
@@ -277,12 +277,12 @@
         </div>
       </div>
     </div>
-    <main class="main">
+    <main class="content">
       <h1 class="title">
         jQuery.slider
         <small id="color-result" style="font-size: 0.75rem;"></small>
       </h1>
-      <div class="d-flex justify-content-center w-75 mx-auto slider">
+      <div class="d-flex justify-content-center mx-auto slider">
         <div class="w-100">
           <input id="slider0" type="text"/>
         </div>
@@ -295,7 +295,7 @@
         </div>
       </div>
 
-      <div class="d-flex justify-content-center w-75 mx-auto slider">
+      <div class="d-flex justify-content-center mx-auto slider">
         <div class="w-100">
           <input id="slider1" type="text"/>
         </div>
@@ -308,7 +308,7 @@
         </div>
       </div>
 
-      <div class="d-flex justify-content-center w-75 mx-auto mb-5 slider">
+      <div class="d-flex justify-content-center mx-auto mb-5 slider">
         <div class="w-100">
           <input id="slider2" type="text"/>
         </div>
@@ -321,7 +321,7 @@
         </div>
       </div>
 
-      <div class="d-flex justify-content-center w-75 mx-auto">
+      <div class="d-flex justify-content-center mx-auto">
         <div class="slider slider_vertical">
           <input id="slider3" type="text"/>
           <div class="slider__settings">
@@ -415,7 +415,7 @@
               startValues: [60],
               showTooltip: true,
               showBounds: true,
-              tooltipReverse: false,
+              tooltipReverse: true,
               showResult: false,
               connectorsColors: ['#B5FEA4'],
             }),
