@@ -55,11 +55,10 @@ class MarkView extends BasicElementView {
   public static init(that: MarkView) {
     super.basicInit(that);
 
-    const coordsAxis = that.settings.vertical ? 'clientY' : 'clientX';
-
     that.element.on('mousedown', function (e) {
       e.preventDefault();
-      that._view.trigger('markClicked', that);
+      if (e.which === 1 && e.target === that.element[0])
+        that._view.trigger('markClicked', that);
     });
 
     that.element.on('touchstart', function (e) {

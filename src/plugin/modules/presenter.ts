@@ -107,10 +107,6 @@ class Presenter {
       this._view.elements.input.element.trigger('slider.end');
     });
 
-    this.on('markValueElementAppend', function (mark: MarkView) {
-      mark.value.text(this._model.valueFromPercentage(mark.percentage));
-    });
-
     this.on('settingsEnd', function () {
       this._view.reset();
       this.reset();
