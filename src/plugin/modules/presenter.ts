@@ -61,10 +61,7 @@ class Presenter {
 
   public initClickEvents() {
     if (this._model.settings.clickableBase && !this._model.settings.showMarks) {
-      this.on('baseClicked connectorClicked progressBarClicked', function (
-        base: BaseView,
-        coords: number,
-      ) {
+      this.on('baseClicked', function (coords: number) {
         const value = this._model.valueFromCoords(coords),
           percentage = this._view.getPercentage(value),
           nearestHandler = this._view.nearestHandler(percentage);

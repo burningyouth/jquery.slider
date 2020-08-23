@@ -9,25 +9,30 @@ class MarkView extends BasicElementView {
   public clickableClass = 'js-slider__mark_clickable';
   public reversedValueClass = 'js-slider__mark-value_reversed';
   public percentage: number;
+  public value: number;
   public index: number;
-  public value: JQuery<HTMLElement>;
+  public valueElement: JQuery<HTMLElement>;
 
   constructor(
     view: View,
     index: number,
+    value: number,
     base: BasicElementView,
     initCallback: Function = MarkView.init,
   ) {
     super(view, MarkView.elementBase.clone(), base.element, initCallback);
     this.index = index;
     this.percentage = (this.index / this.settings.marksCount) * 100;
+    this.value = value;
 
     if (view.settings.showMarkValue) {
-      this.value = MarkView.valueBase.clone();
-      this.value.appendTo(this.element);
+      this.valueElement = MarkView.valueBase.clone();
+      this.valueElement.appendTo(this.element);
+
+      this.valueElement.text(this.value);
 
       if (view.settings.markValueReverse) {
-        this.value.addClass(this.reversedValueClass);
+        this.valueElement.addClass(this.reversedValueClass);
       }
 
       this._view.trigger('markValueElementAppend', this);
@@ -50,14 +55,16 @@ class MarkView extends BasicElementView {
   public static init(that: MarkView) {
     super.basicInit(that);
 
+    const coordsAxis = that.settings.vertical ? 'clientY' : 'clientX';
+
     that.element.on('mousedown', function (e) {
       e.preventDefault();
-      if (e.which === 1) that._view.trigger('markClicked', that);
+      that._view.trigger('markClicked', that);
     });
 
     that.element.on('touchstart', function (e) {
       e.preventDefault();
-      that._view.trigger('markClicked', that);
+      if (e.target === that.element[0]) that._view.trigger('markClicked', that);
     });
   }
 }

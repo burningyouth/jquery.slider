@@ -130,7 +130,7 @@ class View {
     if (this.elements.marksWrapper) {
       for (let i = 0; i <= this.settings.marksCount; i++) {
         this.elements.marks.push(
-          new MarkView(this, i, this.elements.marksWrapper),
+          new MarkView(this, i, this.values[i], this.elements.marksWrapper),
         );
       }
     }

@@ -29,6 +29,7 @@ const model = new Model({
 const view = new View(input);
 const presenter = new Presenter(model, view);
 view.init();
+presenter.init();
 
 describe('Presenter', () => {
   test('Settings and values is accessible', () => {

@@ -37,6 +37,7 @@ const model = new Model({
 const view = new View(input);
 const presenter = new Presenter(model, view);
 view.init();
+presenter.init();
 
 describe('ConnectorView', () => {
   let connector = view.elements.connectors[0];

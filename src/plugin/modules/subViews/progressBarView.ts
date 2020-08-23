@@ -47,19 +47,6 @@ class ProgressBarView extends BasicElementView {
 
   public static init(that: ProgressBarView): void {
     if (that.parent) that.parent.prepend(that.element);
-
-    const coordsAxis = that.settings.vertical ? 'clientY' : 'clientX';
-
-    that.element.on('mousedown', function (e) {
-      e.preventDefault();
-      if (e.which === 1)
-        that._view.trigger('progressBarClicked', that, e[coordsAxis]);
-    });
-
-    that.element.on('touchstart', function (e) {
-      e.preventDefault();
-      that._view.trigger('progressBarClicked', that, e.touches[0][coordsAxis]);
-    });
   }
 }
 

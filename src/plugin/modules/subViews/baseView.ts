@@ -29,12 +29,12 @@ class BaseView extends BasicElementView {
 
     that.element.on('mousedown', function (e) {
       e.preventDefault();
-      if (e.which === 1) that._view.trigger('baseClicked', that, e[coordsAxis]);
+      if (e.which === 1) that._view.trigger('baseClicked', e[coordsAxis]);
     });
 
     that.element.on('touchstart', function (e) {
       e.preventDefault();
-      that._view.trigger('baseClicked', that, e.touches[0][coordsAxis]);
+      that._view.trigger('baseClicked', e.touches[0][coordsAxis]);
     });
   }
 }
