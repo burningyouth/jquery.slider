@@ -41,9 +41,9 @@ class MarkView extends BasicElementView {
 
   public update(): void {
     if (this.settings.vertical) {
-      this.css('top', `${this.percentage}%`);
+      this.element.css('top', `${this.percentage}%`);
     } else {
-      this.css('left', `${this.percentage}%`);
+      this.element.css('left', `${this.percentage}%`);
     }
   }
 

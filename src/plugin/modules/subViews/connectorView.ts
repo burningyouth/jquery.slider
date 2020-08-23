@@ -5,7 +5,7 @@ import View from '../view';
 import $ from 'jquery';
 
 class ConnectorView extends BasicElementView {
-  public static elementBase = $('<div class="js-slider__connector"></div>');
+  public static elementBase = $('<span class="js-slider__connector"></span>');
   public index: number;
   public pairedHandlers: HandlerView[];
   public percentage: number[];
@@ -22,9 +22,15 @@ class ConnectorView extends BasicElementView {
     this.pairedHandlers = pairedHandlers;
 
     if (view.settings.connectorsColors[index]) {
-      this.css('background-color', view.settings.connectorsColors[index]);
+      this.element.css(
+        'background-color',
+        view.settings.connectorsColors[index],
+      );
     } else if (view.settings.handlersColors[index * 2]) {
-      this.css('background-color', view.settings.handlersColors[index * 2]);
+      this.element.css(
+        'background-color',
+        view.settings.handlersColors[index * 2],
+      );
     }
 
     this.update();

@@ -83,7 +83,7 @@ class Presenter {
           nearestHandler.focus = true;
           this._model.values[nearestHandler.index] = value;
           this.exec('valueUpdated');
-          this.exec('valueEnd');
+          this.exec('valueEnd', true);
         }
       });
     }
@@ -99,13 +99,13 @@ class Presenter {
           this._view.elements.result.update(this._model.templateValues);
         }
         this.exec('valueUpdated');
-        this.exec('sliderUpdated');
+        this._view.elements.input.element.trigger('slider.updated');
       }
     });
 
     this.on('handlerEnd', function () {
       this._view.elements.input.update(this._model.sortedValues);
-      this.exec('sliderEnd');
+      this._view.elements.input.element.trigger('slider.end');
     });
 
     this.on('markValueElementAppend', function (mark: MarkView) {
@@ -115,7 +115,7 @@ class Presenter {
     this.on('settingsEnd', function () {
       this._view.reset();
       this.reset();
-      this.exec('sliderReset');
+      this._view.elements.input.element.trigger('slider.reset');
     });
 
     this.on('inputChange', function (values: Values) {
@@ -137,7 +137,7 @@ class Presenter {
         if (this._view.elements.result) {
           this._view.elements.result.update(this._model.templateValues);
         }
-        this.exec('sliderUpdated');
+        this._view.elements.input.element.trigger('slider.updated');
         this.exec('handlerEnd');
       }
     });

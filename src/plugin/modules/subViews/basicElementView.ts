@@ -40,25 +40,6 @@ class BasicElementView {
     return this;
   }
 
-  public css(
-    propertyName: string,
-    value_function?:
-      | string
-      | number
-      | ((
-          this: HTMLElement,
-          index: number,
-          value: string,
-        ) => string | number | void),
-  ): any {
-    if (value_function) {
-      this.element.css(propertyName, value_function);
-      return this;
-    } else {
-      return this.element.css(propertyName);
-    }
-  }
-
   public remove(): void {
     this.element.remove();
   }

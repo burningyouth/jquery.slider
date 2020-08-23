@@ -29,7 +29,7 @@ class HandlerView extends BasicElementView {
     this.index = index;
 
     if (view.settings.handlersColors[index]) {
-      this.css('background-color', view.settings.handlersColors[index]);
+      this.element.css('background-color', view.settings.handlersColors[index]);
     }
     if (view.settings.handlersStateClasses.active) {
       this.activeClass += ` ${view.settings.handlersStateClasses.active}`;
@@ -75,21 +75,6 @@ class HandlerView extends BasicElementView {
     });
   }
 
-  public update(): HandlerView {
-    if (this.settings.vertical) {
-      this.element.css('top', `calc(${this.percentage}% - 7.5px`);
-    } else {
-      this.element.css('left', `calc(${this.percentage}% - 7.5px`);
-    }
-
-    this._view.trigger('handlerUpdated', this);
-
-    if (this.connector) this.connector.update();
-    if (this.tooltip) this.tooltip.update();
-
-    return this;
-  }
-
   get value(): number {
     return this._view.values[this.index];
   }
@@ -122,6 +107,21 @@ class HandlerView extends BasicElementView {
 
   get focus(): boolean {
     return this._focus;
+  }
+
+  public update(): HandlerView {
+    if (this.settings.vertical) {
+      this.element.css('top', `calc(${this.percentage}% - 7.5px)`);
+    } else {
+      this.element.css('left', `calc(${this.percentage}% - 7.5px)`);
+    }
+
+    this._view.trigger('handlerUpdated', this);
+
+    if (this.connector) this.connector.update();
+    if (this.tooltip) this.tooltip.update();
+
+    return this;
   }
 }
 

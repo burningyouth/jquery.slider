@@ -5,7 +5,7 @@ import View from '../view';
 import $ from 'jquery';
 
 class ProgressBarView extends BasicElementView {
-  public static elementBase = $('<div class="js-slider__connector"></div>');
+  public static elementBase = $('<span class="js-slider__connector"></span>');
   public pairedHandler: HandlerView;
 
   constructor(
@@ -23,9 +23,9 @@ class ProgressBarView extends BasicElementView {
     this.pairedHandler = pairedHandler;
 
     if (view.settings.connectorsColors[0]) {
-      this.css('background-color', view.settings.connectorsColors[0]);
+      this.element.css('background-color', view.settings.connectorsColors[0]);
     } else if (view.settings.handlersColors[0]) {
-      this.css('background-color', view.settings.handlersColors[0]);
+      this.element.css('background-color', view.settings.handlersColors[0]);
     }
 
     this.update();
