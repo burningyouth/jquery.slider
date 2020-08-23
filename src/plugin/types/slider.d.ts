@@ -32,6 +32,7 @@ interface Settings {
   min?: number;
   max?: number;
   step?: number;
+  enabled?: boolean;
   startValues?: Values;
   marksCount?: number;
   clickableMark?: boolean;
@@ -45,7 +46,6 @@ interface Settings {
   showProgressBar?: boolean;
   showRange?: boolean;
   showMarks?: boolean;
-  readonlyInput?: boolean;
   sortValues?: boolean;
   sortOnlyPares?: boolean;
   sortReverse?: boolean;
@@ -54,7 +54,7 @@ interface Settings {
   tooltipReverse?: boolean;
   markValueReverse?: boolean;
   vertical?: boolean;
-  roundTo?: number;
+  precision?: number;
   resultTemplate?: string;
   additionalClasses?: AdditionalClasses;
   handlersStateClasses?: HandlersStateClasses;

@@ -15,7 +15,7 @@ const model = new Model({
   handlersColors: [],
   connectorsColors: [],
   step: 5,
-  roundTo: 2,
+  precision: 2,
   vertical: true,
   showProgressBar: true,
   tooltipReverse: true,

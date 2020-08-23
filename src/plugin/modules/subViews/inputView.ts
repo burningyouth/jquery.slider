@@ -4,17 +4,14 @@ import { Values } from '../../types/slider';
 import $ from 'jquery';
 
 class InputView extends BasicElementView {
-  public _values: Values;
-
   constructor(
     view: View,
     input: JQuery<HTMLElement>,
-    values: Values,
     wrapper: BasicElementView,
     initCallback: Function = InputView.init,
   ) {
     super(view, input, wrapper.element, initCallback);
-    this.update(values);
+    this.update();
   }
 
   public static init(that: InputView) {
@@ -27,35 +24,29 @@ class InputView extends BasicElementView {
     } else {
       that.removeClass('js-slider__input_show');
     }
-    if (that.settings.readonlyInput) {
-      that.element.attr('readonly', 'true');
+    if (!that.settings.enabled) {
+      that.element.attr('disabled', 'true');
     }
 
     that.element.on('change', function (e) {
-      that.values = (that.element.val() as string).split(',').map((item) => {
+      const values = (that.element.val() as string).split(',').map((item) => {
         return +item;
       });
-      that._view.trigger('inputChange', that);
+      that._view.trigger('inputChange', values);
     });
   }
 
-  public update(values?: Values): InputView {
-    this.values = values;
-    return this;
+  get sortedValues(): Values {
+    return this._view.sortedValues;
   }
 
-  set values(newValues: Values) {
-    this._values = newValues;
-    if (this._values.length > 1) {
-      this.element.val(this.values.toString());
+  public update(): InputView {
+    if (this.sortedValues.length > 1) {
+      this.element.val(this.sortedValues.toString());
     } else {
-      this.element.val(this.values[0]);
+      this.element.val(this.sortedValues[0]);
     }
-    this._view.trigger('inputUpdated', this);
-  }
-
-  get values(): Values {
-    return this._values;
+    return this;
   }
 }
 

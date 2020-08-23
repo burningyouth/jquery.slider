@@ -29,6 +29,34 @@ class Presenter {
     this.exec('sliderInit');
   }
 
+  get base(): BaseView {
+    return this._view.elements.base;
+  }
+
+  get values(): Values {
+    return this._model.values;
+  }
+
+  get sortedValues(): Values {
+    return this._model.sortedValues;
+  }
+
+  get templateValues(): string {
+    return this._model.templateValues;
+  }
+
+  get settings(): Settings {
+    return this._model.settings;
+  }
+
+  set settings(newSettings: Settings) {
+    this._model.settings = newSettings;
+  }
+
+  set values(newValues: Values) {
+    this._model.values = newValues;
+  }
+
   public initClickEvents() {
     if (this._model.settings.clickableBase && !this._model.settings.showMarks) {
       this.on('baseClicked connectorClicked progressBarClicked', function (
@@ -63,15 +91,16 @@ class Presenter {
 
   public initBasicEvents() {
     this.on('handlerMoved', function (handler: HandlerView, coords: number) {
-      const value = this._model.valueFromCoords(coords),
-        percentage = this._view.getPercentage(value);
-      handler.update(percentage, value);
-      this._model.values[handler.index] = value;
-      if (this._view.elements.result) {
-        this._view.elements.result.update(this._model.templateValues);
+      if (this.settings.enabled) {
+        const value = this._model.valueFromCoords(coords);
+        handler.update();
+        this._model.values[handler.index] = value;
+        if (this._view.elements.result) {
+          this._view.elements.result.update(this._model.templateValues);
+        }
+        this.exec('valueUpdated');
+        this.exec('sliderUpdated');
       }
-      this.exec('valueUpdated');
-      this.exec('sliderUpdated');
     });
 
     this.on('handlerEnd', function () {
@@ -89,63 +118,34 @@ class Presenter {
       this.exec('sliderReset');
     });
 
-    this.on('inputChange', function (input: InputView) {
-      let values = input.values;
-      values = values.map((value) => {
-        return this._model.getValueRelativeToBounds(
-          this._model.getFormattedValue(value),
-        );
-      });
-      this._model.values = values;
-      this.exec('valueEnd');
+    this.on('inputChange', function (values: Values) {
+      if (this.settings.enabled) {
+        this._model.values = values.map((value) => {
+          return this._model.getValueRelativeToBounds(
+            this._model.getFormattedValue(value),
+          );
+        });
+        this.exec('valueEnd');
+      }
     });
 
     this.on('valueEnd', function () {
-      this._view.elements.handlers.forEach(
-        (handler: HandlerView, index: number) => {
-          const value = this._model.values[index];
-          handler.update(this._view.getPercentage(value), value);
-        },
-      );
-      if (this._view.elements.result) {
-        this._view.elements.result.update(this._model.templateValues);
+      if (this.settings.enabled) {
+        this._view.elements.handlers.forEach((handler: HandlerView) => {
+          handler.update();
+        });
+        if (this._view.elements.result) {
+          this._view.elements.result.update(this._model.templateValues);
+        }
+        this.exec('sliderUpdated');
+        this.exec('handlerEnd');
       }
-      this.exec('sliderUpdated');
-      this.exec('handlerEnd');
     });
   }
 
   public reset() {
     this.off('baseClicked connectorClicked progressBarClicked markClicked');
     this.initClickEvents();
-  }
-
-  get base(): BaseView {
-    return this._view.elements.base;
-  }
-
-  get values(): Values {
-    return this._model.values;
-  }
-
-  get sortedValues(): Values {
-    return this._model.sortedValues;
-  }
-
-  get templateValues(): string {
-    return this._model.templateValues;
-  }
-
-  get settings(): Settings {
-    return this._model.settings;
-  }
-
-  set settings(newSettings: Settings) {
-    this._model.settings = newSettings;
-  }
-
-  set values(newValues: Values) {
-    this._model.values = newValues;
   }
 }
 

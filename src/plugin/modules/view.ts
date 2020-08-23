@@ -43,6 +43,18 @@ class View {
     return this._presenter.settings;
   }
 
+  get values(): slider.Values {
+    return this._presenter.values;
+  }
+
+  get sortedValues(): slider.Values {
+    return this._presenter.sortedValues;
+  }
+
+  get templateValues(): string {
+    return this._presenter.templateValues;
+  }
+
   set presenter(newPresenter: Presenter) {
     this._presenter = newPresenter;
   }
@@ -75,7 +87,10 @@ class View {
       this.elements.parent.element,
     );
     if (this.settings.vertical) {
-      this.elements.wrapper.element.addClass('js-slider_vertical');
+      this.elements.wrapper.addClass('js-slider_vertical');
+    }
+    if (!this.settings.enabled) {
+      this.elements.wrapper.addClass('js-slider_disabled');
     }
     return this;
   }
@@ -144,12 +159,8 @@ class View {
   }
 
   public initResult(): View {
-    if (this.settings.showResult) {
-      this.elements.result = new ResultView(
-        this,
-        this._presenter.templateValues,
-        this.elements.wrapper,
-      );
+    if (this.settings.showResult && this.settings.resultTemplate) {
+      this.elements.result = new ResultView(this, this.elements.wrapper);
     }
     return this;
   }
@@ -158,7 +169,6 @@ class View {
     this.elements.input = new InputView(
       this,
       this.input,
-      this._presenter.sortedValues,
       this.elements.wrapper,
     );
     return this;
@@ -210,13 +220,7 @@ class View {
 
   public initHandler(value: number, index: number): View {
     this.elements.handlers.push(
-      new HandlerView(
-        this,
-        index,
-        this.getPercentage(value),
-        value,
-        this.elements.base,
-      ),
+      new HandlerView(this, index, this.elements.base),
     );
     this.initTooltip(index).initConnector(index);
     return this;
@@ -242,13 +246,15 @@ class View {
     this.addClasses(this.settings.additionalClasses);
 
     this.on('handlerStart', function (handler: HandlerView) {
-      handler.active = true;
-      this.elements.handlers.forEach((item: HandlerView) => {
-        if (item.focus) {
-          item.focus = false;
-        }
-      });
-      handler.focus = true;
+      if (this.settings.enabled) {
+        handler.active = true;
+        this.elements.handlers.forEach((item: HandlerView) => {
+          if (item.focus) {
+            item.focus = false;
+          }
+        });
+        handler.focus = true;
+      }
     });
 
     this.on('handlerEnd', function (handler: HandlerView) {

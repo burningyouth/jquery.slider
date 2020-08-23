@@ -16,23 +16,17 @@ class HandlerView extends BasicElementView {
   private _focus: boolean = false;
 
   public index: number;
-  public percentage: number;
-  public value: number;
   public connector: ConnectorView | ProgressBarView;
   public tooltip: TooltipView;
 
   constructor(
     view: View,
     index: number = 0,
-    percentage: number = 0,
-    value: number = 0,
     base: BaseView,
     initCallback: Function = HandlerView.init,
   ) {
     super(view, HandlerView.elementBase.clone(), base.element, initCallback);
     this.index = index;
-    this.percentage = percentage;
-    this.value = value;
 
     if (view.settings.handlersColors[index]) {
       this.css('background-color', view.settings.handlersColors[index]);
@@ -81,13 +75,7 @@ class HandlerView extends BasicElementView {
     });
   }
 
-  public update(
-    percentage: number | undefined = undefined,
-    value: number | undefined = undefined,
-  ): HandlerView {
-    if (typeof percentage === 'number') this.percentage = percentage;
-    if (typeof value === 'number') this.value = value;
-
+  public update(): HandlerView {
     if (this.settings.vertical) {
       this.element.css('top', `calc(${this.percentage}% - 7.5px`);
     } else {
@@ -100,6 +88,14 @@ class HandlerView extends BasicElementView {
     if (this.tooltip) this.tooltip.update();
 
     return this;
+  }
+
+  get value(): number {
+    return this._view.values[this.index];
+  }
+
+  get percentage(): number {
+    return this._view.getPercentage(this.value);
   }
 
   set active(newValue: boolean) {

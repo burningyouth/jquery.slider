@@ -4,24 +4,18 @@ import $ from 'jquery';
 
 class ResultView extends BasicElementView {
   public static elementBase = $('<div class="js-slider__result">undef.</div>');
-  public text: string;
 
-  constructor(
-    view: View,
-    text: string = 'undef.',
-    wrapper: BasicElementView,
-    initCallback?: Function,
-  ) {
+  constructor(view: View, wrapper: BasicElementView, initCallback?: Function) {
     super(view, ResultView.elementBase.clone(), wrapper.element, initCallback);
-    this.text = text;
     this.update();
   }
 
-  public update(text?: string): ResultView {
-    if (text) {
-      this.text = text;
-    }
-    this.element.text(this.text);
+  get value(): string {
+    return this._view.templateValues;
+  }
+
+  public update(): ResultView {
+    this.element.text(this.value);
     this._view.trigger('resultUpdated', this);
 
     return this;

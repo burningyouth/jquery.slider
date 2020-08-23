@@ -12,7 +12,7 @@ const model = new Model({
   handlersColors: [],
   connectorsColors: [],
   step: 0,
-  roundTo: 1,
+  precision: 1,
   vertical: false,
   showProgressBar: false,
   tooltipReverse: true,

@@ -10,7 +10,7 @@ module.exports = {
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2018,
+    projects: './tsconfig.json',
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint', 'fsd'],

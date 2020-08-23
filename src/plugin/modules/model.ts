@@ -13,8 +13,9 @@ class Model {
     showProgressBar: false,
     startValues: [30, 70],
     marksCount: 10,
+    enabled: true,
     step: 1,
-    roundTo: 0,
+    precision: 0,
     vertical: false,
     reverse: false,
     tooltipReverse: false,
@@ -25,7 +26,6 @@ class Model {
     showBounds: true,
     showMarkValue: true,
     showInput: false,
-    readonlyInput: false,
     clickableBase: true,
     clickableMark: true,
     sortValues: false,
@@ -152,12 +152,12 @@ class Model {
 
   public getFormattedValue(value: number): number {
     const settings = this.settings;
-    const roundTo = 10 ** settings.roundTo;
+    const precision = 10 ** settings.precision;
 
     let tmp = settings.step
       ? settings.min + Math.floor(value / settings.step + 0.5) * settings.step
       : settings.min + value; //форматируется значение в зависимости от step
-    tmp = roundTo ? Math.floor(tmp * roundTo) / roundTo : tmp; //округление числа до roundTo
+    tmp = precision ? Math.floor(tmp * precision) / precision : tmp; //округление числа до precision
 
     return tmp;
   }

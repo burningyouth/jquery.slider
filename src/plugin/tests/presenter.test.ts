@@ -14,7 +14,7 @@ const model = new Model({
   showRange: false,
   startValues: [30, 70],
   step: 1,
-  roundTo: 0,
+  precision: 0,
   tooltipReverse: false,
   clickableBase: true,
   showTooltip: false,

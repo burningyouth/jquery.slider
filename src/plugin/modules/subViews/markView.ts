@@ -26,10 +26,11 @@ class MarkView extends BasicElementView {
       this.value = MarkView.valueBase.clone();
       this.value.appendTo(this.element);
 
+      if (view.settings.markValueReverse) {
+        this.value.addClass(this.reversedValueClass);
+      }
+
       this._view.trigger('markValueElementAppend', this);
-    }
-    if (view.settings.markValueReverse) {
-      this.value.addClass(this.reversedValueClass);
     }
     if (view.settings.clickableMark) {
       this.addClass(this.clickableClass);
