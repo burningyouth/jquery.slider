@@ -31,7 +31,7 @@
                 <input autofocus class="form-control" name="startValues" type="text" value="0 65 180"/>
                 <small class="form-text text-muted">
                   1. Put a space between values<br/>2. Values must be in range
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      [min; max]<br/>3. Values must be numbers
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          [min; max]<br/>3. Values must be numbers
                 </small>
               </div>
               <div class="form-group" data-tooltip="How much marks to draw">
@@ -282,64 +282,64 @@
         jQuery.slider
         <small id="color-result" style="font-size: 0.75rem;"></small>
       </h1>
-      <div class="d-flex justify-content-center mx-auto slider">
-        <div class="w-100">
+
+      <div class="slider-wrapper">
+        <div class="slider">
           <input id="slider0" type="text"/>
-        </div>
-        <div class="slider__settings">
-          <a class="link" data-slider="0" data-target="#settings-modal" data-toggle="modal">
-            <svg class="bi bi-gear-fill" fill="currentColor" height="1.2rem" viewbox="0 0 16 16" width="1.2rem" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z" fill-rule="evenodd"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-
-      <div class="d-flex justify-content-center mx-auto slider">
-        <div class="w-100">
-          <input id="slider1" type="text"/>
-        </div>
-        <div class="slider__settings">
-          <a class="link" data-slider="1" data-target="#settings-modal" data-toggle="modal">
-            <svg class="bi bi-gear-fill" fill="currentColor" height="1.2rem" viewbox="0 0 16 16" width="1.2rem" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z" fill-rule="evenodd"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-
-      <div class="d-flex justify-content-center mx-auto mb-5 slider">
-        <div class="w-100">
-          <input id="slider2" type="text"/>
-        </div>
-        <div class="slider__settings">
-          <a class="link" data-slider="2" data-target="#settings-modal" data-toggle="modal">
-            <svg class="bi bi-gear-fill" fill="currentColor" height="1.2rem" viewbox="0 0 16 16" width="1.2rem" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z" fill-rule="evenodd"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-
-      <div class="d-flex justify-content-center mx-auto">
-        <div class="slider slider_vertical">
-          <input id="slider3" type="text"/>
           <div class="slider__settings">
-            <a class="link" data-slider="3" data-target="#settings-modal" data-toggle="modal">
+            <a class="link" data-slider="0" data-target="#settings-modal" data-toggle="modal">
               <svg class="bi bi-gear-fill" fill="currentColor" height="1.2rem" viewbox="0 0 16 16" width="1.2rem" xmlns="http://www.w3.org/2000/svg">
                 <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z" fill-rule="evenodd"/>
               </svg>
             </a>
           </div>
         </div>
-        <div class="slider slider_vertical">
-          <input id="slider4" type="text"/>
+
+
+        <div class="slider">
+          <input id="slider1" type="text"/>
           <div class="slider__settings">
-            <a class="link" data-slider="4" data-target="#settings-modal" data-toggle="modal">
+            <a class="link" data-slider="1" data-target="#settings-modal" data-toggle="modal">
               <svg class="bi bi-gear-fill" fill="currentColor" height="1.2rem" viewbox="0 0 16 16" width="1.2rem" xmlns="http://www.w3.org/2000/svg">
                 <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z" fill-rule="evenodd"/>
               </svg>
             </a>
+          </div>
+        </div>
+
+        <div class="slider">
+          <input id="slider2" type="text"/>
+          <div class="slider__settings">
+            <a class="link" data-slider="2" data-target="#settings-modal" data-toggle="modal">
+              <svg class="bi bi-gear-fill" fill="currentColor" height="1.2rem" viewbox="0 0 16 16" width="1.2rem" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z" fill-rule="evenodd"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-5 d-flex justify-content-center">
+        <div class="slider-wrapper d-inline-flex justify-content-center">
+          <div class="slider slider_vertical">
+            <input id="slider3" type="text"/>
+            <div class="slider__settings">
+              <a class="link" data-slider="3" data-target="#settings-modal" data-toggle="modal">
+                <svg class="bi bi-gear-fill" fill="currentColor" height="1.2rem" viewbox="0 0 16 16" width="1.2rem" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z" fill-rule="evenodd"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="slider slider_vertical">
+            <input id="slider4" type="text"/>
+            <div class="slider__settings">
+              <a class="link" data-slider="4" data-target="#settings-modal" data-toggle="modal">
+                <svg class="bi bi-gear-fill" fill="currentColor" height="1.2rem" viewbox="0 0 16 16" width="1.2rem" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z" fill-rule="evenodd"/>
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -27,10 +27,14 @@ class BaseView extends BasicElementView {
 
     const coordsAxis = that.settings.vertical ? 'clientY' : 'clientX';
 
-    that.element.on('click touch', function (e) {
+    that.element.on('mousedown', function (e) {
       e.preventDefault();
-      if (e.target === that.element[0])
-        that._view.trigger('baseClicked', that, e[coordsAxis]);
+      if (e.which === 1) that._view.trigger('baseClicked', that, e[coordsAxis]);
+    });
+
+    that.element.on('touchstart', function (e) {
+      e.preventDefault();
+      that._view.trigger('baseClicked', that, e.touches[0][coordsAxis]);
     });
   }
 }

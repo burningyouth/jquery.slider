@@ -23,10 +23,6 @@ class Presenter {
     this._view = view;
     this._view.presenter = this;
     view.valueFromPercentage = model.valueFromPercentage;
-
-    this.initClickEvents();
-    this.initBasicEvents();
-    this.exec('sliderInit');
   }
 
   get base(): BaseView {
@@ -55,6 +51,12 @@ class Presenter {
 
   set values(newValues: Values) {
     this._model.values = newValues;
+  }
+
+  public init() {
+    this.initClickEvents();
+    this.initBasicEvents();
+    this.exec('sliderInit');
   }
 
   public initClickEvents() {

@@ -11,6 +11,7 @@ importAll(require.context('../blocks/body/', true, /(\.less)$/));
 importAll(require.context('../blocks/content/', true, /(\.less)$/));
 importAll(require.context('../blocks/checkbox/', true, /(\.less)$/));
 importAll(require.context('../blocks/dropdown/', true, /(\.less)$/));
+importAll(require.context('../blocks/slider-wrapper/', true, /(\.less)$/));
 importAll(require.context('../blocks/slider/', true, /(\.less)$/));
 importAll(require.context('../blocks/link/', true, /(\.less)$/));
 importAll(require.context('../blocks/title/', true, /(\.less)$/));

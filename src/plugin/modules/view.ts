@@ -101,6 +101,12 @@ class View {
       $('<div class="js-slider__base-wrapper"></div>'),
       this.elements.wrapper.element,
     );
+    this.elements.baseWrapper.element.on(
+      'touchstart',
+      (e) => {
+        e.preventDefault();
+      }, //this is for prevent scrolling
+    );
     return this;
   }
 

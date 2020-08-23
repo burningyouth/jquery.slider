@@ -1,21 +1,13 @@
 .slider {
   position: relative;
   padding: 40px 20px 20px 20px;
-  background-color: rgba(0, 0, 0, 0.01);
+  background-color: transparent;
 
   transition: background-color 0.3s ease;
   &:hover {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.75);
     .slider__settings {
       opacity: 1;
     }
-  }
-
-  &:first-of-type {
-    border-radius: 5px 5px 0 0;
-  }
-
-  &:nth-of-type(3) {
-    border-radius: 0 0 5px 5px;
   }
 }

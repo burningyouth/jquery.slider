@@ -50,7 +50,12 @@ class MarkView extends BasicElementView {
   public static init(that: MarkView) {
     super.basicInit(that);
 
-    that.element.on('click touch', function (e) {
+    that.element.on('mousedown', function (e) {
+      e.preventDefault();
+      if (e.which === 1) that._view.trigger('markClicked', that);
+    });
+
+    that.element.on('touchstart', function (e) {
       e.preventDefault();
       that._view.trigger('markClicked', that);
     });
