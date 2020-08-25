@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 import * as slider from '../types/slider';
 import Presenter from './presenter';
 import BasicElementView from './subViews/basicElementView';
@@ -11,7 +13,6 @@ import ResultView from './subViews/resultView';
 import TooltipView from './subViews/tooltipView';
 import InputView from './subViews/inputView';
 import events from './mixins/eventsMixin';
-import $ from 'jquery';
 
 class View {
   private _eventHandlers: Object = {};
@@ -21,10 +22,10 @@ class View {
   public on: Function;
   public off: Function;
 
-  //cкопированные с модели методы
-  public valueFromPercentage: Function;
+  //скопированные с модели методы
+  public getValueFromPercentage: Function;
   public isSliderReversedOrVertical: Function;
-  public valueFromCoords: Function;
+  public getValueFromCoords: Function;
 
   public input: JQuery<HTMLElement>; //поле, в которое записывается значения ползунков
   public inputParent: JQuery<HTMLElement>;
@@ -111,7 +112,7 @@ class View {
   }
 
   public handleHandlerStart(handler: HandlerView): void {
-    if (this.settings.enabled) {
+    if (this.settings.isEnabled) {
       handler.active = true;
       this.elements.handlers.forEach((item: HandlerView) => {
         if (item.focus) {
@@ -153,10 +154,10 @@ class View {
       $('<div class="js-slider"></div>'),
       this.elements.parent.element,
     );
-    if (this.settings.vertical) {
+    if (this.settings.isVertical) {
       this.elements.wrapper.addClass('js-slider_vertical');
     }
-    if (!this.settings.enabled) {
+    if (!this.settings.isEnabled) {
       this.elements.wrapper.addClass('js-slider_disabled');
     }
     return this;
@@ -321,8 +322,8 @@ class View {
     return 0;
   }
 
-  public nearestHandler(percentage: number): HandlerView {
-    let nearestHandler: HandlerView = this.elements.handlers[0];
+  public getNearestHandler(percentage: number): HandlerView {
+    let getNearestHandler: HandlerView = this.elements.handlers[0];
     if (this.elements.handlers.length > 1) {
       let lastDif: number = 100,
         dif: number;
@@ -330,12 +331,12 @@ class View {
         item.focus = false;
         dif = Math.abs(item.percentage - percentage);
         if (lastDif > dif) {
-          nearestHandler = item;
+          getNearestHandler = item;
           lastDif = dif;
         }
       });
     }
-    return nearestHandler;
+    return getNearestHandler;
   }
 
   public trigger(eventType: string, ...args: any) {

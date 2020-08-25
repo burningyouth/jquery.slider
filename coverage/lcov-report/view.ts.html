@@ -606,7 +606,7 @@ class View {
 <span class="cstat-no" title="statement not covered" >      this.elements.wrapper.append(this.elements.result);</span>
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (this.settings.align === Align.vertical) {</span>
+<span class="cstat-no" title="statement not covered" >    if (this.settings.align === Align.isVertical) {</span>
 <span class="cstat-no" title="statement not covered" >      this.elements.wrapper.addClass('js-slider_vertical');</span>
 <span class="cstat-no" title="statement not covered" >      if (this.settings.tooltipReverse &amp;&amp; this.settings.showTooltip) {</span>
 <span class="cstat-no" title="statement not covered" >        this.elements.tooltips[0].addClass('js-slider__tooltip_left');</span>
@@ -704,7 +704,7 @@ class View {
 <span class="fstat-no" title="function not covered" >  pu</span>blic changeHandlerPosition(handler: JQuery&lt;HTMLElement&gt;, percentage: number): View {
     //менеяем позицию ползунка в процентах от ширины base
 <span class="cstat-no" title="statement not covered" >    handler.data('percentage', percentage);</span>
-<span class="cstat-no" title="statement not covered" >    if (this.settings.align === Align.vertical) {</span>
+<span class="cstat-no" title="statement not covered" >    if (this.settings.align === Align.isVertical) {</span>
 <span class="cstat-no" title="statement not covered" >      handler.css('top', `calc(${percentage}% - 7.5px`);</span>
     } else {
 <span class="cstat-no" title="statement not covered" >      handler.css('left', `calc(${percentage}% - 7.5px`);</span>
@@ -720,7 +720,7 @@ class View {
       const pairedPercentage = <span class="cstat-no" title="statement not covered" >this.elements.handlers[pairedHandlerIndex].data('percentage');</span>
       const pairedConnectorIndex = <span class="cstat-no" title="statement not covered" >+handler.data('pairedConnector');</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      if (this.settings.align === Align.vertical) {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.settings.align === Align.isVertical) {</span>
 <span class="cstat-no" title="statement not covered" >        if (pairedPercentage &gt; percentage) {</span>
 <span class="cstat-no" title="statement not covered" >          this.elements.connectors[pairedConnectorIndex].css('top', `${percentage}%`);</span>
 <span class="cstat-no" title="statement not covered" >          this.elements.connectors[pairedConnectorIndex].css(</span>

@@ -1,6 +1,7 @@
+import $ from 'jquery';
+
 import Presenter from './presenter';
 import { Settings, Values } from '../types/slider';
-import $ from 'jquery';
 import BaseView from './subViews/baseView';
 
 class Model {
@@ -9,28 +10,28 @@ class Model {
     //default settings
     min: 0,
     max: 100,
-    showRange: false,
-    showProgressBar: false,
     startValues: [30, 70],
     marksCount: 10,
-    enabled: true,
+    isEnabled: true,
     step: 1,
     precision: 0,
-    vertical: false,
-    reverse: false,
-    tooltipReverse: false,
-    markValueReverse: false,
+    isVertical: false,
+    isReversed: false,
+    isTooltipReversed: false,
+    isMarkValueReversed: false,
     showMarks: false,
     showTooltip: false,
     showResult: true,
     showBounds: true,
     showMarkValue: true,
     showInput: false,
-    clickableBase: true,
-    clickableMark: true,
+    showRange: false,
+    showProgressBar: false,
+    isBaseClickable: true,
+    isMarkClickable: true,
     sortValues: false,
     sortOnlyPares: false,
-    sortReverse: false,
+    sortReversed: false,
     resultTemplate: 'default',
     handlersStateClasses: {},
     additionalClasses: {},
@@ -60,7 +61,7 @@ class Model {
       if (this._settings.sortOnlyPares && this._values.length % 2 === 0) {
         //если нужно сортировать попарно и количество значений четно
         const arr = this._values.slice(0);
-        if (this._settings.sortReverse) {
+        if (this._settings.sortReversed) {
           for (let i = 0; i < arr.length; i += 2) {
             if (arr[i] < arr[i + 1]) {
               let tmp = arr[i];
@@ -79,7 +80,7 @@ class Model {
         }
         return arr;
       } else {
-        if (this._settings.sortReverse) {
+        if (this._settings.sortReversed) {
           return this._values
             .slice(0)
             .sort(function (a: number, b: number): number {
@@ -166,12 +167,12 @@ class Model {
     //метод копируется во view
     const settings = this.settings;
     return (
-      (settings.reverse && !settings.vertical) ||
-      (!settings.reverse && settings.vertical)
+      (settings.isReversed && !settings.isVertical) ||
+      (!settings.isReversed && settings.isVertical)
     );
   }
 
-  public valueFromPercentage(percentage: number): number {
+  public getValueFromPercentage(percentage: number): number {
     //метод копируется во view
     const settings = this.settings;
 
@@ -194,7 +195,7 @@ class Model {
     return this.getValueRelativeToBounds(value);
   }
 
-  public valueFromCoords(coords: number, base?: BaseView): number {
+  public getValueFromCoords(coords: number, base?: BaseView): number {
     //возвращает значение ползунка в зависимости от min, max, ширины базы, положения мыши, положения базы и настроек слайдера
     const settings = this.settings;
     let baseView: BaseView;
@@ -205,7 +206,7 @@ class Model {
     }
 
     let value: number, devider: number, startCoords: number;
-    if (settings.vertical) {
+    if (settings.isVertical) {
       devider = baseView.element.height();
       startCoords = baseView.element[0].getBoundingClientRect().top;
     } else {

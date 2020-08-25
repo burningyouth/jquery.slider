@@ -1,6 +1,7 @@
-import BasicElementView from './basicElementView';
-import View from '../view';
 import $ from 'jquery';
+
+import View from '../view';
+import BasicElementView from './basicElementView';
 
 class ResultView extends BasicElementView {
   public static elementBase = $('<div class="js-slider__result">undef.</div>');

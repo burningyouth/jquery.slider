@@ -10,20 +10,20 @@ input.appendTo(body);
 const model = new Model({
   min: 0,
   max: 100,
-  reverse: false,
+  isReversed: false,
   startValues: [70],
   handlersColors: [],
   connectorsColors: [],
   step: 5,
   precision: 2,
-  vertical: true,
+  isVertical: true,
   showProgressBar: true,
-  tooltipReverse: true,
+  isTooltipReversed: true,
   showTooltip: true,
   showResult: false,
   showBounds: false,
   sortValues: true,
-  sortReverse: false,
+  sortReversed: false,
   sortOnlyPares: true,
   resultTemplate: '$1 - $2',
   handlersStateClasses: {
@@ -49,7 +49,7 @@ describe('ConnectorView', () => {
   test('Style is defined correctly', () => {
     expect(progressBar.element.attr('style')).toBe('top: 30%;');
     model.settings = {
-      vertical: false,
+      isVertical: false,
     };
     expect(view.elements.progressBar.element.attr('style')).toBe('right: 30%;');
   });

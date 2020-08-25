@@ -131,7 +131,7 @@ class BaseView extends BasicElementView {
   public static init(that: BaseView) {
     super.basicInit(that);
 &nbsp;
-    const coordsAxis = that.settings.vertical ? 'clientY' : 'clientX';
+    const coordsAxis = that.settings.isVertical ? 'clientY' : 'clientX';
 &nbsp;
     that.element.on('click touch', function(e) {
       e.preventDefault();

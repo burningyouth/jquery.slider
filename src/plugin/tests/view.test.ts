@@ -11,10 +11,10 @@ const contentHtml = `<html>
         <div id='horizontal-test2'>
             <input id="slider2" type="text"/>
         </div>
-        <div id='vertical-test1'>
+        <div id='isVertical-test1'>
           <input id="slider3" type="text"/>
         </div>
-        <div id='vertical-test2'>
+        <div id='isVertical-test2'>
           <input id="slider4" type="text"/>
         </div>
     </body>
@@ -78,11 +78,11 @@ beforeAll(async () => {
       step: 0,
       precision: 1,
       showProgressBar: true,
-      reverse: true,
+      isReversed: true,
       startValues: [-90],
       showTooltip: true,
       showBounds: false,
-      tooltipReverse: true,
+      isTooltipReversed: true,
       resultTemplate: '$1',
       additionalClasses: {
         wrapper: 'slider',
@@ -94,14 +94,14 @@ beforeAll(async () => {
       max: 500,
       step: 0,
       precision: 1,
-      vertical: true,
+      isVertical: true,
       showRange: true,
       startValues: [90, 150, 205, 420],
       sortValues: true,
       sortOnlyPares: true,
       showTooltip: true,
       showBounds: false,
-      tooltipReverse: true,
+      isTooltipReversed: true,
       resultTemplate: '$1 - $2; $3 - $4',
       additionalClasses: {
         wrapper: 'slider',
@@ -113,13 +113,13 @@ beforeAll(async () => {
       max: -100,
       step: 0,
       precision: 1,
-      vertical: true,
+      isVertical: true,
       showRange: true,
       startValues: [-430, -150],
       sortValues: true,
-      sortReverse: true,
+      sortReversed: true,
       showTooltip: true,
-      tooltipReverse: true,
+      isTooltipReversed: true,
       resultTemplate: '$1 --- $2',
       additionalClasses: {
         wrapper: 'slider',
@@ -292,15 +292,15 @@ describe('View', () => {
     expect(tooltipTextAfter).toBe('-90.3');
   });
 
-  test('Correct handle and connector moving (vertical)', async () => {
+  test('Correct handle and connector moving (isVertical)', async () => {
     const handler1 = await page.$(
-        '#vertical-test1 .js-slider__handler:last-of-type',
+        '#isVertical-test1 .js-slider__handler:last-of-type',
       ),
-      connector1 = await page.$('#vertical-test1 .js-slider__connector'),
+      connector1 = await page.$('#isVertical-test1 .js-slider__connector'),
       handler2 = await page.$(
-        '#vertical-test2 .js-slider__handler:last-of-type',
+        '#isVertical-test2 .js-slider__handler:last-of-type',
       ),
-      connector2 = await page.$('#vertical-test2 .js-slider__connector');
+      connector2 = await page.$('#isVertical-test2 .js-slider__connector');
 
     let handlerBoundingBoxBefore = centerCoords(await handler1.boundingBox()),
       connectorBoundingBoxBefore = centerCoords(await connector1.boundingBox());
@@ -360,18 +360,18 @@ describe('View', () => {
     ).toBeCloseTo(5.4, 0);
   });
 
-  test('Correct tooltip value (vertical)', async () => {
+  test('Correct tooltip value (isVertical)', async () => {
     const handler1 = await page.$(
-        '#vertical-test1 .js-slider__handler:last-of-type',
+        '#isVertical-test1 .js-slider__handler:last-of-type',
       ),
       tooltip1 = await page.$(
-        '#vertical-test1 .js-slider__handler:last-of-type .js-slider__tooltip',
+        '#isVertical-test1 .js-slider__handler:last-of-type .js-slider__tooltip',
       ),
       handler2 = await page.$(
-        '#vertical-test2 .js-slider__handler:last-of-type',
+        '#isVertical-test2 .js-slider__handler:last-of-type',
       ),
       tooltip2 = await page.$(
-        '#vertical-test2 .js-slider__handler:last-of-type .js-slider__tooltip',
+        '#isVertical-test2 .js-slider__handler:last-of-type .js-slider__tooltip',
       );
     let handlerBoundingBox = centerCoords(await handler1.boundingBox()),
       tooltipTextBefore = await page.evaluate(

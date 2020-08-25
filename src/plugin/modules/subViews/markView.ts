@@ -1,7 +1,7 @@
-import BasicElementView from './basicElementView';
+import $ from 'jquery';
 
 import View from '../view';
-import $ from 'jquery';
+import BasicElementView from './basicElementView';
 
 class MarkView extends BasicElementView {
   public static elementBase = $('<span class="js-slider__mark"></span>');
@@ -22,7 +22,7 @@ class MarkView extends BasicElementView {
     super(view, MarkView.elementBase.clone(), base.element, initCallback);
     this.index = index;
     this.percentage = (this.index / this.settings.marksCount) * 100;
-    this.value = this._view.valueFromPercentage(this.percentage);
+    this.value = this._view.getValueFromPercentage(this.percentage);
 
     if (view.settings.showMarkValue) {
       this.valueElement = MarkView.valueBase.clone();
@@ -30,13 +30,13 @@ class MarkView extends BasicElementView {
 
       this.valueElement.text(this.value);
 
-      if (view.settings.markValueReverse) {
+      if (view.settings.isMarkValueReversed) {
         this.valueElement.addClass(this.reversedValueClass);
       }
 
       this._view.trigger('markValueElementAppend', this);
     }
-    if (view.settings.clickableMark) {
+    if (view.settings.isMarkClickable) {
       this.addClass(this.clickableClass);
     }
 
@@ -44,7 +44,7 @@ class MarkView extends BasicElementView {
   }
 
   public update(): void {
-    if (this.settings.vertical) {
+    if (this.settings.isVertical) {
       this.element.css('top', `${this.percentage}%`);
     } else {
       this.element.css('left', `${this.percentage}%`);

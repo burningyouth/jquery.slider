@@ -1,7 +1,8 @@
+import $ from 'jquery';
+
 import View from '../view';
 import events from '../mixins/eventsMixin';
 import { Settings } from '../../types/slider';
-import $ from 'jquery';
 
 class BasicElementView {
   private _eventHandlers: Object = {};

@@ -7,20 +7,20 @@ const model = new Model({
   min: 10,
   max: 230,
   showRange: true,
-  reverse: false,
+  isReversed: false,
   startValues: [30, 70],
   handlersColors: [],
   connectorsColors: [],
   step: 0,
   precision: 1,
-  vertical: false,
+  isVertical: false,
   showProgressBar: false,
-  tooltipReverse: true,
+  isTooltipReversed: true,
   showTooltip: true,
   showResult: false,
   showBounds: false,
   sortValues: true,
-  sortReverse: false,
+  sortReversed: false,
   sortOnlyPares: true,
   resultTemplate: '$1 - $2',
   handlersStateClasses: {
@@ -65,7 +65,7 @@ describe('Model', () => {
   });
 
   test('Reversed sorting is working', () => {
-    model.settings.sortReverse = true;
+    model.settings.sortReversed = true;
     expect(model.sortedValues).toEqual([89, 32, 64, 2]);
     model.settings.sortOnlyPares = false;
     expect(model.sortedValues).toEqual([89, 64, 32, 2]);
@@ -79,46 +79,46 @@ describe('Model', () => {
     expect(model.templateValues).toBe('89,32,64,2');
   });
 
-  test('valueFromPercentage() is working fine', () => {
+  test('getValueFromPercentage() is working fine', () => {
     model.settings.min = 0;
     model.settings.max = 100;
-    expect(model.valueFromPercentage(0)).toBe(0);
-    expect(model.valueFromPercentage(50)).toBe(50);
-    expect(model.valueFromPercentage(100)).toBe(100);
+    expect(model.getValueFromPercentage(0)).toBe(0);
+    expect(model.getValueFromPercentage(50)).toBe(50);
+    expect(model.getValueFromPercentage(100)).toBe(100);
     model.settings.min = -50;
     model.settings.max = 120;
-    expect(model.valueFromPercentage(20)).toBe(-16);
-    expect(model.valueFromPercentage(70)).toBe(68.9);
-    expect(model.valueFromPercentage(89)).toBe(101.3);
+    expect(model.getValueFromPercentage(20)).toBe(-16);
+    expect(model.getValueFromPercentage(70)).toBe(68.9);
+    expect(model.getValueFromPercentage(89)).toBe(101.3);
   });
 
-  test('valueFromCoords() is working fine', () => {
+  test('getValueFromCoords() is working fine', () => {
     model.settings.min = 0;
     model.settings.max = 100;
-    expect(model.valueFromCoords(100, base)).toBe(50);
-    model.settings.vertical = true;
-    expect(model.valueFromCoords(100, base)).toBe(50);
-    model.settings.vertical = false;
+    expect(model.getValueFromCoords(100, base)).toBe(50);
+    model.settings.isVertical = true;
+    expect(model.getValueFromCoords(100, base)).toBe(50);
+    model.settings.isVertical = false;
     model.settings.min = -50;
     model.settings.max = 150;
-    expect(model.valueFromCoords(50, base)).toBe(0);
+    expect(model.getValueFromCoords(50, base)).toBe(0);
     model.settings.min = -350;
     model.settings.max = -150;
-    expect(model.valueFromCoords(50, base)).toBe(-300);
+    expect(model.getValueFromCoords(50, base)).toBe(-300);
     model.settings.min = -50;
     model.settings.max = 150;
-    model.settings.reverse = true;
-    expect(model.valueFromCoords(50, base)).toBe(100);
-    model.settings.vertical = true;
-    expect(model.valueFromCoords(100, base)).toBe(50);
-    model.settings.vertical = false;
-    model.settings.reverse = false;
+    model.settings.isReversed = true;
+    expect(model.getValueFromCoords(50, base)).toBe(100);
+    model.settings.isVertical = true;
+    expect(model.getValueFromCoords(100, base)).toBe(50);
+    model.settings.isVertical = false;
+    model.settings.isReversed = false;
     model.settings.min = -150;
     model.settings.max = 50;
-    expect(model.valueFromCoords(50, base)).toBe(-100);
-    expect(model.valueFromCoords(-50, base)).toBe(-150);
-    expect(model.valueFromCoords(100000, base)).toBe(50);
-    model.settings.reverse = true;
-    expect(model.valueFromCoords(50, base)).toBe(0);
+    expect(model.getValueFromCoords(50, base)).toBe(-100);
+    expect(model.getValueFromCoords(-50, base)).toBe(-150);
+    expect(model.getValueFromCoords(100000, base)).toBe(50);
+    model.settings.isReversed = true;
+    expect(model.getValueFromCoords(50, base)).toBe(0);
   });
 });

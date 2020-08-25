@@ -328,7 +328,7 @@ import $ from 'jquery';
 &nbsp;
 enum Align {
   horizontal,
-  vertical
+  isVertical
 }
 &nbsp;
 class Model {
@@ -417,7 +417,7 @@ class Model {
     const roundTo = <span class="cstat-no" title="statement not covered" >10 ** settings.roundTo;</span>
 &nbsp;
     let value: number, devider: number, startCoords: number;
-<span class="cstat-no" title="statement not covered" >    if (settings.align === Align.vertical) {</span>
+<span class="cstat-no" title="statement not covered" >    if (settings.align === Align.isVertical) {</span>
 <span class="cstat-no" title="statement not covered" >      devider = base.height();</span>
 <span class="cstat-no" title="statement not covered" >      startCoords = base[0].getBoundingClientRect().top;</span>
     } else {

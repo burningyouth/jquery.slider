@@ -1,9 +1,10 @@
+import $ from 'jquery';
+
+import View from '../view';
 import BasicElementView from './basicElementView';
 import BaseView from './baseView';
 import ConnectorView from './connectorView';
 import TooltipView from './tooltipView';
-import View from '../view';
-import $ from 'jquery';
 import ProgressBarView from './progressBarView';
 
 class HandlerView extends BasicElementView {
@@ -78,7 +79,7 @@ class HandlerView extends BasicElementView {
   public static init(that: HandlerView) {
     super.basicInit(that);
 
-    const coordsAxis = that.settings.vertical ? 'clientY' : 'clientX';
+    const coordsAxis = that.settings.isVertical ? 'clientY' : 'clientX';
 
     that.element.on('mousedown', function (e) {
       e.preventDefault();
@@ -86,7 +87,7 @@ class HandlerView extends BasicElementView {
         that._view.trigger('handlerStart', that);
         $(window).on('mousemove', function (e2) {
           const coords = e2[coordsAxis];
-          const offset = that._view.valueFromCoords(coords) - that.value;
+          const offset = that._view.getValueFromCoords(coords) - that.value;
           if (offset !== 0) {
             that._view.trigger('handlerMoved', that, offset);
           }
@@ -105,7 +106,7 @@ class HandlerView extends BasicElementView {
       that._view.trigger('handlerStart', that);
       $(window).on('touchmove', function (e2) {
         const coords = e2.touches[0][coordsAxis];
-        const offset = that._view.valueFromCoords(coords) - that.value;
+        const offset = that._view.getValueFromCoords(coords) - that.value;
         if (offset !== 0) {
           that._view.trigger('handlerMoved', that, offset);
         }
@@ -118,7 +119,7 @@ class HandlerView extends BasicElementView {
   }
 
   public update(): HandlerView {
-    if (this.settings.vertical) {
+    if (this.settings.isVertical) {
       this.element.css('top', `calc(${this.percentage}% - 7.5px)`);
     } else {
       this.element.css('left', `calc(${this.percentage}% - 7.5px)`);

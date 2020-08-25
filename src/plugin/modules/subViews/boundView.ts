@@ -1,6 +1,7 @@
+import $ from 'jquery';
+
 import View from '../view';
 import BasicElementView from './basicElementView';
-import $ from 'jquery';
 
 class BoundView extends BasicElementView {
   public static elementBase = $('<div class="js-slider__bound">undef.</div>');

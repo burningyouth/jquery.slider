@@ -532,7 +532,7 @@ class Model {
     max: 100,
     range: false,
     progressBar: false,
-    reverse: false,
+    isReversed: false,
     startValues: [30, 70],
     showMarks: false,
     marksCount: 10,
@@ -541,7 +541,7 @@ class Model {
     connectorsColors: [],
     step: 1,
     roundTo: 0,
-    vertical: false,
+    isVertical: false,
     tooltipReverse: false,
     showTooltip: false,
     showResult: true,
@@ -660,7 +660,7 @@ class Model {
     let value = percentage / 100;
     value *= settings.max - settings.min;
 &nbsp;
-    <span class="missing-if-branch" title="if path not taken" >I</span>if ((settings.reverse &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >!settings.vertical)</span> || (!settings.reverse &amp;&amp; settings.vertical)) {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if ((settings.isReversed &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >!settings.isVertical)</span> || (!settings.isReversed &amp;&amp; settings.isVertical)) {
 <span class="cstat-no" title="statement not covered" >      if (settings.max &gt;= 0 &amp;&amp; settings.min &gt;= 0) {</span>
 <span class="cstat-no" title="statement not covered" >        value = settings.max - value;</span>
       } else <span class="cstat-no" title="statement not covered" >if (settings.max &lt; 0 &amp;&amp; settings.min &lt; 0) {</span>
@@ -696,7 +696,7 @@ class Model {
     }
 &nbsp;
     let value: number, devider: number, startCoords: number;
-    if (settings.vertical) {
+    if (settings.isVertical) {
       devider = baseView.element.height();
       startCoords = baseView.element[0].getBoundingClientRect().top;
     } else {
@@ -707,7 +707,7 @@ class Model {
     value = (coords - startCoords) / devider;
     value *= settings.max - settings.min;
 &nbsp;
-    if ((settings.reverse &amp;&amp; !settings.vertical) || (!settings.reverse &amp;&amp; settings.vertical)) {
+    if ((settings.isReversed &amp;&amp; !settings.isVertical) || (!settings.isReversed &amp;&amp; settings.isVertical)) {
       if (settings.max &gt;= 0 &amp;&amp; settings.min &gt;= 0) {
         value = settings.max - value;
       } else <span class="missing-if-branch" title="if path not taken" >I</span>if (settings.max &lt; 0 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >settings.min &lt; 0)</span> {

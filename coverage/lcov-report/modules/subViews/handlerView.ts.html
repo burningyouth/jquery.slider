@@ -373,7 +373,7 @@ class HandlerView extends BasicElementView {
   public static init(that: HandlerView) {
     super.basicInit(that);
 &nbsp;
-    const coordsAxis = that.settings.vertical ? 'clientY' : 'clientX';
+    const coordsAxis = that.settings.isVertical ? 'clientY' : 'clientX';
 &nbsp;
     that.element.on('mousedown', <span class="fstat-no" title="function not covered" >fu</span>nction(e) {
 <span class="cstat-no" title="statement not covered" >      e.preventDefault();</span>
@@ -411,7 +411,7 @@ class HandlerView extends BasicElementView {
     if (typeof percentage === 'number') this.percentage = percentage;
     if (typeof value === 'number') this.value = value;
 &nbsp;
-    if (this.settings.vertical) {
+    if (this.settings.isVertical) {
       this.element.css('top', `calc(${this.percentage}% - 7.5px`);
     } else {
       this.element.css('left', `calc(${this.percentage}% - 7.5px`);

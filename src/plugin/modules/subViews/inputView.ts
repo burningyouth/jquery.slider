@@ -1,7 +1,8 @@
-import BasicElementView from './basicElementView';
-import View from '../view';
-import { Values } from '../../types/slider';
 import $ from 'jquery';
+
+import View from '../view';
+import BasicElementView from './basicElementView';
+import { Values } from '../../types/slider';
 
 class InputView extends BasicElementView {
   constructor(
@@ -30,7 +31,7 @@ class InputView extends BasicElementView {
       that.removeClass('js-slider__input_shown');
     }
 
-    if (!that.settings.enabled) {
+    if (!that.settings.isEnabled) {
       that.element.attr('disabled', 'true');
     }
 

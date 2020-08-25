@@ -235,7 +235,7 @@ class ConnectorView extends BasicElementView {
       this.percentage = [pairedPercentage, 100 - percentage];
     }
 &nbsp;
-    if (this.settings.vertical) {
+    if (this.settings.isVertical) {
       this.element.css('top', `${this.percentage[0]}%`);
       this.element.css('bottom', `${this.percentage[1]}%`);
     } else {
@@ -251,7 +251,7 @@ class ConnectorView extends BasicElementView {
   public static init(that: ConnectorView): void {
     <span class="missing-if-branch" title="else path not taken" >E</span>if (that.parent) that.parent.prepend(that.element);
 &nbsp;
-    const coordsAxis = that.settings.vertical ? 'clientY' : 'clientX';
+    const coordsAxis = that.settings.isVertical ? 'clientY' : 'clientX';
 &nbsp;
     that.element.on('click touch', <span class="fstat-no" title="function not covered" >fu</span>nction(e) {
 <span class="cstat-no" title="statement not covered" >      e.preventDefault();</span>

@@ -1,12 +1,12 @@
+import $ from 'jquery';
+
 import Model from './model';
 import { Values, Settings } from '../types/slider';
 import View from './view';
 import HandlerView from './subViews/handlerView';
 import events from './mixins/eventsMixin';
-import $ from 'jquery';
 import BaseView from './subViews/baseView';
 import MarkView from './subViews/markView';
-import InputView from './subViews/inputView';
 
 class Presenter {
   private _eventHandlers: Object = {};
@@ -23,15 +23,15 @@ class Presenter {
     this._view = view;
     this._view.presenter = this;
 
-    model.valueFromPercentage = model.valueFromPercentage.bind(model);
-    model.valueFromCoords = model.valueFromCoords.bind(model);
+    model.getValueFromPercentage = model.getValueFromPercentage.bind(model);
+    model.getValueFromCoords = model.getValueFromCoords.bind(model);
 
     model.isSliderReversedOrVertical = model.isSliderReversedOrVertical.bind(
       model,
     );
 
-    view.valueFromPercentage = model.valueFromPercentage;
-    view.valueFromCoords = model.valueFromCoords;
+    view.getValueFromPercentage = model.getValueFromPercentage;
+    view.getValueFromCoords = model.getValueFromCoords;
     view.isSliderReversedOrVertical = model.isSliderReversedOrVertical;
   }
 
@@ -82,17 +82,20 @@ class Presenter {
   }
 
   public initClickEvents() {
-    if (this._model.settings.clickableBase && !this._model.settings.showMarks) {
+    if (
+      this._model.settings.isBaseClickable &&
+      !this._model.settings.showMarks
+    ) {
       this.on('baseClicked', this.handleBaseClicked);
     }
 
-    if (this.settings.clickableMark && this.settings.showMarks) {
+    if (this.settings.isMarkClickable && this.settings.showMarks) {
       this.on('markClicked', this.handleMarkClicked);
     }
   }
 
   public handleHandlerMoved(handler: HandlerView, offset: number): void {
-    if (this.settings.enabled) {
+    if (this.settings.isEnabled) {
       this._model.values[handler.index] += offset;
       handler.update();
       if (this._view.elements.result) {
@@ -115,7 +118,7 @@ class Presenter {
   }
 
   public handleInputChange(values: Values): void {
-    if (this.settings.enabled) {
+    if (this.settings.isEnabled) {
       this._model.values = values.map((value) => {
         return this._model.getValueRelativeToBounds(
           this._model.getFormattedValue(value),
@@ -126,7 +129,7 @@ class Presenter {
   }
 
   public handleValueEnd(): void {
-    if (this.settings.enabled) {
+    if (this.settings.isEnabled) {
       this._view.elements.handlers.forEach((handler: HandlerView) => {
         handler.update();
       });
@@ -139,23 +142,23 @@ class Presenter {
   }
 
   public handleBaseClicked(coords: number): void {
-    const value = this._model.valueFromCoords(coords),
+    const value = this._model.getValueFromCoords(coords),
       percentage = this._view.getPercentage(value),
-      nearestHandler = this._view.nearestHandler(percentage);
-    if (nearestHandler) {
-      nearestHandler.focus = true;
-      this._model.values[nearestHandler.index] = value;
+      getNearestHandler = this._view.getNearestHandler(percentage);
+    if (getNearestHandler) {
+      getNearestHandler.focus = true;
+      this._model.values[getNearestHandler.index] = value;
       this.exec('valueUpdated');
       this.exec('valueEnd');
     }
   }
 
   public handleMarkClicked(mark: MarkView): void {
-    const value = this._model.valueFromPercentage(mark.percentage),
-      nearestHandler = this._view.nearestHandler(mark.percentage);
-    if (nearestHandler) {
-      nearestHandler.focus = true;
-      this._model.values[nearestHandler.index] = value;
+    const value = this._model.getValueFromPercentage(mark.percentage),
+      getNearestHandler = this._view.getNearestHandler(mark.percentage);
+    if (getNearestHandler) {
+      getNearestHandler.focus = true;
+      this._model.values[getNearestHandler.index] = value;
       this.exec('valueUpdated');
       this.exec('valueEnd', true);
     }

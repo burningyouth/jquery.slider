@@ -1,8 +1,9 @@
+import $ from 'jquery';
+
 import BasicElementView from './basicElementView';
 import BaseView from './baseView';
 import HandlerView from './handlerView';
 import View from '../view';
-import $ from 'jquery';
 
 class ConnectorView extends BasicElementView {
   public static elementBase = $('<span class="js-slider__connector"></span>');
@@ -46,7 +47,7 @@ class ConnectorView extends BasicElementView {
       this.percentage = [pairedPercentage, 100 - percentage];
     }
 
-    if (this.settings.vertical) {
+    if (this.settings.isVertical) {
       this.element.css('top', `${this.percentage[0]}%`);
       this.element.css('bottom', `${this.percentage[1]}%`);
     } else {

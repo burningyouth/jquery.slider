@@ -1,6 +1,7 @@
+import $ from 'jquery';
+
 import BasicElementView from './basicElementView';
 import View from '../view';
-import $ from 'jquery';
 
 class BaseView extends BasicElementView {
   public static elementBase = $('<div class="js-slider__base"></div>');
@@ -17,7 +18,7 @@ class BaseView extends BasicElementView {
       baseWrapper.element,
       initCallback,
     );
-    if (view.settings.clickableBase && !view.settings.showMarks) {
+    if (view.settings.isBaseClickable && !view.settings.showMarks) {
       this.addClass(this.clickableClass);
     }
   }
@@ -25,7 +26,7 @@ class BaseView extends BasicElementView {
   public static init(that: BaseView) {
     super.basicInit(that);
 
-    const coordsAxis = that.settings.vertical ? 'clientY' : 'clientX';
+    const coordsAxis = that.settings.isVertical ? 'clientY' : 'clientX';
 
     that.element.on('mousedown', function (e) {
       e.preventDefault();

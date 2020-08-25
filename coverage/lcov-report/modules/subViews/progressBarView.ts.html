@@ -198,7 +198,7 @@ class ProgressBarView extends BasicElementView {
   public update(): ProgressBarView {
     const percentage = this.pairedHandler.percentage;
 &nbsp;
-    if (this.settings.vertical) {
+    if (this.settings.isVertical) {
       this.element.css('top', `${percentage}%`);
     } else {
       this.element.css('right', `${100 - percentage}%`);
@@ -212,7 +212,7 @@ class ProgressBarView extends BasicElementView {
   public static init(that: ProgressBarView): void {
     <span class="missing-if-branch" title="else path not taken" >E</span>if (that.parent) that.parent.prepend(that.element);
 &nbsp;
-    const coordsAxis = that.settings.vertical ? 'clientY' : 'clientX';
+    const coordsAxis = that.settings.isVertical ? 'clientY' : 'clientX';
 &nbsp;
     that.element.on('click touch', <span class="fstat-no" title="function not covered" >fu</span>nction(e) {
 <span class="cstat-no" title="statement not covered" >      e.preventDefault();</span>

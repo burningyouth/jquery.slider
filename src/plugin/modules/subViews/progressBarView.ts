@@ -1,8 +1,9 @@
+import $ from 'jquery';
+
+import View from '../view';
 import BasicElementView from './basicElementView';
 import HandlerView from './handlerView';
 import BaseView from './baseView';
-import View from '../view';
-import $ from 'jquery';
 
 class ProgressBarView extends BasicElementView {
   public static elementBase = $('<span class="js-slider__connector"></span>');
@@ -34,7 +35,7 @@ class ProgressBarView extends BasicElementView {
   public update(): ProgressBarView {
     const percentage = this.pairedHandler.percentage;
 
-    if (this.settings.vertical) {
+    if (this.settings.isVertical) {
       this.element.css('top', `${percentage}%`);
     } else {
       this.element.css('right', `${100 - percentage}%`);

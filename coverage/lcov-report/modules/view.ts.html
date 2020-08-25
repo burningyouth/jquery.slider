@@ -735,7 +735,7 @@ class View {
       $('&lt;div class="js-slider"&gt;&lt;/div&gt;'),
       this.elements.parent.element
     );
-    if (this.settings.vertical) {
+    if (this.settings.isVertical) {
       this.elements.wrapper.element.addClass('js-slider_vertical');
     }
     return this;
@@ -795,7 +795,7 @@ class View {
         new BoundView(this, settings.max, this.elements.baseWrapper.element)
       );
       const parent = this.elements.bounds[0].parent;
-      <span class="missing-if-branch" title="if path not taken" >I</span>if ((!settings.reverse &amp;&amp; settings.vertical) || (settings.reverse &amp;&amp; <span class="branch-3 cbranch-no" title="branch not covered" >!settings.vertical)</span>) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if ((!settings.isReversed &amp;&amp; settings.isVertical) || (settings.isReversed &amp;&amp; <span class="branch-3 cbranch-no" title="branch not covered" >!settings.isVertical)</span>) {
 <span class="cstat-no" title="statement not covered" >        this.elements.bounds[1].element.prependTo(parent);</span>
 <span class="cstat-no" title="statement not covered" >        this.elements.bounds[0].element.appendTo(parent);</span>
       } else {
@@ -921,7 +921,7 @@ class View {
     //возвращает процентное соотношение value от min, max
     const settings = this.settings;
     let percentage: number;
-    if ((!settings.reverse &amp;&amp; settings.vertical) || (settings.reverse &amp;&amp; <span class="branch-3 cbranch-no" title="branch not covered" >!settings.vertical)</span>) {
+    if ((!settings.isReversed &amp;&amp; settings.isVertical) || (settings.isReversed &amp;&amp; <span class="branch-3 cbranch-no" title="branch not covered" >!settings.isVertical)</span>) {
       percentage = ((settings.max - value) / (settings.max - settings.min)) * 100;
     } else {
       percentage = ((value - settings.min) / (settings.max - settings.min)) * 100;

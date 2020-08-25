@@ -1,7 +1,8 @@
+import $ from 'jquery';
+
+import View from '../view';
 import BasicElementView from './basicElementView';
 import HandlerView from './handlerView';
-import View from '../view';
-import $ from 'jquery';
 
 class TooltipView extends BasicElementView {
   public static elementBase = $(
@@ -14,7 +15,7 @@ class TooltipView extends BasicElementView {
     super(view, TooltipView.elementBase.clone(), handler.element, initCallback);
     this.handler = handler;
 
-    if (view.settings.tooltipReverse) {
+    if (view.settings.isTooltipReversed) {
       this.addClass(this.reversedClass);
     }
 
