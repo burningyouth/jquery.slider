@@ -25,10 +25,10 @@
             </div>
             <div class="modal-body">
               <div class="form-group">
-                <label for="startValues">
+                <label for="values">
                   Start values
                 </label>
-                <input autofocus class="form-control" name="startValues" type="text" value="0 65 180"/>
+                <input autofocus class="form-control" name="values" type="text" value="0 65 180"/>
                 <small class="form-text text-muted">
                   1. Put a space between values<br/>2. Values must be in range
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 [min; max]<br/>3. Values must be numbers
@@ -104,10 +104,10 @@
                 </div>
                 <div class="col-6">
                   <div class="form-group" data-tooltip="How many decimals to show">
-                    <label for="precision">
+                    <label for="decimalPlaces">
                       Precision
                     </label>
-                    <input class="form-control" min="0" name="precision" type="number" value="0"/>
+                    <input class="form-control" min="0" name="decimalPlaces" type="number" value="0"/>
                   </div>
                 </div>
                 <div class="form-group col-12">
@@ -366,7 +366,7 @@
       $(document).ready(function () {
         const sliders = [
             $('#slider0').slider({
-              startValues: [10, 20, 50, 60],
+              values: [10, 20, 50, 60],
               sortValues: true,
               showInput: true,
             }),
@@ -374,9 +374,9 @@
               min: 21,
               max: 125,
               step: 0.75,
-              precision: 2,
+              decimalPlaces: 2,
               showRange: true,
-              startValues: [25, 100],
+              values: [25, 100],
               sortValues: true,
               resultTemplate: '$1 - $2',
             }),
@@ -385,7 +385,7 @@
               max: 1000,
               step: 25,
               showRange: true,
-              startValues: [0, 100, 225, 350, 400, 675],
+              values: [0, 100, 225, 350, 400, 675],
               showMarks: true,
               showMarkValue: false,
               connectorsColors: ['#A4E8FE', '#B5FEA4', '#E1A4FE'],
@@ -400,7 +400,7 @@
               max: 255,
               step: 0,
               isVertical: true,
-              startValues: [255, 200, 150],
+              values: [255, 200, 150],
               showTooltip: true,
               isTooltipReversed: false,
               showResult: false,
@@ -412,7 +412,7 @@
               step: 0,
               isVertical: true,
               showProgressBar: true,
-              startValues: [60],
+              values: [60],
               showTooltip: true,
               showBounds: true,
               isTooltipReversed: true,
@@ -447,7 +447,7 @@
           $.each(inputs, (index, elem) => {
             const name = $(elem).attr('name');
             let value = elem.value;
-            if (name == 'startValues' && value) {
+            if (name == 'values' && value) {
               value = value.split(' ');
               value = value.map((item) => {
                 return +item;
