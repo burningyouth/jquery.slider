@@ -11,20 +11,12 @@ class TooltipView extends BasicElementView {
   public handler: HandlerView;
   public reversedClass = 'js-slider__tooltip_reversed';
 
-  constructor(view: View, handler: HandlerView, initCallback?: Function) {
-    super(
-      view,
-      TooltipView.$elementBase.clone(),
-      handler.$element,
-      initCallback,
-    );
+  constructor(view: View, handler: HandlerView) {
+    super(view, TooltipView.$elementBase.clone(), handler.$element);
     this.handler = handler;
 
-    if (view.settings.isTooltipReversed) {
-      this.addClass(this.reversedClass);
-    }
-
     this.update();
+    this.init();
   }
 
   get value(): number {
@@ -37,6 +29,14 @@ class TooltipView extends BasicElementView {
     this._view.trigger('tooltipUpdated', this);
 
     return this;
+  }
+
+  public init(): void {
+    if (this._view.settings.isTooltipReversed) {
+      this.addClass(this.reversedClass);
+    }
+
+    super.init();
   }
 }
 

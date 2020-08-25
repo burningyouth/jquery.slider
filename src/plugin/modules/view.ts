@@ -65,6 +65,32 @@ class View {
     this._presenter = newPresenter;
   }
 
+  public init(): View {
+    this.initParent()
+      .initWrapper()
+      .initBaseWrapper()
+      .initBase()
+      .initMarksWrapper()
+      .initResult()
+      .initMarks()
+      .initBounds()
+      .initInput();
+
+    this.settings.values.forEach((value, index) => {
+      this.initHandler(value, index);
+    });
+
+    this.initProgressBar();
+
+    this.addClasses(this.settings.additionalClasses);
+
+    this.initEvents();
+
+    if (this._presenter) this._presenter.exec('viewInit');
+
+    return this;
+  }
+
   public addClasses(obj: slider.AdditionalClasses): View {
     //добавляем дополнительные классы для элементов
     Object.keys(obj).forEach((key: keyof slider.AdditionalClasses) => {
@@ -80,32 +106,6 @@ class View {
         }
       }
     });
-    return this;
-  }
-
-  public init(): View {
-    this.initParent()
-      .initWrapper()
-      .initBaseWrapper()
-      .initBase()
-      .initMarksWrapper()
-      .initResult()
-      .initMarks()
-      .initBounds()
-      .initInput();
-
-    this.settings.startValues.forEach((value, index) => {
-      this.initHandler(value, index);
-    });
-
-    this.initProgressBar();
-
-    this.addClasses(this.settings.additionalClasses);
-
-    this.initEvents();
-
-    if (this._presenter) this._presenter.exec('viewInit');
-
     return this;
   }
 
@@ -176,7 +176,7 @@ class View {
       'touchstart',
       (e) => {
         e.preventDefault();
-      }, //this is for scroll preventing
+      }, //улучшает отзывчивость слайдера на тачскринах
     );
     return this;
   }

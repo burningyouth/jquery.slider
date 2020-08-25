@@ -9,27 +9,12 @@ class ProgressBarView extends BasicElementView {
   public static $elementBase = $('<span class="js-slider__connector"></span>');
   public pairedHandler: HandlerView;
 
-  constructor(
-    view: View,
-    pairedHandler: HandlerView,
-    base: BaseView,
-    initCallback: Function = ProgressBarView.init,
-  ) {
-    super(
-      view,
-      ProgressBarView.$elementBase.clone(),
-      base.$element,
-      initCallback,
-    );
+  constructor(view: View, pairedHandler: HandlerView, base: BaseView) {
+    super(view, ProgressBarView.$elementBase.clone(), base.$element);
     this.pairedHandler = pairedHandler;
 
-    if (view.settings.connectorsColors[0]) {
-      this.$element.css('background-color', view.settings.connectorsColors[0]);
-    } else if (view.settings.handlersColors[0]) {
-      this.$element.css('background-color', view.settings.handlersColors[0]);
-    }
-
     this.update();
+    this.init();
   }
 
   public update(): ProgressBarView {
@@ -46,8 +31,20 @@ class ProgressBarView extends BasicElementView {
     return this;
   }
 
-  public static init(that: ProgressBarView): void {
-    if (that.$parent) that.$parent.prepend(that.$element);
+  public init(): void {
+    if (this._view.settings.connectorsColors[0]) {
+      this.$element.css(
+        'background-color',
+        this._view.settings.connectorsColors[0],
+      );
+    } else if (this._view.settings.handlersColors[0]) {
+      this.$element.css(
+        'background-color',
+        this._view.settings.handlersColors[0],
+      );
+    }
+
+    if (this.$parent) this.$parent.prepend(this.$element);
   }
 }
 

@@ -11,11 +11,11 @@ class BoundView extends BasicElementView {
     view: View,
     value: number,
     $parent: JQuery<HTMLElement> = $('body'),
-    initCallback?: Function,
   ) {
-    super(view, BoundView.$elementBase.clone(), $parent, initCallback);
+    super(view, BoundView.$elementBase.clone(), $parent);
     this.value = value;
     this.update();
+    super.init();
   }
 
   public update(): void {

@@ -10,11 +10,11 @@ class Model {
     //default settings
     min: 0,
     max: 100,
-    startValues: [30, 70],
+    values: [30, 70],
     marksCount: 10,
     isEnabled: true,
     step: 1,
-    precision: 0,
+    decimalPlaces: 0,
     isVertical: false,
     isReversed: false,
     isTooltipReversed: false,
@@ -127,8 +127,8 @@ class Model {
 
   set settings(newSettings: Settings) {
     this._settings = $.extend(this._settings, newSettings);
-    if (this.isValueInBounds(this._settings.startValues)) {
-      this._values = this._settings.startValues;
+    if (this.isValueInBounds(this._settings.values)) {
+      this._values = this._settings.values;
     } else {
       throw new RangeError('Start value is invalid (out of range)!');
     }
@@ -153,12 +153,12 @@ class Model {
 
   public getFormattedValue(value: number): number {
     const settings = this.settings;
-    const precision = 10 ** settings.precision;
+    const decimalPlaces = 10 ** settings.decimalPlaces;
 
     let tmp = settings.step
       ? settings.min + Math.floor(value / settings.step + 0.5) * settings.step
       : settings.min + value; //форматируется значение в зависимости от step
-    tmp = precision ? Math.floor(tmp * precision) / precision : tmp; //округление числа до precision
+    tmp = decimalPlaces ? Math.floor(tmp * decimalPlaces) / decimalPlaces : tmp; //округление числа до decimalPlaces
 
     return tmp;
   }

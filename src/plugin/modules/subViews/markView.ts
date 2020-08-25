@@ -15,34 +15,14 @@ class MarkView extends BasicElementView {
   public value: number;
   public index: number;
 
-  constructor(
-    view: View,
-    index: number,
-    base: BasicElementView,
-    initCallback: Function = MarkView.init,
-  ) {
-    super(view, MarkView.$elementBase.clone(), base.$element, initCallback);
+  constructor(view: View, index: number, base: BasicElementView) {
+    super(view, MarkView.$elementBase.clone(), base.$element);
     this.index = index;
     this.percentage = (this.index / this.settings.marksCount) * 100;
     this.value = this._view.getValueFromPercentage(this.percentage);
 
-    if (view.settings.showMarkValue) {
-      this.$valueElement = MarkView.$valueBase.clone();
-      this.$valueElement.appendTo(this.$element);
-
-      this.$valueElement.text(this.value);
-
-      if (view.settings.isMarkValueReversed) {
-        this.$valueElement.addClass(this.reversedValueClass);
-      }
-
-      this._view.trigger('markValueElementAppend', this);
-    }
-    if (view.settings.isMarkClickable) {
-      this.addClass(this.clickableClass);
-    }
-
     this.update();
+    this.init();
   }
 
   public update(): void {
@@ -53,8 +33,23 @@ class MarkView extends BasicElementView {
     }
   }
 
-  public static init(that: MarkView) {
-    super.basicInit(that);
+  public init() {
+    const that = this;
+
+    if (that._view.settings.showMarkValue) {
+      that.$valueElement = MarkView.$valueBase.clone();
+      that.$valueElement.appendTo(that.$element);
+
+      that.$valueElement.text(that.value);
+
+      if (that._view.settings.isMarkValueReversed) {
+        that.$valueElement.addClass(that.reversedValueClass);
+      }
+    }
+
+    if (that._view.settings.isMarkClickable) {
+      that.addClass(that.clickableClass);
+    }
 
     that.$element.on('mousedown', function (e) {
       e.preventDefault();
@@ -67,6 +62,8 @@ class MarkView extends BasicElementView {
       if (e.target === that.$element[0])
         that._view.trigger('markClicked', that);
     });
+
+    super.init();
   }
 }
 

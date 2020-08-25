@@ -12,11 +12,11 @@ const model = new Model({
   max: 100,
   showRange: true,
   isReversed: false,
-  startValues: [70, 30],
+  values: [70, 30],
   handlersColors: [],
   connectorsColors: [],
   step: 5,
-  precision: 2,
+  decimalPlaces: 2,
   isVertical: true,
   showProgressBar: false,
   isTooltipReversed: true,
@@ -47,13 +47,13 @@ describe('ConnectorView', () => {
     expect(connector.pairedHandlers.length).toBe(2);
   });
   test('Connector is inside of base', () => {
-    expect(connector.$element.$parent()).toEqual(view.elements.base.$element);
+    expect(connector.$element.parent()).toEqual(view.elements.base.$element);
   });
   test('Percentage is defined correctly', () => {
     expect(connector.percentage).toBeDefined();
     expect(connector.percentage).toEqual([30, 30]);
     model.settings = {
-      startValues: [40, 80],
+      values: [40, 80],
     };
     connector = view.elements.connectors[0];
     expect(connector.percentage).toEqual([20, 40]);

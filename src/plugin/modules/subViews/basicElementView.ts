@@ -19,12 +19,11 @@ class BasicElementView {
     view: View,
     $element: JQuery<HTMLElement>,
     $parent: JQuery<HTMLElement> | undefined = undefined,
-    initCallback: Function = BasicElementView.basicInit,
   ) {
     this.$element = $element;
     this.$parent = $parent;
     this._view = view;
-    initCallback(this);
+    this.init();
   }
 
   get settings(): Settings {
@@ -45,8 +44,8 @@ class BasicElementView {
     this.$element.remove();
   }
 
-  public static basicInit(that: BasicElementView): void {
-    if (that.$parent) that.$parent.append(that.$element);
+  public init(): void {
+    if (this.$parent) this.$parent.append(this.$element);
   }
 }
 

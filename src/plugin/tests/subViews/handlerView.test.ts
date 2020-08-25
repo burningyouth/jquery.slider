@@ -12,11 +12,11 @@ const model = new Model({
   max: 100,
   showRange: true,
   isReversed: false,
-  startValues: [50, 30],
+  values: [50, 30],
   handlersColors: [],
   connectorsColors: [],
   step: 5,
-  precision: 2,
+  decimalPlaces: 2,
   isVertical: true,
   showProgressBar: false,
   isTooltipReversed: true,
@@ -64,7 +64,7 @@ describe('HandlerView', () => {
     expect(handler.value).toBe(50);
   });
   test('Handler is inside of base', () => {
-    expect(handler.$element.$parent()).toEqual(view.elements.base.$element);
+    expect(handler.$element.parent()).toEqual(view.elements.base.$element);
   });
   test('Handler active and focus working', () => {
     handler.active = true;

@@ -12,9 +12,9 @@ const model = new Model({
   min: 0,
   max: 100,
   showRange: false,
-  startValues: [30, 70],
+  values: [30, 70],
   step: 1,
-  precision: 0,
+  decimalPlaces: 0,
   isTooltipReversed: false,
   isBaseClickable: true,
   showTooltip: false,
@@ -39,19 +39,19 @@ describe('Presenter', () => {
     expect(presenter.templateValues).toBeDefined();
   });
 
-  test('Settings and values is changable', () => {
+  test('Settings and values is changeable', () => {
     presenter.settings = {
-      startValues: [10, 60],
+      values: [10, 60],
     };
     presenter.values = [1, 30];
-    expect(presenter.settings.startValues).toEqual([10, 60]);
+    expect(presenter.settings.values).toEqual([10, 60]);
     expect(presenter.values).toEqual([1, 30]);
   });
 
   test('View events is working fine', () => {
     let handler1 = view.elements.handlers[0],
       handler2 = view.elements.handlers[1],
-      input = view.input,
+      input = view.$input,
       inputValBefore = input.val(),
       modelValueBefore = model.values[0],
       handlerValueBefore = handler1.value,
@@ -74,13 +74,13 @@ describe('Presenter', () => {
   test('Changing the model changes the view', () => {
     let handler = view.elements.handlers[0];
 
-    const input = view.input,
+    const input = view.$input,
       inputValBefore = input.val(),
       handlerValueBefore = handler.value,
       handlerPercentageBefore = handler.percentage;
 
     model.settings = {
-      startValues: [10, 30, 50],
+      values: [10, 30, 50],
     };
 
     handler = view.elements.handlers[0];

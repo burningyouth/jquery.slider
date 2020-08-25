@@ -6,14 +6,10 @@ import BasicElementView from './basicElementView';
 class ResultView extends BasicElementView {
   public static $elementBase = $('<div class="js-slider__result">undef.</div>');
 
-  constructor(view: View, wrapper: BasicElementView, initCallback?: Function) {
-    super(
-      view,
-      ResultView.$elementBase.clone(),
-      wrapper.$element,
-      initCallback,
-    );
+  constructor(view: View, wrapper: BasicElementView) {
+    super(view, ResultView.$elementBase.clone(), wrapper.$element);
     this.update();
+    super.init();
   }
 
   get value(): string {

@@ -16,30 +16,13 @@ class ConnectorView extends BasicElementView {
     index: number = 0,
     pairedHandlers: HandlerView[],
     base: BaseView,
-    initCallback: Function = ConnectorView.init,
   ) {
-    super(
-      view,
-      ConnectorView.$elementBase.clone(),
-      base.$element,
-      initCallback,
-    );
+    super(view, ConnectorView.$elementBase.clone(), base.$element);
     this.index = index;
     this.pairedHandlers = pairedHandlers;
 
-    if (view.settings.connectorsColors[index]) {
-      this.$element.css(
-        'background-color',
-        view.settings.connectorsColors[index],
-      );
-    } else if (view.settings.handlersColors[index * 2]) {
-      this.$element.css(
-        'background-color',
-        view.settings.handlersColors[index * 2],
-      );
-    }
-
     this.update();
+    this.init();
   }
 
   public update(): ConnectorView {
@@ -65,8 +48,20 @@ class ConnectorView extends BasicElementView {
     return this;
   }
 
-  public static init(that: ConnectorView): void {
-    if (that.$parent) that.$parent.prepend(that.$element);
+  public init(): void {
+    if (this._view.settings.connectorsColors[this.index]) {
+      this.$element.css(
+        'background-color',
+        this._view.settings.connectorsColors[this.index],
+      );
+    } else if (this._view.settings.handlersColors[this.index * 2]) {
+      this.$element.css(
+        'background-color',
+        this._view.settings.handlersColors[this.index * 2],
+      );
+    }
+
+    if (this.$parent) this.$parent.prepend(this.$element);
   }
 }
 

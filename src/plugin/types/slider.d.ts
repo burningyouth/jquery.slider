@@ -33,7 +33,7 @@ interface Settings {
   max?: number;
   step?: number;
   isEnabled?: boolean;
-  startValues?: Values;
+  values?: Values;
   marksCount?: number;
   isMarkClickable?: boolean;
   showMarkValue?: boolean;
@@ -54,7 +54,7 @@ interface Settings {
   isTooltipReversed?: boolean;
   isMarkValueReversed?: boolean;
   isVertical?: boolean;
-  precision?: number;
+  decimalPlaces?: number;
   resultTemplate?: string;
   additionalClasses?: AdditionalClasses;
   handlersStateClasses?: HandlersStateClasses;

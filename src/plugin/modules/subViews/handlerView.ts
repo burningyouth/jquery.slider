@@ -20,29 +20,20 @@ class HandlerView extends BasicElementView {
   public connector: ConnectorView | ProgressBarView;
   public tooltip: TooltipView;
 
-  constructor(
-    view: View,
-    index: number = 0,
-    base: BaseView,
-    initCallback: Function = HandlerView.init,
-  ) {
-    super(view, HandlerView.$elementBase.clone(), base.$element, initCallback);
+  constructor(view: View, index: number = 0, base: BaseView) {
+    super(view, HandlerView.$elementBase.clone(), base.$element);
     this.index = index;
 
-    if (view.settings.handlersColors[index]) {
-      this.$element.css(
-        'background-color',
-        view.settings.handlersColors[index],
-      );
-    }
     if (view.settings.handlersStateClasses.active) {
       this.activeClass += ` ${view.settings.handlersStateClasses.active}`;
     }
+
     if (view.settings.handlersStateClasses.focus) {
       this.focusClass += ` ${view.settings.handlersStateClasses.focus}`;
     }
 
     this.update();
+    this.init();
   }
 
   get percentage(): number {
@@ -79,10 +70,16 @@ class HandlerView extends BasicElementView {
     return this._view.values[this.index];
   }
 
-  public static init(that: HandlerView) {
-    super.basicInit(that);
-
+  public init() {
+    const that = this;
     const coordsAxis = that.settings.isVertical ? 'clientY' : 'clientX';
+
+    if (that._view.settings.handlersColors[that.index]) {
+      that.$element.css(
+        'background-color',
+        that._view.settings.handlersColors[that.index],
+      );
+    }
 
     that.$element.on('mousedown', function (e) {
       e.preventDefault();
@@ -119,6 +116,8 @@ class HandlerView extends BasicElementView {
         that._view.trigger('handlerEnd', that);
       });
     });
+
+    super.init();
   }
 
   public update(): HandlerView {

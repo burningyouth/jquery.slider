@@ -9,19 +9,20 @@ class InputView extends BasicElementView {
     view: View,
     input: JQuery<HTMLElement>,
     wrapper: BasicElementView,
-    initCallback: Function = InputView.init,
   ) {
-    super(view, input, wrapper.$element, initCallback);
+    super(view, input, wrapper.$element);
     this.update();
+    this.init();
   }
 
   get sortedValues(): Values {
     return this._view.sortedValues;
   }
 
-  public static init(that: InputView) {
+  public init() {
+    const that = this;
+
     that.$element.remove();
-    that.$element.appendTo(that.$parent);
 
     that.addClass('js-slider__input');
 
@@ -41,6 +42,8 @@ class InputView extends BasicElementView {
       });
       that._view.trigger('inputChange', values);
     });
+
+    that.$element.appendTo(that.$parent);
   }
 
   public update(): InputView {

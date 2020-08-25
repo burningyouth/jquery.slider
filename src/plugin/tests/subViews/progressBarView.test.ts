@@ -11,11 +11,11 @@ const model = new Model({
   min: 0,
   max: 100,
   isReversed: false,
-  startValues: [70],
+  values: [70],
   handlersColors: [],
   connectorsColors: [],
   step: 5,
-  precision: 2,
+  decimalPlaces: 2,
   isVertical: true,
   showProgressBar: true,
   isTooltipReversed: true,
@@ -44,7 +44,7 @@ describe('ConnectorView', () => {
     expect(progressBar.pairedHandler).toBeDefined();
   });
   test('Progress bar is inside of base', () => {
-    expect(progressBar.$element.$parent()).toEqual(view.elements.base.$element);
+    expect(progressBar.$element.parent()).toEqual(view.elements.base.$element);
   });
   test('Style is defined correctly', () => {
     expect(progressBar.$element.attr('style')).toBe('top: 30%;');
