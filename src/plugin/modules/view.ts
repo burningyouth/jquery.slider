@@ -79,6 +79,69 @@ class View {
     return this;
   }
 
+  public init(): View {
+    this.initParent()
+      .initWrapper()
+      .initBaseWrapper()
+      .initBase()
+      .initMarksWrapper()
+      .initResult()
+      .initMarks()
+      .initBounds()
+      .initInput();
+
+    this.settings.startValues.forEach((value, index) => {
+      this.initHandler(value, index);
+    });
+
+    this.initProgressBar();
+
+    this.addClasses(this.settings.additionalClasses);
+
+    this.initEvents();
+
+    if (this._presenter) this._presenter.exec('viewInit');
+
+    return this;
+  }
+
+  public initEvents() {
+    this.on('handlerStart', this.handleHandlerStart);
+    this.on('handlerEnd', this.handleHandlerEnd);
+  }
+
+  public handleHandlerStart(handler: HandlerView): void {
+    if (this.settings.enabled) {
+      handler.active = true;
+      this.elements.handlers.forEach((item: HandlerView) => {
+        if (item.focus) {
+          item.focus = false;
+        }
+      });
+      handler.focus = true;
+    }
+  }
+
+  public handleHandlerEnd(handler: HandlerView): void {
+    handler.active = false;
+  }
+
+  public reset() {
+    if (this.elements.wrapper) {
+      this.elements.wrapper.remove();
+      this.elements = {
+        handlers: [],
+        connectors: [],
+        tooltips: [],
+        bounds: [],
+        marks: [],
+      };
+    }
+    this.init();
+
+    if (this._presenter) this._presenter.exec('viewReset');
+  }
+
   public initParent(): View {
     this.elements.parent = new BasicElementView(this, this.inputParent);
     return this;
@@ -237,62 +300,6 @@ class View {
     );
     this.initTooltip(index).initConnector(index);
     return this;
-  }
-
-  public init(): View {
-    this.initParent()
-      .initWrapper()
-      .initBaseWrapper()
-      .initBase()
-      .initMarksWrapper()
-      .initResult()
-      .initMarks()
-      .initBounds()
-      .initInput();
-
-    this.settings.startValues.forEach((value, index) => {
-      this.initHandler(value, index);
-    });
-
-    this.initProgressBar();
-
-    this.addClasses(this.settings.additionalClasses);
-
-    this.on('handlerStart', function (handler: HandlerView) {
-      if (this.settings.enabled) {
-        handler.active = true;
-        this.elements.handlers.forEach((item: HandlerView) => {
-          if (item.focus) {
-            item.focus = false;
-          }
-        });
-        handler.focus = true;
-      }
-    });
-
-    this.on('handlerEnd', function (handler: HandlerView) {
-      handler.active = false;
-    });
-
-    if (this._presenter) this._presenter.exec('viewInit');
-
-    return this;
-  }
-
-  public reset() {
-    if (this.elements.wrapper) {
-      this.elements.wrapper.remove();
-      this.elements = {
-        handlers: [],
-        connectors: [],
-        tooltips: [],
-        bounds: [],
-        marks: [],
-      };
-    }
-    this.init();
-
-    if (this._presenter) this._presenter.exec('viewReset');
   }
 
   public getPercentage(value: number): number {

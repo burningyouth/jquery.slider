@@ -64,87 +64,101 @@ class Presenter {
   }
 
   public init() {
-    this.initClickEvents();
     this.initBasicEvents();
+    this.initClickEvents();
     this.exec('sliderInit');
+  }
+
+  public initBasicEvents() {
+    this.on('handlerMoved', this.handleHandlerMoved);
+
+    this.on('handlerEnd', this.handleHandlerEnd);
+
+    this.on('settingsEnd', this.handleSettingsEnd);
+
+    this.on('inputChange', this.handleInputChange);
+
+    this.on('valueEnd', this.handleValueEnd);
   }
 
   public initClickEvents() {
     if (this._model.settings.clickableBase && !this._model.settings.showMarks) {
-      this.on('baseClicked', function (coords: number) {
-        const value = this._model.valueFromCoords(coords),
-          percentage = this._view.getPercentage(value),
-          nearestHandler = this._view.nearestHandler(percentage);
-        if (nearestHandler) {
-          nearestHandler.focus = true;
-          this._model.values[nearestHandler.index] = value;
-          this.exec('valueUpdated');
-          this.exec('valueEnd');
-        }
-      });
+      this.on('baseClicked', this.handleBaseClicked);
     }
 
     if (this.settings.clickableMark && this.settings.showMarks) {
-      this.on('markClicked', function (mark: MarkView) {
-        const value = this._model.valueFromPercentage(mark.percentage),
-          nearestHandler = this._view.nearestHandler(mark.percentage);
-        if (nearestHandler) {
-          nearestHandler.focus = true;
-          this._model.values[nearestHandler.index] = value;
-          this.exec('valueUpdated');
-          this.exec('valueEnd', true);
-        }
-      });
+      this.on('markClicked', this.handleMarkClicked);
     }
   }
 
-  public initBasicEvents() {
-    this.on('handlerMoved', function (handler: HandlerView, offset: number) {
-      if (this.settings.enabled) {
-        this._model.values[handler.index] += offset;
+  public handleHandlerMoved(handler: HandlerView, offset: number): void {
+    if (this.settings.enabled) {
+      this._model.values[handler.index] += offset;
+      handler.update();
+      if (this._view.elements.result) {
+        this._view.elements.result.update();
+      }
+      this.exec('valueUpdated');
+      this.exec('sliderUpdated');
+    }
+  }
+
+  public handleHandlerEnd(): void {
+    this._view.elements.input.update();
+    this.exec('sliderEnd');
+  }
+
+  public handleSettingsEnd(): void {
+    this._view.reset();
+    this.reset();
+    this.exec('sliderReset');
+  }
+
+  public handleInputChange(values: Values): void {
+    if (this.settings.enabled) {
+      this._model.values = values.map((value) => {
+        return this._model.getValueRelativeToBounds(
+          this._model.getFormattedValue(value),
+        );
+      });
+      this.exec('valueEnd');
+    }
+  }
+
+  public handleValueEnd(): void {
+    if (this.settings.enabled) {
+      this._view.elements.handlers.forEach((handler: HandlerView) => {
         handler.update();
-        if (this._view.elements.result) {
-          this._view.elements.result.update(this._model.templateValues);
-        }
-        this.exec('valueUpdated');
-        this._view.elements.input.element.trigger('slider.updated');
+      });
+      if (this._view.elements.result) {
+        this._view.elements.result.update();
       }
-    });
+      this.exec('sliderUpdated');
+      this.exec('handlerEnd');
+    }
+  }
 
-    this.on('handlerEnd', function () {
-      this._view.elements.input.update(this._model.sortedValues);
-      this._view.elements.input.element.trigger('slider.end');
-    });
+  public handleBaseClicked(coords: number): void {
+    const value = this._model.valueFromCoords(coords),
+      percentage = this._view.getPercentage(value),
+      nearestHandler = this._view.nearestHandler(percentage);
+    if (nearestHandler) {
+      nearestHandler.focus = true;
+      this._model.values[nearestHandler.index] = value;
+      this.exec('valueUpdated');
+      this.exec('valueEnd');
+    }
+  }
 
-    this.on('settingsEnd', function () {
-      this._view.reset();
-      this.reset();
-      this._view.elements.input.element.trigger('slider.reset');
-    });
-
-    this.on('inputChange', function (values: Values) {
-      if (this.settings.enabled) {
-        this._model.values = values.map((value) => {
-          return this._model.getValueRelativeToBounds(
-            this._model.getFormattedValue(value),
-          );
-        });
-        this.exec('valueEnd');
-      }
-    });
-
-    this.on('valueEnd', function () {
-      if (this.settings.enabled) {
-        this._view.elements.handlers.forEach((handler: HandlerView) => {
-          handler.update();
-        });
-        if (this._view.elements.result) {
-          this._view.elements.result.update(this._model.templateValues);
-        }
-        this._view.elements.input.element.trigger('slider.updated');
-        this.exec('handlerEnd');
-      }
-    });
+  public handleMarkClicked(mark: MarkView): void {
+    const value = this._model.valueFromPercentage(mark.percentage),
+      nearestHandler = this._view.nearestHandler(mark.percentage);
+    if (nearestHandler) {
+      nearestHandler.focus = true;
+      this._model.values[nearestHandler.index] = value;
+      this.exec('valueUpdated');
+      this.exec('valueEnd', true);
+    }
   }
 
   public reset() {

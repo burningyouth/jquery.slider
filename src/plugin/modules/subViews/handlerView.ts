@@ -78,9 +78,7 @@ class HandlerView extends BasicElementView {
   public static init(that: HandlerView) {
     super.basicInit(that);
 
-    const coordsAxis = that.settings.vertical ? 'clientY' : 'clientX',
-      elemCoordsAxis = that.settings.vertical ? 'y' : 'x',
-      elemWidthOrHeight = that.settings.vertical ? 'height' : 'width';
+    const coordsAxis = that.settings.vertical ? 'clientY' : 'clientX';
 
     that.element.on('mousedown', function (e) {
       e.preventDefault();
