@@ -4,7 +4,7 @@ html{font-size:16px;font-family:Tahoma,Geneva,Verdana,sans-serif;color:#585858}.
 .checkbox__label{display:block;line-height:24px;margin-top:1px;margin-bottom:1px;cursor:pointer}
 .checkbox{display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex}
 .dropdown{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;color:inherit!important;text-decoration:none!important}.dropdown:after{display:inline-block;content:"▲";font-size:.6rem;margin-left:5px}.dropdown.collapsed:after{-webkit-transform:rotate(-180deg);-ms-transform:rotate(-180deg);transform:rotate(-180deg)}
-.slider-wrapper{border-radius:5px;background-color:rgba(0,0,0,.015);overflow:hidden}
+.slider-wrapper{border-radius:5px;background-color:rgba(0,0,0,.015);overflow:hidden;max-width:1000px;margin-left:auto;margin-right:auto}
 .slider__settings{position:absolute;bottom:20px;right:20px;opacity:0;margin-left:15px;-webkit-transition:opacity .3s ease;-o-transition:opacity .3s ease;transition:opacity .3s ease}
 .slider.slider_vertical{padding-right:60px}.slider.slider_vertical .slider__settings{top:20px;bottom:auto}.slider.slider_vertical:last-of-type{padding-left:60px;padding-right:20px}.slider.slider_vertical:last-of-type .slider__settings{left:0;right:auto}
 .slider{position:relative;padding:40px 20px 20px;background-color:rgba(0,0,0,0);-webkit-transition:background-color .3s ease;-o-transition:background-color .3s ease;transition:background-color .3s ease}.slider:hover{background-color:hsla(0,0%,100%,.75)}.slider:hover .slider__settings{opacity:1}
