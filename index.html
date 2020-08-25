@@ -31,7 +31,7 @@
                 <input autofocus class="form-control" name="startValues" type="text" value="0 65 180"/>
                 <small class="form-text text-muted">
                   1. Put a space between values<br/>2. Values must be in range
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          [min; max]<br/>3. Values must be numbers
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                [min; max]<br/>3. Values must be numbers
                 </small>
               </div>
               <div class="form-group" data-tooltip="How much marks to draw">
@@ -496,14 +496,16 @@
         }
 
         colorChange();
-        $('#slider3').on('slider.end slider.reset', () => colorChange());
-        $('#slider4').on('slider.end slider.reset', () => colorChange());
+        colorSlider.on('sliderEnd sliderReset', () => colorChange());
+        opacitySlider.on('sliderEnd sliderReset', () => colorChange());
+
       });
     </script>
   </body>
 </html> 
   </body>
 </html> 
+  </body>
   </body>
   </body>
 </html>
