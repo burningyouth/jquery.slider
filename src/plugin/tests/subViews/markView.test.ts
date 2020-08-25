@@ -47,17 +47,4 @@ describe('MarkView', () => {
   test('Base has clickable class', () => {
     expect(mark.element.hasClass(mark.clickableClass)).toBe(true);
   });
-  test('markClicked event is working', () => {
-    let counter = 0;
-    view.on('markClicked', () => {
-      counter++;
-    });
-    presenter.on('markClicked', () => {
-      counter++;
-    });
-    mark.element.trigger('click');
-    expect(counter).toBe(2);
-    mark.element.trigger('touch');
-    expect(counter).toBe(4);
-  });
 });

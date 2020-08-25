@@ -41,44 +41,6 @@ class HandlerView extends BasicElementView {
     this.update();
   }
 
-  public static init(that: HandlerView) {
-    super.basicInit(that);
-
-    const coordsAxis = that.settings.vertical ? 'clientY' : 'clientX';
-
-    that.element.on('mousedown', function (e) {
-      e.preventDefault();
-      if (e.which === 1) {
-        that._view.trigger('handlerStart', that);
-        $(window).on('mousemove', function (e2) {
-          that._view.trigger('handlerMoved', that, e2[coordsAxis]);
-        });
-        $(window).on('mouseup', function (e2) {
-          if (e2.which == 1) {
-            $(this).off('mousemove mouseup');
-            that._view.trigger('handlerEnd', that);
-          }
-        });
-      }
-    });
-
-    that.element.on('touchstart', function (e) {
-      e.preventDefault();
-      that._view.trigger('handlerStart', that);
-      $(window).on('touchmove', function (e2) {
-        that._view.trigger('handlerMoved', that, e2.touches[0][coordsAxis]);
-      });
-      $(window).on('touchend', function (e2) {
-        $(this).off('touchmove touchend');
-        that._view.trigger('handlerEnd', that);
-      });
-    });
-  }
-
-  get value(): number {
-    return this._view.values[this.index];
-  }
-
   get percentage(): number {
     return this._view.getPercentage(this.value);
   }
@@ -107,6 +69,54 @@ class HandlerView extends BasicElementView {
 
   get focus(): boolean {
     return this._focus;
+  }
+
+  get value(): number {
+    return this._view.values[this.index];
+  }
+
+  public static init(that: HandlerView) {
+    super.basicInit(that);
+
+    const coordsAxis = that.settings.vertical ? 'clientY' : 'clientX',
+      elemCoordsAxis = that.settings.vertical ? 'y' : 'x',
+      elemWidthOrHeight = that.settings.vertical ? 'height' : 'width';
+
+    that.element.on('mousedown', function (e) {
+      e.preventDefault();
+      if (e.which === 1) {
+        that._view.trigger('handlerStart', that);
+        $(window).on('mousemove', function (e2) {
+          const coords = e2[coordsAxis];
+          const offset = that._view.valueFromCoords(coords) - that.value;
+          if (offset !== 0) {
+            that._view.trigger('handlerMoved', that, offset);
+          }
+        });
+        $(window).on('mouseup', function (e2) {
+          if (e2.which == 1) {
+            $(this).off('mousemove mouseup');
+            that._view.trigger('handlerEnd', that);
+          }
+        });
+      }
+    });
+
+    that.element.on('touchstart', function (e) {
+      e.preventDefault();
+      that._view.trigger('handlerStart', that);
+      $(window).on('touchmove', function (e2) {
+        const coords = e2.touches[0][coordsAxis];
+        const offset = that._view.valueFromCoords(coords) - that.value;
+        if (offset !== 0) {
+          that._view.trigger('handlerMoved', that, offset);
+        }
+      });
+      $(window).on('touchend', function (e2) {
+        $(this).off('touchmove touchend');
+        that._view.trigger('handlerEnd', that);
+      });
+    });
   }
 
   public update(): HandlerView {

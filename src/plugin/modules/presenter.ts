@@ -22,7 +22,17 @@ class Presenter {
     this._model.presenter = this;
     this._view = view;
     this._view.presenter = this;
+
+    model.valueFromPercentage = model.valueFromPercentage.bind(model);
+    model.valueFromCoords = model.valueFromCoords.bind(model);
+
+    model.isSliderReversedOrVertical = model.isSliderReversedOrVertical.bind(
+      model,
+    );
+
     view.valueFromPercentage = model.valueFromPercentage;
+    view.valueFromCoords = model.valueFromCoords;
+    view.isSliderReversedOrVertical = model.isSliderReversedOrVertical;
   }
 
   get base(): BaseView {
@@ -89,11 +99,10 @@ class Presenter {
   }
 
   public initBasicEvents() {
-    this.on('handlerMoved', function (handler: HandlerView, coords: number) {
+    this.on('handlerMoved', function (handler: HandlerView, offset: number) {
       if (this.settings.enabled) {
-        const value = this._model.valueFromCoords(coords);
+        this._model.values[handler.index] += offset;
         handler.update();
-        this._model.values[handler.index] = value;
         if (this._view.elements.result) {
           this._view.elements.result.update(this._model.templateValues);
         }

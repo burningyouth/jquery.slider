@@ -44,17 +44,4 @@ describe('BaseView', () => {
   test('Base has clickable class', () => {
     expect(baseView.element.hasClass(baseView.clickableClass)).toBe(true);
   });
-  test('baseClicked event is working', () => {
-    let counter = 0;
-    view.on('baseClicked', () => {
-      counter++;
-    });
-    presenter.on('baseClicked', () => {
-      counter++;
-    });
-    baseView.element.trigger('click');
-    expect(counter).toBe(2);
-    baseView.element.trigger('touch');
-    expect(counter).toBe(4);
-  });
 });

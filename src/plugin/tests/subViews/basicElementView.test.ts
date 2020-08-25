@@ -52,13 +52,11 @@ describe('BasicElementView', () => {
       basicElementView.parent.find(basicElementView.element).length,
     ).toBeGreaterThanOrEqual(1);
   });
-  test('addClass(), removeClass() and css() is working correctly', () => {
+  test('addClass() and removeClass() is working correctly', () => {
     basicElementView.addClass('test');
     expect(basicElementView.element.hasClass('test')).toBeTruthy();
     basicElementView.removeClass('test');
     expect(basicElementView.element.hasClass('test')).toBeFalsy();
-    basicElementView.css('color', 'red');
-    expect(basicElementView.css('color')).toBe('red');
   });
   test('remove() is working correctly', () => {
     basicElementView.remove();

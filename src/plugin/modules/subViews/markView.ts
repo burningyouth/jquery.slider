@@ -16,14 +16,13 @@ class MarkView extends BasicElementView {
   constructor(
     view: View,
     index: number,
-    value: number,
     base: BasicElementView,
     initCallback: Function = MarkView.init,
   ) {
     super(view, MarkView.elementBase.clone(), base.element, initCallback);
     this.index = index;
     this.percentage = (this.index / this.settings.marksCount) * 100;
-    this.value = value;
+    this.value = this._view.valueFromPercentage(this.percentage);
 
     if (view.settings.showMarkValue) {
       this.valueElement = MarkView.valueBase.clone();

@@ -14,16 +14,22 @@ class InputView extends BasicElementView {
     this.update();
   }
 
+  get sortedValues(): Values {
+    return this._view.sortedValues;
+  }
+
   public static init(that: InputView) {
     that.element.remove();
     that.element.appendTo(that.parent);
 
     that.addClass('js-slider__input');
+
     if (that.settings.showInput) {
-      that.addClass('js-slider__input_show');
+      that.addClass('js-slider__input_shown');
     } else {
-      that.removeClass('js-slider__input_show');
+      that.removeClass('js-slider__input_shown');
     }
+
     if (!that.settings.enabled) {
       that.element.attr('disabled', 'true');
     }
@@ -34,10 +40,6 @@ class InputView extends BasicElementView {
       });
       that._view.trigger('inputChange', values);
     });
-  }
-
-  get sortedValues(): Values {
-    return this._view.sortedValues;
   }
 
   public update(): InputView {

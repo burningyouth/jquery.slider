@@ -116,7 +116,7 @@ class Model {
 
   set values(newValues: Values) {
     if (Array.isArray(newValues)) {
-      if (this.checkValue(newValues)) {
+      if (this.isValueInBounds(newValues)) {
         this._values = newValues;
         this.trigger('valueUpdated');
         this.trigger('valueEnd');
@@ -126,7 +126,7 @@ class Model {
 
   set settings(newSettings: Settings) {
     this._settings = $.extend(this._settings, newSettings);
-    if (this.checkValue(this._settings.startValues)) {
+    if (this.isValueInBounds(this._settings.startValues)) {
       this._values = this._settings.startValues;
     } else {
       throw new RangeError('Start value is invalid (out of range)!');
@@ -162,16 +162,23 @@ class Model {
     return tmp;
   }
 
+  public isSliderReversedOrVertical(): boolean {
+    //метод копируется во view
+    const settings = this.settings;
+    return (
+      (settings.reverse && !settings.vertical) ||
+      (!settings.reverse && settings.vertical)
+    );
+  }
+
   public valueFromPercentage(percentage: number): number {
+    //метод копируется во view
     const settings = this.settings;
 
     let value = percentage / 100;
     value *= settings.max - settings.min;
 
-    if (
-      (settings.reverse && !settings.vertical) ||
-      (!settings.reverse && settings.vertical)
-    ) {
+    if (this.isSliderReversedOrVertical()) {
       if (settings.max >= 0 && settings.min >= 0) {
         value = settings.max - value;
       } else if (settings.max < 0 && settings.min < 0) {
@@ -209,10 +216,7 @@ class Model {
     value = (coords - startCoords) / devider;
     value *= settings.max - settings.min;
 
-    if (
-      (settings.reverse && !settings.vertical) ||
-      (!settings.reverse && settings.vertical)
-    ) {
+    if (this.isSliderReversedOrVertical()) {
       if (settings.max >= 0 && settings.min >= 0) {
         value = settings.max - value;
       } else if (settings.max < 0 && settings.min < 0) {
@@ -228,12 +232,12 @@ class Model {
     return this.getValueRelativeToBounds(value);
   }
 
-  public checkValue(value: number | Values): boolean {
+  public isValueInBounds(value: number | Values): boolean {
     //проверка значений на попадание в диапазон
     if (Array.isArray(value)) {
       let result = true;
       value.forEach((item) => {
-        if (!this.checkValue(item)) result = false;
+        if (!this.isValueInBounds(item)) result = false;
       });
       return result;
     } else {

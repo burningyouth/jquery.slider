@@ -20,7 +20,11 @@ class View {
   public exec: Function;
   public on: Function;
   public off: Function;
+
+  //cкопированные с модели методы
   public valueFromPercentage: Function;
+  public isSliderReversedOrVertical: Function;
+  public valueFromCoords: Function;
 
   public input: JQuery<HTMLElement>; //поле, в которое записывается значения ползунков
   public inputParent: JQuery<HTMLElement>;
@@ -105,7 +109,7 @@ class View {
       'touchstart',
       (e) => {
         e.preventDefault();
-      }, //this is for prevent scrolling
+      }, //this is for scroll preventing
     );
     return this;
   }
@@ -130,19 +134,25 @@ class View {
     if (this.elements.marksWrapper) {
       for (let i = 0; i <= this.settings.marksCount; i++) {
         this.elements.marks.push(
-          new MarkView(this, i, this.values[i], this.elements.marksWrapper),
+          new MarkView(this, i, this.elements.marksWrapper),
         );
       }
     }
     return this;
   }
 
-  public initBounds(): View {
+  public isBoundsOrMarksWithoutValuesShown() {
     const settings = this.settings;
-    if (
+
+    return (
       (settings.showBounds && !settings.showMarks) ||
       (settings.showMarks && settings.showBounds && !settings.showMarkValue)
-    ) {
+    );
+  }
+
+  public initBounds(): View {
+    const settings = this.settings;
+    if (this.isBoundsOrMarksWithoutValuesShown()) {
       this.elements.bounds.push(
         new BoundView(this, settings.min, this.elements.baseWrapper.element),
       );
@@ -150,10 +160,7 @@ class View {
         new BoundView(this, settings.max, this.elements.baseWrapper.element),
       );
       const parent = this.elements.bounds[0].parent;
-      if (
-        (!settings.reverse && settings.vertical) ||
-        (settings.reverse && !settings.vertical)
-      ) {
+      if (this.isSliderReversedOrVertical()) {
         this.elements.bounds[1].element.prependTo(parent);
         this.elements.bounds[0].element.appendTo(parent);
       } else {
@@ -292,10 +299,7 @@ class View {
     //возвращает процентное соотношение value от min, max
     const settings = this.settings;
     let percentage: number;
-    if (
-      (!settings.reverse && settings.vertical) ||
-      (settings.reverse && !settings.vertical)
-    ) {
+    if (this.isSliderReversedOrVertical()) {
       percentage =
         ((settings.max - value) / (settings.max - settings.min)) * 100;
     } else {

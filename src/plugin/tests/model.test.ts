@@ -38,13 +38,13 @@ const base = new BaseView(
 );
 
 describe('Model', () => {
-  test('checkValue() is working fine', () => {
+  test('isValueInBounds() is working fine', () => {
     model.settings.min = 0;
     model.settings.max = 100;
-    expect(model.checkValue(152)).toBe(false);
-    expect(model.checkValue(100)).toBe(true);
-    expect(model.checkValue(68)).toBe(true);
-    expect(model.checkValue(0)).toBe(true);
+    expect(model.isValueInBounds(152)).toBe(false);
+    expect(model.isValueInBounds(100)).toBe(true);
+    expect(model.isValueInBounds(68)).toBe(true);
+    expect(model.isValueInBounds(0)).toBe(true);
   });
 
   test("Values doesn't sort if settings is false", () => {

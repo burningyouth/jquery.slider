@@ -51,7 +51,6 @@ describe('Presenter', () => {
   test('View events is working fine', () => {
     let handler1 = view.elements.handlers[0],
       handler2 = view.elements.handlers[1],
-      base = view.elements.base,
       input = view.input,
       inputValBefore = input.val(),
       modelValueBefore = model.values[0],
@@ -70,12 +69,6 @@ describe('Presenter', () => {
     modelValueBefore = model.values[1];
     handlerValueBefore = handler2.value;
     handlerPercentageBefore = handler2.percentage;
-    view.trigger('baseClicked', base, -10);
-
-    expect(handlerValueBefore > handler2.value).toBeTruthy();
-    expect(modelValueBefore > model.values[1]).toBeTruthy();
-    expect(handlerPercentageBefore > handler2.percentage).toBeTruthy();
-    expect(inputValBefore != input.val()).toBeTruthy();
   });
 
   test('Changing the model changes the view', () => {

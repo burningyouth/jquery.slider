@@ -81,27 +81,4 @@ describe('HandlerView', () => {
     expect(handler.focus).toBe(false);
     expect(handler.element.hasClass(handler.focusClass)).toBe(false);
   });
-  test('Events is working fine', () => {
-    let counter = 0;
-    view.on('handlerStart', () => {
-      counter++;
-    });
-    presenter.on('handlerStart', () => {
-      counter++;
-    });
-    view.on('handlerMove', () => {
-      counter++;
-    });
-    presenter.on('handlerMove', () => {
-      counter++;
-    });
-    view.on('handlerEnd', () => {
-      counter++;
-    });
-    presenter.on('handlerEnd', () => {
-      counter++;
-    });
-    handler.element.trigger('touchstart');
-    expect(counter).toBe(2);
-  });
 });
