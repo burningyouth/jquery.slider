@@ -103,7 +103,7 @@
                   </div>
                 </div>
                 <div class="col-6">
-                  <div class="form-group" data-tooltip="How many decaminals to show">
+                  <div class="form-group" data-tooltip="How many decimals to show">
                     <label for="precision">
                       Precision
                     </label>
@@ -199,8 +199,8 @@
 
                 <div class="col-6">
                   <div class="toggle" data-tooltip="Sort in descending order">
-                    <input class="toggle__input" name="sortReverse" type="checkbox"/>
-                    <label class="toggle__label" for="sortReverse">Sort reverse
+                    <input class="toggle__input" name="sortReversed" type="checkbox"/>
+                    <label class="toggle__label" for="sortReversed">Sort reversed
                     </label>
                   </div>
                 </div>
@@ -213,25 +213,25 @@
               <div class="form-group row collapse" id="orientation">
                 <div class="col-6 d-flex flex-column">
                   <div class="toggle mb-2" data-tooltip="Whether or not the slider should be reversed">
-                    <input class="toggle__input" name="reverse" type="checkbox"/>
-                    <label class="toggle__label" for="reverse">Reverse
+                    <input class="toggle__input" name="isReversed" type="checkbox"/>
+                    <label class="toggle__label" for="isReversed">Is reversed
                     </label>
                   </div>
-                  <div class="toggle" data-tooltip="Makes slider vertical">
-                    <input class="toggle__input" name="vertical" type="checkbox"/>
-                    <label class="toggle__label" for="vertical">Vertical
+                  <div class="toggle" data-tooltip="Makes slider isVertical">
+                    <input class="toggle__input" name="isVertical" type="checkbox"/>
+                    <label class="toggle__label" for="isVertical">Is vertical
                     </label>
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="toggle" data-tooltip="Tooltip appears at the bottom">
-                    <input class="toggle__input" name="tooltipReverse" type="checkbox"/>
-                    <label class="toggle__label" for="tooltipReverse">Tooltip reverse
+                    <input class="toggle__input" name="isTooltipReversed" type="checkbox"/>
+                    <label class="toggle__label" for="isTooltipReversed">Is tooltip reversed
                     </label>
                   </div>
                   <div class="toggle">
-                    <input class="toggle__input" name="markValueReverse" type="checkbox"/>
-                    <label class="toggle__label" for="markValueReverse">Mark value reverse
+                    <input class="toggle__input" name="isMarkValueReversed" type="checkbox"/>
+                    <label class="toggle__label" for="isMarkValueReversed">Is mark value reversed
                     </label>
                   </div>
                 </div>
@@ -246,20 +246,20 @@
               <div class="form-group row collapse" id="misc">
                 <div class="col-6">
                   <div class="toggle mb-2" data-tooltip="Whether or not clicking on base will move nearest handler">
-                    <input checked class="toggle__input" name="clickableBase" type="checkbox"/>
-                    <label class="toggle__label" for="clickableBase">Clickable base
+                    <input checked class="toggle__input" name="isBaseClickable" type="checkbox"/>
+                    <label class="toggle__label" for="isBaseClickable">Clickable base
                     </label>
                   </div>
-                  <div class="toggle" data-tooltip="Whether or not the slider is enabled">
-                    <input checked class="toggle__input" name="enabled" type="checkbox"/>
-                    <label class="toggle__label" for="enabled">Enabled
+                  <div class="toggle" data-tooltip="Whether or not the slider is isEnabled">
+                    <input checked class="toggle__input" name="isEnabled" type="checkbox"/>
+                    <label class="toggle__label" for="isEnabled">Is enabled
                     </label>
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="toggle">
-                    <input class="toggle__input" name="clickableMark" type="checkbox"/>
-                    <label class="toggle__label" for="clickableMark">Clickable mark
+                    <input class="toggle__input" name="isMarkClickable" type="checkbox"/>
+                    <label class="toggle__label" for="isMarkClickable">Clickable mark
                     </label>
                   </div>
                 </div>
@@ -399,10 +399,10 @@
               min: 0,
               max: 255,
               step: 0,
-              vertical: true,
+              isVertical: true,
               startValues: [255, 200, 150],
               showTooltip: true,
-              tooltipReverse: false,
+              isTooltipReversed: false,
               showResult: false,
               handlersColors: ['#FC6A6A', '#8CFC6A', '#6AB2FC'],
             }),
@@ -410,12 +410,12 @@
               min: 0,
               max: 100,
               step: 0,
-              vertical: true,
+              isVertical: true,
               showProgressBar: true,
               startValues: [60],
               showTooltip: true,
               showBounds: true,
-              tooltipReverse: true,
+              isTooltipReversed: true,
               showResult: false,
               connectorsColors: ['#B5FEA4'],
             }),
