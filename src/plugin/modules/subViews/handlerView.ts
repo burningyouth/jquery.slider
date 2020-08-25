@@ -8,7 +8,7 @@ import TooltipView from './tooltipView';
 import ProgressBarView from './progressBarView';
 
 class HandlerView extends BasicElementView {
-  public static elementBase = $('<span class="js-slider__handler"></span>');
+  public static $elementBase = $('<span class="js-slider__handler"></span>');
 
   public activeClass = 'js-slider__handler_active';
   public focusClass = 'js-slider__handler_focus';
@@ -26,11 +26,14 @@ class HandlerView extends BasicElementView {
     base: BaseView,
     initCallback: Function = HandlerView.init,
   ) {
-    super(view, HandlerView.elementBase.clone(), base.element, initCallback);
+    super(view, HandlerView.$elementBase.clone(), base.$element, initCallback);
     this.index = index;
 
     if (view.settings.handlersColors[index]) {
-      this.element.css('background-color', view.settings.handlersColors[index]);
+      this.$element.css(
+        'background-color',
+        view.settings.handlersColors[index],
+      );
     }
     if (view.settings.handlersStateClasses.active) {
       this.activeClass += ` ${view.settings.handlersStateClasses.active}`;
@@ -81,7 +84,7 @@ class HandlerView extends BasicElementView {
 
     const coordsAxis = that.settings.isVertical ? 'clientY' : 'clientX';
 
-    that.element.on('mousedown', function (e) {
+    that.$element.on('mousedown', function (e) {
       e.preventDefault();
       if (e.which === 1) {
         that._view.trigger('handlerStart', that);
@@ -101,7 +104,7 @@ class HandlerView extends BasicElementView {
       }
     });
 
-    that.element.on('touchstart', function (e) {
+    that.$element.on('touchstart', function (e) {
       e.preventDefault();
       that._view.trigger('handlerStart', that);
       $(window).on('touchmove', function (e2) {
@@ -120,9 +123,9 @@ class HandlerView extends BasicElementView {
 
   public update(): HandlerView {
     if (this.settings.isVertical) {
-      this.element.css('top', `calc(${this.percentage}% - 7.5px)`);
+      this.$element.css('top', `calc(${this.percentage}% - 7.5px)`);
     } else {
-      this.element.css('left', `calc(${this.percentage}% - 7.5px)`);
+      this.$element.css('left', `calc(${this.percentage}% - 7.5px)`);
     }
 
     this._view.trigger('handlerUpdated', this);

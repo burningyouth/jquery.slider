@@ -10,7 +10,7 @@ import BaseView from '../modules/subViews/baseView';
 import MarkView from '../modules/subViews/markView';
 
 interface AdditionalClasses {
-  parent?: string;
+  $parent?: string;
   wrapper?: string;
   input?: string;
   bounds?: string;
@@ -63,7 +63,7 @@ interface Settings {
 type Values = number[];
 
 interface Elements {
-  parent?: BasicElementView;
+  $parent?: BasicElementView;
   input?: InputView;
   wrapper?: BasicElementView;
   baseWrapper?: BasicElementView;

@@ -47,7 +47,7 @@ describe('ConnectorView', () => {
     expect(connector.pairedHandlers.length).toBe(2);
   });
   test('Connector is inside of base', () => {
-    expect(connector.element.parent()).toEqual(view.elements.base.element);
+    expect(connector.$element.$parent()).toEqual(view.elements.base.$element);
   });
   test('Percentage is defined correctly', () => {
     expect(connector.percentage).toBeDefined();

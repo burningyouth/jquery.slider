@@ -45,6 +45,6 @@ presenter.init();
 describe('MarkView', () => {
   const mark = view.elements.marks[0];
   test('Base has clickable class', () => {
-    expect(mark.element.hasClass(mark.clickableClass)).toBe(true);
+    expect(mark.$element.hasClass(mark.clickableClass)).toBe(true);
   });
 });

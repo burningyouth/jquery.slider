@@ -4,10 +4,15 @@ import View from '../view';
 import BasicElementView from './basicElementView';
 
 class ResultView extends BasicElementView {
-  public static elementBase = $('<div class="js-slider__result">undef.</div>');
+  public static $elementBase = $('<div class="js-slider__result">undef.</div>');
 
   constructor(view: View, wrapper: BasicElementView, initCallback?: Function) {
-    super(view, ResultView.elementBase.clone(), wrapper.element, initCallback);
+    super(
+      view,
+      ResultView.$elementBase.clone(),
+      wrapper.$element,
+      initCallback,
+    );
     this.update();
   }
 
@@ -16,7 +21,7 @@ class ResultView extends BasicElementView {
   }
 
   public update(): ResultView {
-    this.element.text(this.value);
+    this.$element.text(this.value);
     this._view.trigger('resultUpdated', this);
 
     return this;

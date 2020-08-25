@@ -6,7 +6,7 @@ import HandlerView from './handlerView';
 import View from '../view';
 
 class ConnectorView extends BasicElementView {
-  public static elementBase = $('<span class="js-slider__connector"></span>');
+  public static $elementBase = $('<span class="js-slider__connector"></span>');
   public index: number;
   public pairedHandlers: HandlerView[];
   public percentage: number[];
@@ -18,17 +18,22 @@ class ConnectorView extends BasicElementView {
     base: BaseView,
     initCallback: Function = ConnectorView.init,
   ) {
-    super(view, ConnectorView.elementBase.clone(), base.element, initCallback);
+    super(
+      view,
+      ConnectorView.$elementBase.clone(),
+      base.$element,
+      initCallback,
+    );
     this.index = index;
     this.pairedHandlers = pairedHandlers;
 
     if (view.settings.connectorsColors[index]) {
-      this.element.css(
+      this.$element.css(
         'background-color',
         view.settings.connectorsColors[index],
       );
     } else if (view.settings.handlersColors[index * 2]) {
-      this.element.css(
+      this.$element.css(
         'background-color',
         view.settings.handlersColors[index * 2],
       );
@@ -48,20 +53,20 @@ class ConnectorView extends BasicElementView {
     }
 
     if (this.settings.isVertical) {
-      this.element.css('top', `${this.percentage[0]}%`);
-      this.element.css('bottom', `${this.percentage[1]}%`);
+      this.$element.css('top', `${this.percentage[0]}%`);
+      this.$element.css('bottom', `${this.percentage[1]}%`);
     } else {
-      this.element.css('left', `${this.percentage[0]}%`);
-      this.element.css('right', `${this.percentage[1]}%`);
+      this.$element.css('left', `${this.percentage[0]}%`);
+      this.$element.css('right', `${this.percentage[1]}%`);
     }
 
-    this.element.trigger('connectorUpdated', this);
+    this.$element.trigger('connectorUpdated', this);
 
     return this;
   }
 
   public static init(that: ConnectorView): void {
-    if (that.parent) that.parent.prepend(that.element);
+    if (that.$parent) that.$parent.prepend(that.$element);
   }
 }
 

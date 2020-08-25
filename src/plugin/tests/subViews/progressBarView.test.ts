@@ -44,13 +44,15 @@ describe('ConnectorView', () => {
     expect(progressBar.pairedHandler).toBeDefined();
   });
   test('Progress bar is inside of base', () => {
-    expect(progressBar.element.parent()).toEqual(view.elements.base.element);
+    expect(progressBar.$element.$parent()).toEqual(view.elements.base.$element);
   });
   test('Style is defined correctly', () => {
-    expect(progressBar.element.attr('style')).toBe('top: 30%;');
+    expect(progressBar.$element.attr('style')).toBe('top: 30%;');
     model.settings = {
       isVertical: false,
     };
-    expect(view.elements.progressBar.element.attr('style')).toBe('right: 30%;');
+    expect(view.elements.progressBar.$element.attr('style')).toBe(
+      'right: 30%;',
+    );
   });
 });

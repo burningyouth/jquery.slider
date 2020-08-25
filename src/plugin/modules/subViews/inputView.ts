@@ -11,7 +11,7 @@ class InputView extends BasicElementView {
     wrapper: BasicElementView,
     initCallback: Function = InputView.init,
   ) {
-    super(view, input, wrapper.element, initCallback);
+    super(view, input, wrapper.$element, initCallback);
     this.update();
   }
 
@@ -20,8 +20,8 @@ class InputView extends BasicElementView {
   }
 
   public static init(that: InputView) {
-    that.element.remove();
-    that.element.appendTo(that.parent);
+    that.$element.remove();
+    that.$element.appendTo(that.$parent);
 
     that.addClass('js-slider__input');
 
@@ -32,11 +32,11 @@ class InputView extends BasicElementView {
     }
 
     if (!that.settings.isEnabled) {
-      that.element.attr('disabled', 'true');
+      that.$element.attr('disabled', 'true');
     }
 
-    that.element.on('change', function (e) {
-      const values = (that.element.val() as string).split(',').map((item) => {
+    that.$element.on('change', function (e) {
+      const values = (that.$element.val() as string).split(',').map((item) => {
         return +item;
       });
       that._view.trigger('inputChange', values);
@@ -45,9 +45,9 @@ class InputView extends BasicElementView {
 
   public update(): InputView {
     if (this.sortedValues.length > 1) {
-      this.element.val(this.sortedValues.toString());
+      this.$element.val(this.sortedValues.toString());
     } else {
-      this.element.val(this.sortedValues[0]);
+      this.$element.val(this.sortedValues[0]);
     }
     return this;
   }

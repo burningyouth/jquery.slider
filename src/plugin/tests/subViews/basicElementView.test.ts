@@ -43,25 +43,25 @@ presenter.init();
 const basicElementView = view.elements.baseWrapper;
 
 describe('BasicElementView', () => {
-  test('Parent and element is defined', () => {
-    expect(basicElementView.parent).toBeDefined();
-    expect(basicElementView.element).toBeDefined();
+  test('Parent and $element is defined', () => {
+    expect(basicElementView.$parent).toBeDefined();
+    expect(basicElementView.$element).toBeDefined();
   });
-  test('Element is inside of parent', () => {
+  test('Element is inside of $parent', () => {
     expect(
-      basicElementView.parent.find(basicElementView.element).length,
+      basicElementView.$parent.find(basicElementView.$element).length,
     ).toBeGreaterThanOrEqual(1);
   });
   test('addClass() and removeClass() is working correctly', () => {
     basicElementView.addClass('test');
-    expect(basicElementView.element.hasClass('test')).toBeTruthy();
+    expect(basicElementView.$element.hasClass('test')).toBeTruthy();
     basicElementView.removeClass('test');
-    expect(basicElementView.element.hasClass('test')).toBeFalsy();
+    expect(basicElementView.$element.hasClass('test')).toBeFalsy();
   });
   test('remove() is working correctly', () => {
     basicElementView.remove();
-    expect(basicElementView.parent.find(basicElementView.element).length).toBe(
-      0,
-    );
+    expect(
+      basicElementView.$parent.find(basicElementView.$element).length,
+    ).toBe(0);
   });
 });

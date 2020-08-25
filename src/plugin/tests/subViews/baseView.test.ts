@@ -42,6 +42,6 @@ presenter.init();
 describe('BaseView', () => {
   const baseView = view.elements.base;
   test('Base has clickable class', () => {
-    expect(baseView.element.hasClass(baseView.clickableClass)).toBe(true);
+    expect(baseView.$element.hasClass(baseView.clickableClass)).toBe(true);
   });
 });

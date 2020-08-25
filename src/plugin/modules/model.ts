@@ -207,11 +207,11 @@ class Model {
 
     let value: number, devider: number, startCoords: number;
     if (settings.isVertical) {
-      devider = baseView.element.height();
-      startCoords = baseView.element[0].getBoundingClientRect().top;
+      devider = baseView.$element.height();
+      startCoords = baseView.$element[0].getBoundingClientRect().top;
     } else {
-      devider = baseView.element.width();
-      startCoords = baseView.element[0].getBoundingClientRect().left;
+      devider = baseView.$element.width();
+      startCoords = baseView.$element[0].getBoundingClientRect().left;
     }
 
     value = (coords - startCoords) / devider;

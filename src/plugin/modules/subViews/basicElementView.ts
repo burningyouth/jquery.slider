@@ -12,17 +12,17 @@ class BasicElementView {
   public on: Function;
   public off: Function;
 
-  public parent: JQuery<HTMLElement>;
-  public element: JQuery<HTMLElement>;
+  public $parent: JQuery<HTMLElement>;
+  public $element: JQuery<HTMLElement>;
 
   constructor(
     view: View,
-    element: JQuery<HTMLElement>,
-    parent: JQuery<HTMLElement> | undefined = undefined,
+    $element: JQuery<HTMLElement>,
+    $parent: JQuery<HTMLElement> | undefined = undefined,
     initCallback: Function = BasicElementView.basicInit,
   ) {
-    this.element = element;
-    this.parent = parent;
+    this.$element = $element;
+    this.$parent = $parent;
     this._view = view;
     initCallback(this);
   }
@@ -32,21 +32,21 @@ class BasicElementView {
   }
 
   public removeClass(className: string): any {
-    this.element.removeClass(className);
+    this.$element.removeClass(className);
     return this;
   }
 
   public addClass(className: string): any {
-    this.element.addClass(className);
+    this.$element.addClass(className);
     return this;
   }
 
   public remove(): void {
-    this.element.remove();
+    this.$element.remove();
   }
 
   public static basicInit(that: BasicElementView): void {
-    if (that.parent) that.parent.append(that.element);
+    if (that.$parent) that.$parent.append(that.$element);
   }
 }
 

@@ -27,8 +27,9 @@ class View {
   public isSliderReversedOrVertical: Function;
   public getValueFromCoords: Function;
 
-  public input: JQuery<HTMLElement>; //поле, в которое записывается значения ползунков
-  public inputParent: JQuery<HTMLElement>;
+  public $input: JQuery<HTMLElement>; //поле, в которое записывается значения ползунков
+  public $inputParent: JQuery<HTMLElement>;
+
   public elements: slider.Elements = {
     handlers: [],
     connectors: [],
@@ -37,10 +38,10 @@ class View {
     marks: [],
   };
 
-  constructor(input?: JQuery<HTMLElement>) {
-    if (input) {
-      this.input = input;
-      this.inputParent = input.parent();
+  constructor($input?: JQuery<HTMLElement>) {
+    if ($input) {
+      this.$input = $input;
+      this.$inputParent = $input.parent();
     }
   }
 
@@ -69,9 +70,11 @@ class View {
     Object.keys(obj).forEach((key: keyof slider.AdditionalClasses) => {
       if (this.elements[key]) {
         if (Array.isArray(this.elements[key])) {
-          (this.elements[key] as Array<BasicElementView>).forEach((element) => {
-            element.addClass(obj[key]);
-          });
+          (this.elements[key] as Array<BasicElementView>).forEach(
+            ($element) => {
+              $element.addClass(obj[key]);
+            },
+          );
         } else {
           (this.elements[key] as BasicElementView).addClass(obj[key]);
         }
@@ -144,7 +147,7 @@ class View {
   }
 
   public initParent(): View {
-    this.elements.parent = new BasicElementView(this, this.inputParent);
+    this.elements.$parent = new BasicElementView(this, this.$inputParent);
     return this;
   }
 
@@ -152,7 +155,7 @@ class View {
     this.elements.wrapper = new BasicElementView(
       this,
       $('<div class="js-slider"></div>'),
-      this.elements.parent.element,
+      this.elements.$parent.$element,
     );
     if (this.settings.isVertical) {
       this.elements.wrapper.addClass('js-slider_vertical');
@@ -167,9 +170,9 @@ class View {
     this.elements.baseWrapper = new BasicElementView(
       this,
       $('<div class="js-slider__base-wrapper"></div>'),
-      this.elements.wrapper.element,
+      this.elements.wrapper.$element,
     );
-    this.elements.baseWrapper.element.on(
+    this.elements.baseWrapper.$element.on(
       'touchstart',
       (e) => {
         e.preventDefault();
@@ -188,7 +191,7 @@ class View {
       this.elements.marksWrapper = new BasicElementView(
         this,
         $('<div class="js-slider__marks-wrapper"></div>'),
-        this.elements.base.element,
+        this.elements.base.$element,
       );
     }
     return this;
@@ -218,18 +221,18 @@ class View {
     const settings = this.settings;
     if (this.isBoundsOrMarksWithoutValuesShown()) {
       this.elements.bounds.push(
-        new BoundView(this, settings.min, this.elements.baseWrapper.element),
+        new BoundView(this, settings.min, this.elements.baseWrapper.$element),
       );
       this.elements.bounds.push(
-        new BoundView(this, settings.max, this.elements.baseWrapper.element),
+        new BoundView(this, settings.max, this.elements.baseWrapper.$element),
       );
-      const parent = this.elements.bounds[0].parent;
+      const $parent = this.elements.bounds[0].$parent;
       if (this.isSliderReversedOrVertical()) {
-        this.elements.bounds[1].element.prependTo(parent);
-        this.elements.bounds[0].element.appendTo(parent);
+        this.elements.bounds[1].$element.prependTo($parent);
+        this.elements.bounds[0].$element.appendTo($parent);
       } else {
-        this.elements.bounds[0].element.prependTo(parent);
-        this.elements.bounds[1].element.appendTo(parent);
+        this.elements.bounds[0].$element.prependTo($parent);
+        this.elements.bounds[1].$element.appendTo($parent);
       }
     }
     return this;
@@ -245,7 +248,7 @@ class View {
   public initInput(): View {
     this.elements.input = new InputView(
       this,
-      this.input,
+      this.$input,
       this.elements.wrapper,
     );
     return this;

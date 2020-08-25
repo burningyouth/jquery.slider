@@ -6,7 +6,7 @@ import HandlerView from './handlerView';
 import BaseView from './baseView';
 
 class ProgressBarView extends BasicElementView {
-  public static elementBase = $('<span class="js-slider__connector"></span>');
+  public static $elementBase = $('<span class="js-slider__connector"></span>');
   public pairedHandler: HandlerView;
 
   constructor(
@@ -17,16 +17,16 @@ class ProgressBarView extends BasicElementView {
   ) {
     super(
       view,
-      ProgressBarView.elementBase.clone(),
-      base.element,
+      ProgressBarView.$elementBase.clone(),
+      base.$element,
       initCallback,
     );
     this.pairedHandler = pairedHandler;
 
     if (view.settings.connectorsColors[0]) {
-      this.element.css('background-color', view.settings.connectorsColors[0]);
+      this.$element.css('background-color', view.settings.connectorsColors[0]);
     } else if (view.settings.handlersColors[0]) {
-      this.element.css('background-color', view.settings.handlersColors[0]);
+      this.$element.css('background-color', view.settings.handlersColors[0]);
     }
 
     this.update();
@@ -36,9 +36,9 @@ class ProgressBarView extends BasicElementView {
     const percentage = this.pairedHandler.percentage;
 
     if (this.settings.isVertical) {
-      this.element.css('top', `${percentage}%`);
+      this.$element.css('top', `${percentage}%`);
     } else {
-      this.element.css('right', `${100 - percentage}%`);
+      this.$element.css('right', `${100 - percentage}%`);
     }
 
     this._view.trigger('progressBarUpdated', this);
@@ -47,7 +47,7 @@ class ProgressBarView extends BasicElementView {
   }
 
   public static init(that: ProgressBarView): void {
-    if (that.parent) that.parent.prepend(that.element);
+    if (that.$parent) that.$parent.prepend(that.$element);
   }
 }
 

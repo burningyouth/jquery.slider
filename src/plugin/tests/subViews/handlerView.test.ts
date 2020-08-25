@@ -64,21 +64,21 @@ describe('HandlerView', () => {
     expect(handler.value).toBe(50);
   });
   test('Handler is inside of base', () => {
-    expect(handler.element.parent()).toEqual(view.elements.base.element);
+    expect(handler.$element.$parent()).toEqual(view.elements.base.$element);
   });
   test('Handler active and focus working', () => {
     handler.active = true;
     expect(handler.active).toBe(true);
-    expect(handler.element.hasClass(handler.activeClass)).toBe(true);
+    expect(handler.$element.hasClass(handler.activeClass)).toBe(true);
     handler.active = false;
     expect(handler.active).toBe(false);
-    expect(handler.element.hasClass(handler.activeClass)).toBe(false);
+    expect(handler.$element.hasClass(handler.activeClass)).toBe(false);
 
     handler.focus = true;
     expect(handler.focus).toBe(true);
-    expect(handler.element.hasClass(handler.focusClass)).toBe(true);
+    expect(handler.$element.hasClass(handler.focusClass)).toBe(true);
     handler.focus = false;
     expect(handler.focus).toBe(false);
-    expect(handler.element.hasClass(handler.focusClass)).toBe(false);
+    expect(handler.$element.hasClass(handler.focusClass)).toBe(false);
   });
 });
