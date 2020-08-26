@@ -65,6 +65,14 @@ class View {
     this._presenter = newPresenter;
   }
 
+  public debugStart(str: string): void {
+    this.settings.debug && console.time(`[slider.View] ${str}`);
+  }
+
+  public debugEnd(str: string): void {
+    this.settings.debug && console.timeEnd(`[slider.View] ${str}`);
+  }
+
   public init(): View {
     this.initParent()
       .initWrapper()
@@ -77,7 +85,7 @@ class View {
       .initInput();
 
     this.settings.values.forEach((value, index) => {
-      this.initHandler(value, index);
+      this.initHandler(index);
     });
 
     this.initProgressBar();
@@ -116,6 +124,7 @@ class View {
 
   public handleHandlerStart(handler: HandlerView): void {
     if (this.settings.isEnabled) {
+      this.debugStart('handlerStart took');
       handler.active = true;
       this.elements.handlers.forEach((item: HandlerView) => {
         if (item.focus) {
@@ -123,11 +132,14 @@ class View {
         }
       });
       handler.focus = true;
+      this.debugEnd('handlerStart took');
     }
   }
 
   public handleHandlerEnd(handler: HandlerView): void {
+    this.debugStart('handlerEnd took');
     handler.active = false;
+    this.debugEnd('handlerEnd took');
   }
 
   public reset() {
@@ -298,7 +310,7 @@ class View {
     return this;
   }
 
-  public initHandler(value: number, index: number): View {
+  public initHandler(index: number): View {
     this.elements.handlers.push(
       new HandlerView(this, index, this.elements.base),
     );

@@ -36,11 +36,18 @@ class InputView extends BasicElementView {
       that.$element.attr('disabled', 'true');
     }
 
+    that.$element.off('change');
+
     that.$element.on('change', function (e) {
-      const values = (that.$element.val() as string).split(',').map((item) => {
-        return +item;
-      });
-      that._view.trigger('inputChange', values);
+      e.preventDefault();
+      if (e.target === that.$element[0]) {
+        const values = ($(e.currentTarget).val() as string)
+          .split(',')
+          .map((item) => {
+            return +item;
+          });
+        that._view.trigger('inputChange', values);
+      }
     });
 
     that.$element.appendTo(that.$parent);

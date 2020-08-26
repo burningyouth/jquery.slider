@@ -11,11 +11,12 @@
     <link href="assets/css/jquery.slider.min.css" rel="stylesheet"/>
     <link href="assets/css/misc.min.css" rel="stylesheet"/>
   </head>
+
   <body class="body" id="color">
     <div class="modal" id="settings-modal" role="dialog" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
-          <form id="settings-form">
+          <form class="needs-validation" id="settings-form" novalidate>
             <input id="sliderIndex" name="sliderIndex" type="hidden" value="0"/>
             <div class="modal-header">
               <h5 class="modal-title">Settings</h5>
@@ -26,13 +27,12 @@
             <div class="modal-body">
               <div class="form-group">
                 <label for="values">
-                  Start values
+                  Values
                 </label>
-                <input autofocus class="form-control" name="values" type="text" value="0 65 180"/>
-                <small class="form-text text-muted">
-                  1. Put a space between values<br/>2. Values must be in range
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                [min; max]<br/>3. Values must be numbers
-                </small>
+                <input autofocus class="form-control" name="values" pattern="^[\d\s\.]+$" required type="text" value="0 65 180"/>
+                <div class="invalid-feedback">
+                  1. Put one space between values<br/>2. Values must be numbers
+                </div>
               </div>
               <div class="form-group" data-tooltip="How much marks to draw">
                 <label for="marksCount">
@@ -50,19 +50,19 @@
                   <label for="handlersColors">
                     Handlers colors
                   </label>
-                  <input class="form-control" name="handlersColors" type="text" value="red green blue"/>
-                  <small class="form-text text-muted">
-                    Put a space between values
-                  </small>
+                  <input class="form-control" name="handlersColors" pattern="^((#(?:[\da-f]{3}){1,2}|rgb\((?:\d{1,3},\s*){2}\d{1,3}\)|rgba\((?:\d{1,3},\s*){3}\d*\.?\d+\)|hsl\(\d{1,3}(?:,\s*\d{1,3}%){2}\)|hsla\(\d{1,3}(?:,\s*\d{1,3}%){2},\s*\d*\.?\d+\))\s?)+$" type="text" value="red green blue"/>
+                  <div class="invalid-feedback">
+                    1. Put one space between values<br/>2. Values must be colors (rgb, rgba, hex, hsl, hsla)
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="connectorsColors">
                     Connectors colors
                   </label>
-                  <input class="form-control" name="connectorsColors" type="text" value=""/>
-                  <small class="form-text text-muted">
-                    Put a space between values
-                  </small>
+                  <input class="form-control" name="connectorsColors" pattern="^((#(?:[\da-f]{3}){1,2}|rgb\((?:\d{1,3},\s*){2}\d{1,3}\)|rgba\((?:\d{1,3},\s*){3}\d*\.?\d+\)|hsl\(\d{1,3}(?:,\s*\d{1,3}%){2}\)|hsla\(\d{1,3}(?:,\s*\d{1,3}%){2},\s*\d*\.?\d+\))\s?)+$" type="text" value=""/>
+                  <div class="invalid-feedback">
+                    1. Put one space between values<br/>2. Values must be colors (rgb, rgba, hex, hsl, hsla)
+                  </div>
                 </div>
               </div>
               <div class="form-group">
@@ -76,7 +76,7 @@
                     <label for="min">
                       Min
                     </label>
-                    <input class="form-control" name="min" type="number" value="0"/>
+                    <input class="form-control" name="min" required type="number" value="0"/>
                   </div>
                 </div>
                 <div class="col-6">
@@ -84,7 +84,7 @@
                     <label for="max">
                       Max
                     </label>
-                    <input class="form-control" name="max" type="number" value="255"/>
+                    <input class="form-control" id="max" name="max" required type="number" value="255"/>
                   </div>
                 </div>
               </div>
@@ -99,7 +99,10 @@
                     <label for="step">
                       Step
                     </label>
-                    <input class="form-control" min="0" name="step" step="any" type="number" value="1"/>
+                    <input class="form-control" min="0" name="step" required step="any" type="number" value="1"/>
+                    <div class="invalid-feedback">
+                      Must be in range and > 0!
+                    </div>
                   </div>
                 </div>
                 <div class="col-6">
@@ -107,7 +110,10 @@
                     <label for="decimalPlaces">
                       Precision
                     </label>
-                    <input class="form-control" min="0" name="decimalPlaces" type="number" value="0"/>
+                    <input class="form-control" max="10" min="0" name="decimalPlaces" required type="number" value="0"/>
+                    <div class="invalid-feedback">
+                      Must be a number from 0 to 10!
+                    </div>
                   </div>
                 </div>
                 <div class="form-group col-12">
@@ -224,12 +230,12 @@
                   </div>
                 </div>
                 <div class="col-6">
-                  <div class="toggle" data-tooltip="Tooltip appears at the bottom">
+                  <div class="toggle mb-2" data-tooltip="Tooltip appears at the bottom">
                     <input class="toggle__input" name="isTooltipReversed" type="checkbox"/>
                     <label class="toggle__label" for="isTooltipReversed">Is tooltip reversed
                     </label>
                   </div>
-                  <div class="toggle">
+                  <div class="toggle" data-tooltip="Mark values appears at the bottom">
                     <input class="toggle__input" name="isMarkValueReversed" type="checkbox"/>
                     <label class="toggle__label" for="isMarkValueReversed">Is mark value reversed
                     </label>
@@ -250,16 +256,21 @@
                     <label class="toggle__label" for="isBaseClickable">Clickable base
                     </label>
                   </div>
-                  <div class="toggle" data-tooltip="Whether or not the slider is isEnabled">
+                  <div class="toggle" data-tooltip="Whether or not the slider is enabled">
                     <input checked class="toggle__input" name="isEnabled" type="checkbox"/>
                     <label class="toggle__label" for="isEnabled">Is enabled
                     </label>
                   </div>
                 </div>
                 <div class="col-6">
-                  <div class="toggle">
+                  <div class="toggle mb-2">
                     <input class="toggle__input" name="isMarkClickable" type="checkbox"/>
                     <label class="toggle__label" for="isMarkClickable">Clickable mark
+                    </label>
+                  </div>
+                  <div class="toggle" data-tooltip="Whether or not to display event logs">
+                    <input class="toggle__input" name="debug" type="checkbox"/>
+                    <label class="toggle__label" for="debug">Debug
                     </label>
                   </div>
                 </div>
@@ -364,11 +375,12 @@
     <script src="assets/js/jquery.slider.min.js"></script>
     <script>
       $(document).ready(function () {
+
         const sliders = [
             $('#slider0').slider({
               values: [10, 20, 50, 60],
               sortValues: true,
-              showInput: true,
+              showInput: true
             }),
             $('#slider1').slider({
               min: 21,
@@ -420,31 +432,46 @@
               connectorsColors: ['#B5FEA4'],
             }),
           ],
-          modal = $('#settings-modal'),
-          form = $('#settings-form'),
-          sliderIndexInput = form.find('#sliderIndex'),
-          inputs = form.find('input:not([type="hidden"])');
+          $modal = $('#settings-modal'),
+          $form = $('#settings-form'),
+          $sliderIndexInput = $form.find('#sliderIndex'),
+          $inputs = $form.find('input:not([type="hidden"])');
 
-        modal.on('show.bs.modal', function (e) {
+        $modal.on('show.bs.modal', function (e) {
           const sliderIndex = $(e.relatedTarget).data('slider'),
             slider = sliders[sliderIndex],
             settings = slider.settings;
-          sliderIndexInput.val(sliderIndex);
-          $.each(inputs, (index, elem) => {
+          $sliderIndexInput.val(sliderIndex);
+          $.each($inputs, (index, elem) => {
             const name = $(elem).attr('name');
             if (Array.isArray(settings[name]))
               settings[name] = settings[name].join(' ');
             if (elem.type != 'checkbox') $(elem).val(settings[name]);
             else $(elem).attr('checked', settings[name]);
+            if (name === 'step'){
+              const max = $('#max').val();
+              $(elem).attr('max', max);
+            }
           });
         });
 
-        form.on('submit', function (e) {
-          const slider = sliders[sliderIndexInput.val()];
-          let settings = {};
+        $form.on('submit', (e) => {
           e.preventDefault();
-          modal.modal('hide');
-          $.each(inputs, (index, elem) => {
+
+          const slider = sliders[$sliderIndexInput.val()],
+            element = e.currentTarget;
+          
+          if (element.checkValidity() === false) {
+            $(element).addClass('was-validated');
+            e.stopPropagation();
+            return false;
+          }else{
+            $(element).removeClass('was-validated');
+          }
+
+          let settings = {};
+          $modal.modal('hide');
+          $.each($inputs, (index, elem) => {
             const name = $(elem).attr('name');
             let value = elem.value;
             if (name == 'values' && value) {
@@ -502,10 +529,10 @@
       });
     </script>
   </body>
-</html> 
+</html>   
   </body>
 </html> 
   </body>
-  </body>
+</html>
   </body>
 </html>

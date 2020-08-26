@@ -81,9 +81,11 @@ class HandlerView extends BasicElementView {
       );
     }
 
+    that.$element.off('mousedown touchstart');
+
     that.$element.on('mousedown', function (e) {
       e.preventDefault();
-      if (e.which === 1) {
+      if (e.which === 1 && e.target === that.$element[0]) {
         that._view.trigger('handlerStart', that);
         $(window).on('mousemove', function (e2) {
           const coords = e2[coordsAxis];
@@ -92,29 +94,29 @@ class HandlerView extends BasicElementView {
             that._view.trigger('handlerMoved', that, offset);
           }
         });
-        $(window).on('mouseup', function (e2) {
-          if (e2.which == 1) {
-            $(this).off('mousemove mouseup');
-            that._view.trigger('handlerEnd', that);
-          }
-        });
       }
     });
 
     that.$element.on('touchstart', function (e) {
       e.preventDefault();
-      that._view.trigger('handlerStart', that);
-      $(window).on('touchmove', function (e2) {
-        const coords = e2.touches[0][coordsAxis];
-        const offset = that._view.getValueFromCoords(coords) - that.value;
-        if (offset !== 0) {
-          that._view.trigger('handlerMoved', that, offset);
-        }
-      });
-      $(window).on('touchend', function (e2) {
-        $(this).off('touchmove touchend');
+      if (e.target === that.$element[0]) {
+        that._view.trigger('handlerStart', that);
+        $(window).on('touchmove', function (e2) {
+          const coords = e2.touches[0][coordsAxis];
+          const offset = that._view.getValueFromCoords(coords) - that.value;
+          if (offset !== 0) {
+            that._view.trigger('handlerMoved', that, offset);
+          }
+        });
+      }
+    });
+
+    $(window).on('mouseup touchend', function (e) {
+      e.preventDefault();
+      if (that.active && e.target === that.$element[0]) {
+        $(window).off('mousemove touchmove');
         that._view.trigger('handlerEnd', that);
-      });
+      }
     });
 
     super.init();

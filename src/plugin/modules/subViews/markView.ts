@@ -51,6 +51,8 @@ class MarkView extends BasicElementView {
       that.addClass(that.clickableClass);
     }
 
+    that.$element.off('mousedown touchstart');
+
     that.$element.on('mousedown', function (e) {
       e.preventDefault();
       if (e.which === 1 && e.target === that.$element[0])

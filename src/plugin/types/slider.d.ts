@@ -58,6 +58,7 @@ interface Settings {
   resultTemplate?: string;
   additionalClasses?: AdditionalClasses;
   handlersStateClasses?: HandlersStateClasses;
+  debug?: boolean;
 }
 
 type Values = number[];

@@ -19,6 +19,8 @@ class BaseView extends BasicElementView {
     const that = this;
     const coordsAxis = that.settings.isVertical ? 'clientY' : 'clientX';
 
+    that.$element.off('mousedown touchstart');
+
     that.$element.on('mousedown', function (e) {
       e.preventDefault();
       if (e.which === 1) that._view.trigger('baseClicked', e[coordsAxis]);

@@ -37,6 +37,7 @@ class Model {
     additionalClasses: {},
     handlersColors: [],
     connectorsColors: [],
+    debug: false,
   };
   private _values: Values;
 
