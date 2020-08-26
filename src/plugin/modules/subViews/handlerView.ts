@@ -94,6 +94,12 @@ class HandlerView extends BasicElementView {
             that._view.trigger('handlerMoved', that, offset);
           }
         });
+        $(window).on('mouseup', function (e2) {
+          if (e2.which === 1) {
+            $(window).off('mousemove mouseup');
+            that._view.trigger('handlerEnd', that);
+          }
+        });
       }
     });
 
@@ -108,14 +114,10 @@ class HandlerView extends BasicElementView {
             that._view.trigger('handlerMoved', that, offset);
           }
         });
-      }
-    });
-
-    $(window).on('mouseup touchend', function (e) {
-      e.preventDefault();
-      if (that.active) {
-        $(window).off('mousemove touchmove');
-        that._view.trigger('handlerEnd', that);
+        $(window).on('touchend', function () {
+          $(window).off('touchmove touchend');
+          that._view.trigger('handlerEnd', that);
+        });
       }
     });
 
