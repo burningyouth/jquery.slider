@@ -113,7 +113,7 @@ class HandlerView extends BasicElementView {
 
     $(window).on('mouseup touchend', function (e) {
       e.preventDefault();
-      if (that.active && e.target === that.$element[0]) {
+      if (that.active) {
         $(window).off('mousemove touchmove');
         that._view.trigger('handlerEnd', that);
       }
