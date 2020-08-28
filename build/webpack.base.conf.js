@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CheckerPlugin } = require('awesome-typescript-loader');
+const ZipPlugin = require('zip-webpack-plugin');
 
 const PATHS = {
   src: path.join(__dirname, '../src'),
@@ -124,6 +125,17 @@ module.exports = {
     new CheckerPlugin(),
     new MiniCssExtractPlugin({
       filename: `${PATHS.assets}css/[name].min.css`,
+    }),
+    new ZipPlugin({
+      path: 'bundle',
+      filename: 'jquery.slider.zip',
+      include: [/jquery.slider.min.js$/, /jquery.slider.min.css$/],
+      fileOptions: {
+        mtime: new Date(),
+        mode: 0o100664,
+        compress: true,
+        forceZip64Format: false,
+      },
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',
