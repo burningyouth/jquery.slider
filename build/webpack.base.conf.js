@@ -127,12 +127,10 @@ module.exports = {
       filename: `${PATHS.assets}css/[name].min.css`,
     }),
     new ZipPlugin({
-      path: 'bundle',
+      path: '../bundleZip',
       filename: 'jquery.slider.zip',
       include: [/jquery.slider.min.js$/, /jquery.slider.min.css$/],
       fileOptions: {
-        mtime: new Date(),
-        mode: 0o100664,
         compress: true,
         forceZip64Format: false,
       },
